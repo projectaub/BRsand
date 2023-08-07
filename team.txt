@@ -13,5 +13,5 @@ styled-components
 npm i
 yarn 
 
-yarn add styled-component 
+yarn add styled-components 
 yarn add @supabase/supabase-js axios dotenv
