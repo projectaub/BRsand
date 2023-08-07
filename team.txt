@@ -1,0 +1,17 @@
+"@types/jest"
+"@types/node"
+"@types/react"
+"@types/react-dom"
+"json-server"  
+"react-query"
+"react-redux"
+"typescript"
+styled component
+reset
+styled-components
+
+npm i
+yarn 
+
+yarn add styled-component 
+yarn add @supabase/supabase-js axios dotenv
