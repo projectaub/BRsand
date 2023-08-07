@@ -9,3 +9,9 @@
 styled component
 reset
 styled-components
+
+npm i
+yarn 
+
+yarn add styled-component 
+yarn add @supabase/supabase-js axios dotenv
