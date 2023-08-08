@@ -10,7 +10,7 @@ const useGetOrder = () => {
   const fetchOrderData = async () => {
     try {
       //로그인한 유저의 정보를 가져옵니다.
-      const userData = await supabase.from('users').select().single();
+      const userData = await supabase.from('users_test').select().single();
       console.log('userdata', userData);
 
       //로그인한 유저의 정보를 가지고 주문목록에서 user라는 칼럼과 맞는 값의 주문 ID만 가지고 옵니다.

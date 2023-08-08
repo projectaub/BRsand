@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useGetOrder from '../../hook/useGetOrder';
 import { supabase } from '../../supabase';
 import { User } from '../../model/data';
-import OrderPay from '../../components/orderDetail/OrderPay';
+import OrderPay from '../../components/order detail/OrderPay';
 
 interface veges {
   name: string;

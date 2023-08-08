@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import useGetOrder from '../../hook/useGetOrder';
 import { supabase } from '../../supabase';
-import OrderPay from '../../components/orderDetail/OrderPay';
+import OrderPay from '../../components/order detail/OrderPay';
 
 interface Menu {
   name: string;
