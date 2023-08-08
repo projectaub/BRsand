@@ -7,8 +7,16 @@ const webpackConfig: Configuration = {
     path: path.resolve(__dirname, 'dist'), // 번들링된 파일의 출력 경로
     filename: 'bundle.js' // 번들링된 파일의 이름
   },
-  mode: 'development' // 빌드 모드: 'development' 또는 'production'
+  mode: 'development', // 빌드 모드: 'development' 또는 'production'
   // 기타 설정들...
+
+  resolve: {
+    fallback: {
+      path: require.resolve('path-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      crypto: require.resolve('crypto-browserify')
+    }
+  }
 };
 
 export default webpackConfig;
