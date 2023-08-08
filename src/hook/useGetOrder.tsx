@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
-import { User } from '../model/data';
+import { User } from '../model/Data';
 import { useNavigate } from 'react-router-dom';
 
 const useGetOrder = () => {
