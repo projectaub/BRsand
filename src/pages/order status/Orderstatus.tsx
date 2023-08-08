@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import Stocks from './Stocks';
 import { supabase } from '../../supabase';
+import { useParams } from 'react-router-dom';
 
 interface User {
   id: number;
@@ -13,7 +14,7 @@ interface User {
 }
 
 interface Order {
-  id: number;
+  id: string;
   dineIn: boolean;
   isActive: boolean;
   isDone: boolean;
@@ -24,8 +25,14 @@ interface Order {
   user: User;
 }
 
+const store: Record<string, string> = {
+  '1': '신정네거리역점',
+  '2': '화곡역점'
+};
+
 const Orderstatus: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const params = useParams();
 
   useEffect(() => {
     fetchOrders();
@@ -45,62 +52,86 @@ const Orderstatus: React.FC = () => {
   };
 
   const confirmOrderHandler = async (id: any, isActive: boolean) => {
-    console.log(id);
-    try {
-      const { data, error } = await supabase.from('orders').update({ isActive: !isActive }).eq('id', id);
-    } catch (error) {
-      console.error('Error Updating orders:', error);
+    const orderConfirmed = window.confirm('주문을 접수하시겠습니까?');
+    if (orderConfirmed) {
+      try {
+        const { data, error } = await supabase.from('orders').update({ isActive: !isActive }).eq('id', id);
+      } catch (error) {
+        console.error('Error Updating orders:', error);
+      }
+    } else {
+      return;
     }
   };
+
+  const completeOrderHandler = async (id: any, isDone: boolean) => {
+    const completeOrder = window.confirm('[조리완료]로 변경하시겠습니까?');
+    if (completeOrder) {
+      try {
+        const { data, error } = await supabase.from('orders').update({ isDone: !isDone }).eq('id', id);
+      } catch {}
+    }
+  };
+
+  const newOrderCount = orders.filter((order) => !order.isActive && order.storeId == params.id).length;
+  const oldOrderCount = orders.filter((order) => order.isActive && !order.isDone && order.storeId == params.id).length;
 
   return (
     <>
       <div>
-        <h1>신규주문</h1>
+        <h1>신규주문 : {newOrderCount} </h1>
         {orders
-          .filter((order) => !order.isActive)
+          .filter((order) => !order.isActive && order.storeId == params.id)
           .map((order) => (
             <OrderArea key={order.id}>
-              <h1>{order.storeId}</h1>
-              <p>주문번호 : {order.id}</p>
+              <h1>{store[order.storeId]}</h1>
+              <p>주문번호 : {order.id.slice(0, 8)}</p>
+              <p>주문시간 : {order.time}</p>
               <p>결제금액 : {order.price}원</p>
               <p>{order.dineIn ? '매장' : '포장'}</p>
               <p>상태 : 주문접수대기</p>
               <button onClick={() => confirmOrderHandler(order.id, order.isActive)}>주문접수</button>
-              <p>{order.isDone ? '수령완료' : '미수령'}</p>
               <div>
                 {order.orderMenu !== null && order.user !== null && (
                   <div>
                     <h2>주문자명 {order.user.name}</h2>
                     <p>메뉴 : {order.orderMenu.base}</p>
-                    <p>빵 : {order.orderMenu.bread}</p>
-                    <p>치즈 : {order.orderMenu.cheese}</p>
-                    <p>소스 : {order.orderMenu.sauce}</p>
+                    {order.orderMenu.bread && <p>빵 : {order.orderMenu.bread}</p>}
+                    {order.orderMenu.cheese && <p>치즈 : {order.orderMenu.cheese}</p>}
+                    {order.orderMenu.sauce && <p>소스 : {order.orderMenu.sauce}</p>}
+                    {order.orderMenu.vegetables &&
+                      order.orderMenu.vegetables
+                        .filter((vege: any) => !vege.isAdd)
+                        .map((vege: any) => <p>(-){vege.name}</p>)}
                   </div>
                 )}
               </div>
             </OrderArea>
           ))}
-        <h1>조리진행중</h1>
+        <h1>조리진행중 : {oldOrderCount}</h1>
         {orders
-          .filter((order) => order.isActive)
+          .filter((order) => order.isActive && !order.isDone && order.storeId == params.id)
           .map((order) => (
             <OrderArea key={order.id}>
-              <h1>{order.storeId}</h1>
-              <p>주문번호 : {order.id}</p>
+              <h1>{store[order.storeId]}</h1>
+              <p>주문번호 : {order.id.slice(0, 8)}</p>
+              <p>주문시간 : {order.time}</p>
               <p>결제금액 : {order.price}원</p>
               <p>{order.dineIn ? '매장' : '포장'}</p>
               <p>상태 : 주문접수완료</p>
-              <button onClick={() => confirmOrderHandler(order.id, order.isActive)}>조리완료</button>
-              <p>{order.isDone ? '수령완료' : '미수령'}</p>
+              <button onClick={() => completeOrderHandler(order.id, order.isDone)}>조리완료</button>
               <div>
                 {order.orderMenu !== null && order.user !== null && (
                   <div>
                     <h2>주문자명 {order.user.name}</h2>
                     <p>메뉴 : {order.orderMenu.base}</p>
-                    <p>빵 : {order.orderMenu.bread}</p>
-                    <p>치즈 : {order.orderMenu.cheese}</p>
-                    <p>소스 : {order.orderMenu.sauce}</p>
+                    {order.orderMenu.bread && <p>빵 : {order.orderMenu.bread}</p>}
+                    {order.orderMenu.cheese && <p>치즈 : {order.orderMenu.cheese}</p>}
+                    {order.orderMenu.sauce && <p>소스 : {order.orderMenu.sauce}</p>}
+                    {order.orderMenu.vegetables &&
+                      order.orderMenu.vegetables
+                        .filter((vege: any) => !vege.isAdd)
+                        .map((vege: any) => <p>(-){vege.name}</p>)}
                   </div>
                 )}
               </div>

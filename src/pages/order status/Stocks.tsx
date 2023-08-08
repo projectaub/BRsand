@@ -1,6 +1,8 @@
 import React from 'react';
 import { supabase } from '../../supabase';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { styled } from 'styled-components';
 
 interface Stock {
   id: string;
@@ -11,13 +13,14 @@ interface Stock {
 
 function Stocks() {
   const [stocks, setStocks] = useState<Stock[]>([]);
+  const params = useParams();
   useEffect(() => {
-    fetchOrders();
+    fetchStocks();
   }, [stocks]);
 
-  const fetchOrders = async () => {
+  const fetchStocks = async () => {
     try {
-      const { data, error } = await supabase.from('stocks').select();
+      const { data, error } = await supabase.from(`stocks_${params.id}`).select();
       if (error) {
         console.error('Error fetching orders:', error);
       } else if (data !== null) {
@@ -28,30 +31,39 @@ function Stocks() {
     }
   };
 
-  const getMoreStocks = async (id: any, count: number) => {
+  const getMoreStocks = async (id: string, count: number) => {
     try {
       const { data, error } = await supabase
-        .from('stocks')
+        .from(`stocks_${params.id}`)
         .update({ count: count + 20 })
         .eq('id', id);
     } catch (error) {
       console.error('Error Updating orders:', error);
     }
   };
+
   return (
-    <div>
+    <>
       <h1>재고현황</h1>
-      {stocks.map((stock) => (
-        <div id={stock.id}>
-          <h1>
-            {stock.name} : {stock.count}
-          </h1>
-          <p>{stock.type}</p>
-          {stock.count <= 5 && <button onClick={() => getMoreStocks(stock.id, stock.count)}>발주</button>}
-        </div>
-      ))}
-    </div>
+      <StockArea>
+        {stocks.map((stock) => (
+          <div id={stock.id}>
+            <p>
+              {stock.name} : {stock.count}
+            </p>
+            {stock.count <= 10 && <button onClick={() => getMoreStocks(stock.id, stock.count)}>발주</button>}
+          </div>
+        ))}
+      </StockArea>
+    </>
   );
 }
+
+const StockArea = styled.div`
+  border: 1px solid black;
+  width: 400px;
+  margin: 20px;
+  padding: 10px;
+`;
 
 export default Stocks;
