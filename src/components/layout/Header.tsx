@@ -11,9 +11,10 @@ const S = {
   Area: styled.div`
     width: 100%;
     height: 70px;
-    background-color: orange;
+    background-color: #226f54;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
   `
 };

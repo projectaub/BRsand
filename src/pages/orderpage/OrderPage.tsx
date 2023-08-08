@@ -37,8 +37,10 @@ const OrderPage = () => {
 
     try {
       const { data, error } = await supabase.from('orders').insert(newOrderSet).select();
-      console.log(data);
-      console.log(error);
+      if (error) {
+        console.log(error);
+        return;
+      }
       if (select === 'custom') {
         navigate('/order-custom');
       } else {
@@ -55,7 +57,7 @@ const OrderPage = () => {
       {/* 매장 포장 여부를 선택해야 매장 선택이 나타납니다. */}
       <SelectDineIn dineIn={dineIn} setDineIn={setDineIn} userData={userData}></SelectDineIn>
       {/* 매장을 선택하면 샌드위치를 커스텀할지 기성품을 살지 선택합니다. */}
-      {dineIn !== null && <SelectStore setStore={setStore}></SelectStore>}
+      {dineIn !== null && <SelectStore store={store} setStore={setStore}></SelectStore>}
 
       {store && <SelectProduct setBasicOrder={setBasicOrder}></SelectProduct>}
     </>

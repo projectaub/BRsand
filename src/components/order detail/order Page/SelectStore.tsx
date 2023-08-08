@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../../supabase';
 import { StorePoint } from '../../../model/data';
+import { styled } from 'styled-components';
 
-const SelectStore = ({ dineIn, setStore }: any) => {
+const SelectStore = ({ store, setStore }: any) => {
   const [storeData, setStoreData] = useState<StorePoint[] | null>();
 
   const fetchData = async () => {
@@ -20,17 +21,24 @@ const SelectStore = ({ dineIn, setStore }: any) => {
 
   return (
     <>
+      {/* 이용하실 매장을 선택해 주세요. */}
+
+      <S.CaptionArea>
+        <S.Caption> {store ? `` : '이용하실 매장을 선택해 주세요.'}</S.Caption>
+      </S.CaptionArea>
+
       {storeData?.map((store) => {
         return (
-          <button
+          <S.BtnArea
             key={store.id}
             onClick={() => {
               // 선택한 매장을 store 상태에 담습니다.
               setStore(store);
             }}
           >
-            {store.name}
-          </button>
+            <S.Name>{store.name}</S.Name>
+            <S.Address>{store.address}</S.Address>
+          </S.BtnArea>
         );
       })}
     </>
@@ -38,3 +46,50 @@ const SelectStore = ({ dineIn, setStore }: any) => {
 };
 
 export default SelectStore;
+
+const S = {
+  Container: styled.div`
+    /* margin-top: 16px; */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  `,
+  CaptionArea: styled.div`
+    margin-top: 30px;
+  `,
+  Caption: styled.p`
+    font-size: 18px;
+    margin: 8px 0px;
+    font-weight: 700;
+    color: #226f54;
+  `,
+  BtnArea: styled.div`
+    /* background-color: royalblue; */
+    height: 80px;
+    /* margin: 0px 10px; */
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    border-bottom: 1px solid black;
+  `,
+  Name: styled.div`
+    font-weight: 500;
+    font-size: 24px;
+  `,
+  Address: styled.div`
+    font-size: 18px;
+  `,
+
+  Btn: styled.button`
+    width: calc(361px / 2 - 8px);
+    padding: 8px;
+    outline: none;
+    border: 1px solid #226f54;
+    border-radius: 50px;
+    background-color: white;
+    font-size: 18px;
+    color: #226f54;
+  `
+};
