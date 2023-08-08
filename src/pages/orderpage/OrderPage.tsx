@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
-import { StorePoint, User } from '../../model/data';
+import { StorePoint, User } from '../../model/Data';
 import { useNavigate } from 'react-router-dom';
 import SelectDineIn from '../../components/order detail/order Page/SelectDineIn';
 import SelectStore from '../../components/order detail/order Page/SelectStore';
