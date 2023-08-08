@@ -29,6 +29,7 @@ const Router = () => {
           <Route path="/order-custom" element={<OrderCustom />} />
           <Route path="/order-menu" element={<OrderMenu />} />
         </Route>
+
         <Route path="/orderstatus" element={<Orderstatus />} />
         <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
