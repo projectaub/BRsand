@@ -23,14 +23,12 @@ const Router = () => {
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mypage" element={<Mypage />} />
-
           {/* 주문관련 - 모바일 */}
           <Route path="/orderpage" element={<OrderPage />} />
           <Route path="/order-custom" element={<OrderCustom />} />
           <Route path="/order-menu" element={<OrderMenu />} />
         </Route>
-
-        <Route path="/orderstatus" element={<Orderstatus />} />
+        <Route path="/orderstatus/:id" element={<Orderstatus />} />
         <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
         <Route path="/statistice" element={<Statistics />} />
