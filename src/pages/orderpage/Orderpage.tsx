@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
 import { StorePoint, User } from '../../model/data';
-import SetOrder from '../../components/orderDetail/SetOrder';
 import { useNavigate } from 'react-router-dom';
 
 const OrderPage = () => {
@@ -15,7 +14,6 @@ const OrderPage = () => {
     try {
       const userData = await supabase.from('users').select().single();
       const storeData = await supabase.from('stores').select();
-      // console.log(storeData.data);
       setUserData(userData.data);
       setStoreData(storeData.data);
     } catch (error) {
@@ -27,7 +25,7 @@ const OrderPage = () => {
     fetchData();
   }, []);
 
-  const setBasicOrder = async () => {
+  const setBasicOrder = async (select: string) => {
     const newOrderSet = {
       dineIn,
       storeId: store?.id,
@@ -40,6 +38,12 @@ const OrderPage = () => {
     try {
       const { data, error } = await supabase.from('orders').insert(newOrderSet).select();
       console.log(data);
+      console.log(error);
+      if (select === 'custom') {
+        navigate('/order-custom');
+      } else {
+        navigate('/order-menu');
+      }
     } catch (error) {
       console.log(error);
     }
@@ -91,16 +95,14 @@ const OrderPage = () => {
         <>
           <button
             onClick={() => {
-              setBasicOrder();
-              navigate('/order-custom');
+              setBasicOrder('custom');
             }}
           >
             커스텀
           </button>
           <button
             onClick={() => {
-              setBasicOrder();
-              navigate('/order-menu');
+              setBasicOrder('menu');
             }}
           >
             메뉴주문

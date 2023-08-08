@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useGetOrder from '../../hook/useGetOrder';
 import { supabase } from '../../supabase';
+import OrderPay from '../../components/orderDetail/OrderPay';
 
 interface Menu {
   name: string;
@@ -10,6 +11,8 @@ interface Menu {
 
 const OrderMenu = () => {
   const [orderId] = useGetOrder();
+  const [pay, setPay] = useState(false);
+  const [menu, setMenu] = useState<Menu>();
 
   //메뉴 리스트를 서버에서 가져오면 좋을거같습니다.
   //나중에 전체 어드민에서 새로운 메뉴를 추가할 수 있도록..?
@@ -22,24 +25,29 @@ const OrderMenu = () => {
   ];
 
   //서버에 있는 주문 id값에 맞춰 메뉴와 가격을 업데이트 해줍니다.
-  const updateOrder = async (menu: Menu) => {
+  const updateOrder = async () => {
     const order = {
-      orderMenu: { base: menu.name },
-      price: menu.price
+      orderMenu: { base: menu?.name },
+      price: menu?.price
     };
     await supabase.from('orders').update(order).eq('id', orderId);
+    alert('주문 잘 들어감');
   };
 
   //메뉴와 가격을 세팅해서
   return (
     <>
+      {/* 결제모달창 컴포넌트입니다. */}
+      {pay && <OrderPay updateOrder={updateOrder} setPay={setPay}></OrderPay>}
+
       <h1>메뉴를 골라주세요.</h1>
       {menuList?.map((menu) => {
         return (
           <button
             key={menu.id}
             onClick={() => {
-              updateOrder(menu);
+              setMenu(menu);
+              setPay(true);
             }}
           >
             {menu.name}, {menu.price}

@@ -11,19 +11,24 @@ import InventoryStatus from '../pages/Inventory status/InventoryStatus';
 import Statistics from '../pages/statistics/Statistics';
 import OrderMenu from '../pages/orderpage/OrderMenu';
 import OrderCustom from '../pages/orderpage/OrderCustom';
+import Mobile from './layout/Mobile';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/join" element={<Join />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/orderpage" element={<OrderPage />} />
-        <Route path="/order-custom" element={<OrderCustom />} />
-        <Route path="/order-menu" element={<OrderMenu />} />
+        <Route path="/" element={<Mobile />}>
+          {/* 유저 로그인 / 회원가입 / 마이페이지 */}
+          <Route path="/" element={<Main />} />
+          <Route path="/join" element={<Join />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/mypage" element={<Mypage />} />
 
+          {/* 주문관련 - 모바일 */}
+          <Route path="/orderpage" element={<OrderPage />} />
+          <Route path="/order-custom" element={<OrderCustom />} />
+          <Route path="/order-menu" element={<OrderMenu />} />
+        </Route>
         <Route path="/orderstatus" element={<Orderstatus />} />
         <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
