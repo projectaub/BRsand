@@ -1,8 +1,14 @@
-import React from "react";
-import Router from "./shard/Router";
+import React from 'react';
+import Router from './shard/Router';
+import GlobalStyle from './globalStyle';
 
 const App = () => {
-  return <Router />;
+  return (
+    <>
+      <GlobalStyle />
+      <Router />
+    </>
+  );
 };
 
 export default App;
