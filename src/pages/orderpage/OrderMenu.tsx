@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import useGetOrder from '../../hook/useGetOrder';
 import { supabase } from '../../supabase';
 import OrderPay from '../../components/order detail/OrderPay';
+import { useNavigate } from 'react-router-dom';
 
 interface Menu {
   name: string;
@@ -10,6 +11,9 @@ interface Menu {
 }
 
 const OrderMenu = () => {
+  //임시 라우터 이동 함수
+  const navigate = useNavigate();
+
   const [orderId] = useGetOrder();
   const [pay, setPay] = useState(false);
   const [menu, setMenu] = useState<Menu>();
@@ -31,7 +35,9 @@ const OrderMenu = () => {
       price: menu?.price
     };
     await supabase.from('orders').update(order).eq('id', orderId);
+
     alert('주문 잘 들어감');
+    navigate('/orderpage');
   };
 
   //메뉴와 가격을 세팅해서
