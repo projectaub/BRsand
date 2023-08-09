@@ -1,6 +1,6 @@
 import React from 'react';
 import Router from './shared/Router';
-import GlobalStyle from './globalStyle';
+import GlobalStyle from './GlobalStyle';
 const App = () => {
   return (
     <>
