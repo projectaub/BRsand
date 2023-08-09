@@ -55,17 +55,17 @@ export enum Base {
   ham
 }
 
-export interface Order {
-  id: number;
-  StoreId: number;
-  dining: boolean; // 매장 / 포장
-  user: User;
-  time: string;
-  orderMenu: OrderMenu;
-  isActive: boolean;
-  isDone: boolean;
-  price: number;
-}
+// export interface Order {
+//   id: number;
+//   StoreId: number;
+//   dining: boolean; // 매장 / 포장
+//   user: User;
+//   time: string;
+//   orderMenu: OrderMenu;
+//   isActive: boolean;
+//   isDone: boolean;
+//   price: number;
+// }
 
 export enum OrderMenu {
   Sandwich,

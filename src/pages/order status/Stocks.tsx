@@ -47,11 +47,13 @@ function Stocks() {
       <h1>재고현황</h1>
       <StockArea>
         {stocks.map((stock) => (
-          <div id={stock.id}>
-            <p>
-              {stock.name} : {stock.count}
-            </p>
-            {stock.count <= 10 && <button onClick={() => getMoreStocks(stock.id, stock.count)}>발주</button>}
+          <div key={stock.id}>
+            <div id={stock.id}>
+              <p>
+                {stock.name} : {stock.count}
+              </p>
+              {stock.count <= 10 && <button onClick={() => getMoreStocks(stock.id, stock.count)}>발주</button>}
+            </div>
           </div>
         ))}
       </StockArea>
