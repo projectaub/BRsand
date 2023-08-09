@@ -16,7 +16,7 @@ function Stocks() {
   const params = useParams();
   useEffect(() => {
     fetchStocks();
-  }, [stocks]);
+  }, []);
 
   const fetchStocks = async () => {
     try {

@@ -31,13 +31,14 @@ const S = {
     height: 852px;
     border-radius: 20px;
     overflow: hidden;
-    background-color: royalblue;
+    /* background-color: lightgray; */
+    border: 1px solid black;
   `,
   ContentArea: styled.div`
     /* width: 100%; */
     margin: 0px 16px;
     padding-bottom: 16px;
-    background-color: green;
+    background-color: white;
     box-sizing: border-box;
   `
 };
