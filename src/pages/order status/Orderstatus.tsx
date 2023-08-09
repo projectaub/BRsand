@@ -36,7 +36,7 @@ const Orderstatus: React.FC = () => {
 
   useEffect(() => {
     fetchOrders();
-  }, [orders]);
+  }, []);
 
   const fetchOrders = async () => {
     try {
