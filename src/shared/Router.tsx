@@ -1,28 +1,46 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from '../pages/main/Main';
 import Join from '../pages/join/Join';
 import Login from '../pages/login/Login';
 import Mypage from '../pages/mypage/Mypage';
-import Orderpage from '../pages/orderpage/Orderpage';
+import OrderPage from '../pages/orderpage/OrderPage';
 import Orderstatus from '../pages/order status/Orderstatus';
 import SalesStatus from '../pages/sales status/SalesStatus';
 import InventoryStatus from '../pages/Inventory status/InventoryStatus';
 import Statistics from '../pages/statistics/Statistics';
+import OrderMenu from '../pages/orderpage/OrderMenu';
+import OrderCustom from '../pages/orderpage/OrderCustom';
+import Mobile from './layout/Mobile';
+import { supabase } from '../supabase';
+
+console.log('Router', supabase);
+// interface ProfileProps {
+//   session: supabase.auth.Session | null; // Use the Session type from supabase
+// }
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/join" element={<Join />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mypage" element={<Mypage />} />
-        <Route path="/orderpage" element={<Orderpage />} />
-        <Route path="/orderstatus" element={<Orderstatus />} />
-        <Route path="/salesStatus" element={<SalesStatus />} />
+        <Route path="/" element={<Mobile />}>
+          {/* 유저 로그인 / 회원가입 / 마이페이지 */}
+          <Route path="/" element={<Main />} />
+          <Route path="/join" element={<Join />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/mypage" element={<Mypage />} />
+          {/* 주문관련 - 모바일 */}
+          <Route path="/orderpage" element={<OrderPage />} />
+          <Route path="/order-custom" element={<OrderCustom />} />
+          <Route path="/order-menu" element={<OrderMenu />} />
+        </Route>
+
+        {/* <Route path="/" element={<Web />}> */}
+        <Route path="/orderstatus/:id" element={<Orderstatus />} />
+        <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
-        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/statistice" element={<Statistics />} />
+        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );
