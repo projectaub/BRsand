@@ -84,14 +84,14 @@ export enum Menu {
 
 // 매장 데이터
 export interface StorePoint {
-  name: string;
-  call: string;
   id: number;
   address: string;
   businessHours: string;
   stock: Stocks;
   isOpen: boolean;
   managerID: string;
+  name: string;
+  call: string;
 }
 
 // stocks
