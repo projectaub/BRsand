@@ -6,7 +6,6 @@ export interface User {
   email: string;
   grade: string;
 }
-
 export interface Vegetables {
   tomato: boolean;
   cucumber: boolean;
@@ -17,7 +16,6 @@ export interface Vegetables {
   jalapenos: boolean;
   paprika: boolean;
 }
-
 export interface Sandwich {
   base: Base;
   bread: Bread;
@@ -25,20 +23,17 @@ export interface Sandwich {
   vegetable: Vegetables;
   sauce: Sauce;
 }
-
 export enum Cheese {
   mozzarella,
   cheddar,
   gorgonzola
 }
-
 export enum Bread {
   white,
   croissant,
   bagel,
   bun
 }
-
 export enum Sauce {
   barbecue,
   hotChili,
@@ -46,7 +41,6 @@ export enum Sauce {
   Mara,
   sweetOnion
 }
-
 export enum Base {
   chicken,
   vegetableMeat,
@@ -55,23 +49,22 @@ export enum Base {
   ham
 }
 
-// export interface Order {
-//   id: number;
-//   StoreId: number;
-//   dining: boolean; // 매장 / 포장
-//   user: User;
-//   time: string;
-//   orderMenu: OrderMenu;
-//   isActive: boolean;
-//   isDone: boolean;
-//   price: number;
-// }
+export interface Order {
+  id: number;
+  StoreId: number;
+  dining: boolean; // 매장 / 포장
+  user: User;
+  time: string;
+  orderMenu: OrderMenu;
+  isActive: boolean;
+  isDone: boolean;
+  price: number;
+}
 
 export enum OrderMenu {
   Sandwich,
   Menu
 }
-
 export enum Menu {
   barbecueChicken,
   ranchVegetable,
@@ -79,9 +72,7 @@ export enum Menu {
   sweetOnionHam,
   hotChiliEggMayo
 }
-
 //  / //도 셋팅해야됨
-
 // 매장 데이터
 export interface StorePoint {
   id: number;
@@ -91,9 +82,7 @@ export interface StorePoint {
   isOpen: boolean;
   managerID: string;
   name: string;
-  call: string;
 }
-
 // stocks
 export interface Stocks {
   menuStocks: MenuStocks;
@@ -102,7 +91,6 @@ export interface Stocks {
   cheeseStocks: CheeseStocks;
   baseStocks: BaseStocks;
 }
-
 export interface MenuStocks {
   barbecueChicken: number;
   ranchVegetable: Number;
@@ -110,7 +98,6 @@ export interface MenuStocks {
   sweetOnionHam: number;
   hotChiliEggMayo: number;
 }
-
 export interface VegetableStocks {
   tomato: number;
   cucumber: number;
@@ -121,20 +108,17 @@ export interface VegetableStocks {
   jalapenos: number;
   paprika: number;
 }
-
 export interface BreadStocks {
   white: number;
   croissant: number;
   bagel: number;
   bun: number;
 }
-
 export interface CheeseStocks {
   mozzarella: number;
   cheddar: number;
   gorgonzola: number;
 }
-
 export interface BaseStocks {
   chicken: number;
   vegetableMeat: number;
@@ -142,13 +126,11 @@ export interface BaseStocks {
   beef: number;
   ham: number;
 }
-
 export interface A {
   name: string;
   image: string;
   price: number;
 }
-
 export interface B {
   name: string;
   image: string;
