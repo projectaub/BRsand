@@ -76,6 +76,10 @@ declare global {
 }
 
 const OrderPay = ({ updateOrder, setPay }: any) => {
+  // 결제시스템을 작동
+
+  //
+
   const submitPay = () => {
     setPay(false);
     updateOrder();

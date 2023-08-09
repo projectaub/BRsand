@@ -28,10 +28,13 @@ const Router = () => {
           <Route path="/order-custom" element={<OrderCustom />} />
           <Route path="/order-menu" element={<OrderMenu />} />
         </Route>
+
+        {/* <Route path="/" element={<Web />}> */}
         <Route path="/orderstatus/:id" element={<Orderstatus />} />
         <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
         <Route path="/statistice" element={<Statistics />} />
+        {/* </Route> */}
       </Routes>
     </BrowserRouter>
   );

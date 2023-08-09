@@ -48,6 +48,7 @@ export enum Base {
   beef,
   ham
 }
+
 export interface Order {
   id: number;
   StoreId: number;
@@ -59,6 +60,7 @@ export interface Order {
   isDone: boolean;
   price: number;
 }
+
 export enum OrderMenu {
   Sandwich,
   Menu
