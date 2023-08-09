@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createClient } from '@supabase/supabase-js';
 import { supabase } from '../../supabase';
 
 const Login = () => {
@@ -13,10 +12,11 @@ const Login = () => {
     const { error } = await supabase.auth.signInWithOtp({ email });
 
     if (error) {
+      console.log(error);
       const errorDescription = (error as any).error_description || error.message;
       alert(errorDescription);
     } else {
-      alert('Check your email for the login link!');
+      alert('입력하신 메일에 접속하여 링크를 확인하세요!');
     }
     setLoading(false);
   };

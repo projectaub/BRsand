@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from '../pages/main/Main';
 import Join from '../pages/join/Join';
@@ -12,6 +12,12 @@ import Statistics from '../pages/statistics/Statistics';
 import OrderMenu from '../pages/orderpage/OrderMenu';
 import OrderCustom from '../pages/orderpage/OrderCustom';
 import Mobile from './layout/Mobile';
+import { supabase } from '../supabase';
+
+console.log('Router', supabase);
+// interface ProfileProps {
+//   session: supabase.auth.Session | null; // Use the Session type from supabase
+// }
 
 const Router = () => {
   return (
