@@ -89,7 +89,7 @@ const Orderstatus: React.FC = () => {
       <OrderStateArea orderList={orders}></OrderStateArea>
       <div>
         <h1>신규주문 : {newOrderCount} </h1>
-        {orders
+        {/* {orders
           .filter((order) => !order.isActive)
           .map((order) => (
             <OrderArea key={order.id}>
@@ -144,8 +144,8 @@ const Orderstatus: React.FC = () => {
                   </div>
                 )}
               </div>
-            </OrderArea>
-          ))}
+            </OrderArea> 
+          ))}*/}
       </div>
       <Stocks />
     </>
