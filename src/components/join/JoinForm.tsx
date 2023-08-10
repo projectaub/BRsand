@@ -29,7 +29,7 @@ const JoinForm: React.FC<JoinFormProps> = ({ setUserDataProp, setShowPersonalInf
       email,
       password
     });
-    // console.log(error);
+
     console.log('가입 잘 되?', data.user!.email);
 
     if (error) {
