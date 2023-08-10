@@ -6815,7 +6815,7 @@ for-in@^1.0.2:
 
 force@^0.0.3:
   version "0.0.3"
-  resolved "https://registry.npmjs.org/force/-/force-0.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/force/-/force-0.0.3.tgz#16a711e6b9a542a974da85546434a3ae94d66b14"
   integrity sha512-B/4gl3/7o8Q4jYfXNKSvTHlAPxB1ruYCkxVkiVUUuHziYbDa2NsURljSgpm+Q+d4cGmN1EaAD5QXhLodGN44zA==
   dependencies:
     faye "~0.8.3"

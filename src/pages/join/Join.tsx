@@ -42,7 +42,7 @@ const Join = () => {
       const { data, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
 
       console.log('로그인 잘 되?', email);
-
+      console.log(data);
       if (loginError) {
         console.error('로그인에러:', loginError);
       } else {
@@ -69,11 +69,11 @@ const Join = () => {
     setShowPersonalInfoModal(true);
   };
   const emailUpdater = async (userData: any) => {
-    await supabase.from('users').update({ email: userData.user!.email, grade: 'basic' }).eq('uid', userData.user!.id);
+    await supabase.from('users').update({ email: userData.user!.email, grade: 'basic' }).eq('id', userData.user!.id);
   };
   const submitPersonalInfo = async () => {
     try {
-      await supabase.from('users').update({ name, gender, age, grade: 'basic' }).eq('uid', userData.user!.id);
+      await supabase.from('users').update({ name, gender, age, grade: 'basic' }).eq('id', userData.user!.id);
       alert('입력완료되었다. 즐거운 이용 하시길 바람...');
       navigate('/');
     } catch (error) {
@@ -85,7 +85,7 @@ const Join = () => {
   };
   const postUid = async (id: string) => {
     try {
-      await supabase.from('users').insert({ uid: id });
+      await supabase.from('users').insert({ id });
     } catch (error) {
       console.error('Error updating user ID:', error);
     }

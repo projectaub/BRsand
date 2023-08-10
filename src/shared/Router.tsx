@@ -38,10 +38,10 @@ const Router = () => {
 
         {/* <Route path="/" element={<Web />}> */}
         <Route path="/orderstatus/:id" element={<Orderstatus />} />
-        <Route path="/salessataus" element={<SalesStatus />} />
+        <Route path="/salestatus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/statistice" element={<Statistics />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Route>
         {/* </Route> */}
       </Routes>

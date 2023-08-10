@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
-import { User } from '../model/data';
 import { useNavigate } from 'react-router-dom';
+import useCheckLoginUser from './useCheckLoginUser';
+import { User } from '../model';
 
 const useGetOrder = () => {
   const [order, setOrder] = useState<string>('');
+  const [userId] = useCheckLoginUser();
+  // const [userData] = useCheck
   const navigate = useNavigate();
 
   const fetchOrderData = async () => {
     try {
       //로그인한 유저의 정보를 가져옵니다.
-      const userData = await supabase.from('users_test').select().single();
-      console.log('userdata', userData);
 
       //로그인한 유저의 정보를 가지고 주문목록에서 user라는 칼럼과 맞는 값의 주문 ID만 가지고 옵니다.
       //필터링 조건1 / 로그인된 유저 = 주문 목록의 유저
@@ -19,7 +20,7 @@ const useGetOrder = () => {
       const { data } = await supabase
         .from('orders')
         .select('id')
-        .contains('user', userData.data)
+        .contains('user', { id: userId })
         .is('orderMenu', null)
         .single();
 
