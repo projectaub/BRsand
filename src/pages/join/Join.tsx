@@ -43,8 +43,6 @@ const Join = () => {
 
       console.log('로그인 잘 되?', email);
 
-      console.log('로그인 잘 되?', email);
-
       if (loginError) {
         console.error('로그인에러:', loginError);
       } else {
