@@ -22,8 +22,10 @@ const useGetOrder = () => {
         .select('id')
         .contains('user', { id: userId })
         .is('orderMenu', null);
+      setOrder(data![0].id);
 
       //이것이 최신의 데이터
+
       console.log(data![0]);
 
       // 이런 로직을 짜야함
