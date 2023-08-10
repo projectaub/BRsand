@@ -1,3 +1,4 @@
+
 export interface User {
   id: number;
   name: string;
@@ -85,12 +86,12 @@ export enum Menu {
 // 매장 데이터
 export interface StorePoint {
   id: number;
-  name: string;
   address: string;
   businessHours: string;
   stock: Stocks;
   isOpen: boolean;
   managerID: string;
+  name: string;
 }
 
 // stocks
@@ -152,3 +153,4 @@ export interface B {
   name: string;
   image: string;
 }
+
