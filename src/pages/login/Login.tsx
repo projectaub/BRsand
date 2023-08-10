@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { supabase } from '../../supabase';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,6 +24,11 @@ const Login = () => {
     setLoading(false);
   };
 
+  const moveJoinPage = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate('/join');
+  };
+
   return (
     <div>
       Logo
@@ -36,6 +44,11 @@ const Login = () => {
         </div>
         <div>
           <button disabled={loading}>{loading ? <span>Loading</span> : <span>이메일로 로그인!</span>}</button>
+        </div>
+      </form>
+      <form onSubmit={moveJoinPage}>
+        <div>
+          <button>회원가입하러 가기</button>
         </div>
       </form>
     </div>
