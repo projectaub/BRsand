@@ -13,6 +13,7 @@ const Statistics = () => {
   const [userAgeData, setUserAgeData] = useState<any>([]);
   const [orderTime, setOrderTime] = useState<any>([]);
 
+  console.log('statistics==>', statistics);
   const userAgeDataFilter = userAgeData.reduce((acc: any, age: any) => {
     const key = ~~(age.age / 10);
     if (acc[key]) {
@@ -66,11 +67,7 @@ const Statistics = () => {
       const { data } = await supabase.from('orders').select().eq('storeId', params.id);
       setStatistics(data);
     }
-    const { data } = await supabase
-      .from('orders')
-      .select()
-      .filter('storeId', 'in', '(1)')
-      .filter('isDone', 'in', '(true)');
+    const { data } = await supabase.from('orders').select().filter('isDone', 'in', '(true)');
     setStatistics(data);
   };
   const getUserAge = async () => {
@@ -79,12 +76,22 @@ const Statistics = () => {
   };
 
   const getOderTime = async () => {
-    const { data } = await supabase
-      .from('orders')
-      .select()
-      .gte('time', '2023-08-10T00:00:00.114748+00:00')
-      .lte('time', '2023-08-10T14:00:00.114748+00:00');
-    setOrderTime(data);
+    if (params.id === '0') {
+      const { data } = await supabase
+        .from('orders')
+        .select()
+        .gte('time', '2023-08-10T00:00:00.114748+00:00')
+        .lte('time', '2023-08-10T14:00:00.114748+00:00');
+      setOrderTime(data);
+    } else {
+      const { data } = await supabase
+        .from('orders')
+        .select()
+        .eq('storeId', params.id)
+        .gte('time', '2023-08-10T00:00:00.114748+00:00')
+        .lte('time', '2023-08-10T14:00:00.114748+00:00');
+      setOrderTime(data);
+    }
   };
 
   useEffect(() => {
@@ -101,15 +108,16 @@ const Statistics = () => {
             return (sum += item.price);
           }
         })}
-        <div>총매출액 :{sum}</div>
+        {params.id === '0' && <div>총매출액 :{sum}</div>}
       </div>
+
       <div>
         {statistics.forEach((item: any) => {
           if (item.isDone === true && item.storeId === 1) {
             return (sum2 += item.price);
           }
         })}
-        <div>스토어1 :{sum2}</div>
+        {(params.id === '0' || params.id === '1') && <div>스토어1 :{sum2}</div>}
       </div>
       <div>
         {statistics.forEach((item: any) => {
@@ -117,8 +125,8 @@ const Statistics = () => {
             return (sum3 += item.price);
           }
         })}
-        <div>스토어2 :{sum3}</div>
-        <div style={{ height: '500px' }}>
+        {(params.id === '0' || params.id === '2') && <div>스토어2 :{sum3}</div>}
+        <div style={{ height: '300px', display: 'flex' }}>
           <PieAge data={userAgeArr} />
           <PieTime data={orderTimeArr} />
         </div>
