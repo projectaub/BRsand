@@ -41,7 +41,7 @@ const Router = () => {
         <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
         <Route element={<PrivateRoute />}>
-          <Route path="/statistice" element={<Statistics />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Route>
         {/* </Route> */}
       </Routes>
