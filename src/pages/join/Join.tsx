@@ -95,7 +95,7 @@ const Join = () => {
       <h1>회원가입</h1>
       <form onSubmit={joinHandler}>
         <input placeholder="e-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input placeholder="pw" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <input type="password" placeholder="pw" value={password} onChange={(e) => setPassword(e.target.value)} />
         <div>
           <button>가입하기</button>
         </div>

@@ -15,4 +15,3 @@ yarn
 
 yarn add styled-components 
 yarn add @supabase/supabase-js 
-yarn global add supabase-cli

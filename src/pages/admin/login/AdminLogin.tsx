@@ -34,7 +34,7 @@ const AdminLogin = () => {
     <>
       <form onSubmit={adminLogin}>
         <input value={id} onChange={idInput}></input>
-        <input value={password} onChange={passwordInput}></input>
+        <input type="password" value={password} onChange={passwordInput}></input>
         <button>어드민 로그인 </button>
       </form>
     </>
