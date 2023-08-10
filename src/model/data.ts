@@ -1,3 +1,4 @@
+
 export interface User {
   id: number;
   name: string;
@@ -152,3 +153,4 @@ export interface B {
   name: string;
   image: string;
 }
+
