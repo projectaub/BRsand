@@ -13,11 +13,13 @@ const Join = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const navigate = useNavigate();
+
   useEffect(() => {
     if (userData) {
       setShowPersonalInfoAlert(true);
     }
   }, [userData]);
+
   const joinHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
@@ -29,6 +31,7 @@ const Join = () => {
     });
     // console.log(error);
     console.log('가입 잘 되?', data.user!.email);
+
     if (error) {
       console.log(error);
       const errorDescription = (error as any).error_description || error.message;
@@ -37,7 +40,11 @@ const Join = () => {
       alert('가입완료!');
       //자동로그인
       const { data, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+
       console.log('로그인 잘 되?', email);
+
+      console.log('로그인 잘 되?', email);
+
       if (loginError) {
         console.error('로그인에러:', loginError);
       } else {
@@ -47,12 +54,14 @@ const Join = () => {
         emailUpdater(data);
         //함수 합치기
         const condition = window.confirm('로그인이 완료되었습니다. 추가 정보를 입력하시겠습니까?');
+
         if (condition) {
           setShowPersonalInfoModal(true);
         } else {
           navigate('/');
         }
       }
+
       // setShowPersonalInfoAlert(true);
     }
     setLoading(false);
