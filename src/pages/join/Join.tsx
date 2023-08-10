@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 
 const Join = () => {
@@ -25,7 +25,7 @@ const Join = () => {
     });
 
     // console.log(error);
-    // console.log('id', data.user!.id);
+    console.log('data', data.user!.email);
 
     if (error) {
       console.log(error);
@@ -33,9 +33,20 @@ const Join = () => {
       alert(errorDescription);
     } else {
       alert('가입완료!');
+
+      // 자동로그인
+      // const { data, error: loginError } = await supabase.auth.signInWithPassword({ email, password });
+
+      // if (loginError) {
+      //   console.error('로그인에러:', loginError);
+      // } else {
+      //   console.log('로그인');
+      // }
+
       setUserData(data);
       postUid(data.user!.id);
       setShowPersonalInfoAlert(true);
+      emailUpdater(data);
     }
     setLoading(false);
   };
@@ -45,9 +56,14 @@ const Join = () => {
     setShowPersonalInfoModal(true);
   };
 
+  // useEffect(()=>{},[userData])
+  const emailUpdater = async (userData: any) => {
+    await supabase.from('users').update({ email: userData.user!.email }).eq('uid', userData.user!.id);
+  };
+
   const submitPersonalInfo = async () => {
     try {
-      await supabase.from('users').update({ name, gender, age }).eq('uid', userData.user!.id);
+      await supabase.from('users').update({ name, gender, age, grade: 'basic' }).eq('uid', userData.user!.id);
       setShowPersonalInfoModal(false);
     } catch (error) {
       console.error('Error updating personal user Info:', error);
