@@ -2,6 +2,8 @@ import React from 'react';
 import { Order } from '../../model';
 import { styled } from 'styled-components';
 import OrderMenuDetail from './OrderMenuDetail';
+import { getTimeFromPostgreSQL, orderStateChanger } from './feature/function';
+import { supabase } from '../../supabase';
 
 interface Props {
   orders: Order[];
@@ -15,11 +17,11 @@ const OrderStateCard = ({ orders }: Props) => {
             <S.SubInfoArea>
               <S.SubInfoContent>{order.dineIn ? '매장 식사' : '포장'}</S.SubInfoContent>
               <S.SubInfoContent>{order.orderMenu.bread !== undefined ? '커스텀' : '완제품'}</S.SubInfoContent>
-              {/* <S.SubInfoContent>{order.isActive ? '조리중' : '접수 대기중'}</S.SubInfoContent> */}
+              <S.SubInfoContent>{order.isActive ? '조리중' : '접수 대기중'}</S.SubInfoContent>
             </S.SubInfoArea>
             <S.MainInfoArea>
               <p>주문번호 : {order.id.slice(0, 8)}</p>
-              <p>주문시간 : {order.time.slice(0, 5)}</p>
+              <p>주문시간 : {getTimeFromPostgreSQL(order.time)}</p>
               <h2>주문자명 : {order.user.name}</h2>
             </S.MainInfoArea>
 
@@ -27,7 +29,13 @@ const OrderStateCard = ({ orders }: Props) => {
             <OrderMenuDetail order={order}></OrderMenuDetail>
 
             <S.PriceArea>최종 결제 금액 : {order.price}원</S.PriceArea>
-            <S.ActionButton>주문접수</S.ActionButton>
+            <S.ActionButton
+              onClick={() => {
+                orderStateChanger(order);
+              }}
+            >
+              주문접수
+            </S.ActionButton>
           </S.Card>
         );
       })}

@@ -17,18 +17,17 @@ const OrderMenuDetail = ({ order }: Props) => {
             <S.Option>{order.orderMenu.bread}</S.Option>
             <S.Option>{order.orderMenu.cheese}</S.Option>
             <S.Option>{order.orderMenu.sauce}</S.Option>
-            <>
-              {order.orderMenu.vegetables && (
-                <>
-                  <S.Title style={{ marginTop: '20px' }}>야채 옵션</S.Title>
-                  {order.orderMenu.vegetables
-                    .filter((vege: any) => !vege.isAdd)
-                    .map((vege: any) => (
-                      <S.Caption key={vege.name}>(-){vege.name}</S.Caption>
-                    ))}
-                </>
-              )}
-            </>
+
+            {order.orderMenu.vegetables && (
+              <>
+                <S.Title style={{ marginTop: '20px' }}>야채 옵션</S.Title>
+                {order.orderMenu.vegetables
+                  .filter((vege: any) => !vege.isAdd)
+                  .map((vege: any) => (
+                    <S.Caption key={vege.name}>(-){vege.name}</S.Caption>
+                  ))}
+              </>
+            )}
           </>
         ) : (
           <S.Sub>{order.orderMenu.base}</S.Sub>
