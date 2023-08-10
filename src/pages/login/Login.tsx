@@ -5,7 +5,6 @@ import LoginBasic from '../../components/login/LoginBasic';
 import LoginOTP from '../../components/login/LoginOTP';
 
 const Login = () => {
-  return <div></div>;
   const [loading, setLoading] = useState(false);
   const [selectLogin, setSelectLogin] = useState(true);
 
