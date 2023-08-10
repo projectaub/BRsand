@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Main from '../pages/main/Main';
 import Join from '../pages/join/Join';
@@ -13,6 +13,7 @@ import OrderMenu from '../pages/orderpage/OrderMenu';
 import OrderCustom from '../pages/orderpage/OrderCustom';
 import Mobile from './layout/Mobile';
 import { supabase } from '../supabase';
+import { PrivateRoute } from '../pages/statistics/PrivateRoute';
 
 console.log('Router', supabase);
 // interface ProfileProps {
@@ -39,7 +40,9 @@ const Router = () => {
         <Route path="/orderstatus/:id" element={<Orderstatus />} />
         <Route path="/salessataus" element={<SalesStatus />} />
         <Route path="/inventorystatus" element={<InventoryStatus />} />
-        <Route path="/statistice" element={<Statistics />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/statistice" element={<Statistics />} />
+        </Route>
         {/* </Route> */}
       </Routes>
     </BrowserRouter>
