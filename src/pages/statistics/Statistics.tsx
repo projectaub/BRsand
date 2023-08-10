@@ -1,8 +1,10 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
+import { useParams } from 'react-router-dom';
 
 const Statistics = () => {
+  const params = useParams();
   const [statistics, setStatistics] = useState<any>([]);
   console.log(statistics);
   let sum = 0;
@@ -11,8 +13,13 @@ const Statistics = () => {
 
   // 프라이빗 라우터 , graph
   const fetchData = async () => {
-    const { data } = await supabase.from('orders').select();
-    setStatistics(data);
+    if (params.id === '0') {
+      const { data } = await supabase.from('orders').select();
+      setStatistics(data);
+    } else {
+      const { data } = await supabase.from('orders').select().eq('storeId', params.id);
+      setStatistics(data);
+    }
   };
 
   useEffect(() => {

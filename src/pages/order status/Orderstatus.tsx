@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import Stocks from './Stocks';
 
 import OrderStateArea from '../../components/order status detail/OrderStateArea';
+import { useNavigate, useParams } from 'react-router-dom';
 
 // ------------------------------------
 
@@ -14,8 +15,17 @@ const store: Record<string, string> = {
 
 // ------------------------------------
 const Orderstatus = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+
+  console.log(params);
+  const goToS = () => {
+    navigate(`/statistics/${params.id}`);
+  };
+
   return (
     <>
+      <button onClick={goToS}>통계로 꼬우</button>
       <OrderStateArea></OrderStateArea>
 
       <Stocks />
