@@ -10,11 +10,23 @@ const OrderPage = () => {
   const [dineIn, setDineIn] = useState<boolean | null>(null);
   const [userData, setUserData] = useState<User | null>();
   const [store, setStore] = useState<StorePoint>();
+  // const [userId] = useCheckLoginUser();
   const navigate = useNavigate();
 
   const fetchData = async () => {
     try {
-      const userData = await supabase.from('users_test').select().single();
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      if (user === null) {
+        alert('로그인 후 이용 가능합니다.');
+        navigate('/');
+        return;
+      }
+
+      console.log(user.id);
+      const userData = await supabase.from('users').select().eq('id', user.id).single();
       setUserData(userData.data);
     } catch (error) {
       console.log(error);

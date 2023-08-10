@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { styled } from 'styled-components';
 import { supabase } from '../../supabase';
+import { useNavigate } from 'react-router-dom';
 
 interface User {
   id: string;
@@ -33,25 +34,26 @@ const store: Record<string, string> = {
 };
 
 const Mypage = () => {
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [user, setUser] = useState<any>();
 
-  const getUser = async () => {
-    const {
-      data: { user }
-    } = await supabase.auth.getUser();
+  // const getUser = async () => {
+  //   const {
+  //     data: { user }
+  //   } = await supabase.auth.getUser();
 
-    if (!user) {
-      setUser(undefined);
-    } else {
-      setUser(user);
-      console.log(user);
-    }
-  };
+  //   if (!user) {
+  //     setUser(undefined);
+  //   } else {
+  //     setUser(user);
+  //     console.log(user);
+  //   }
+  // };
 
-  useEffect(() => {
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   getUser();
+  // }, []);
 
   useEffect(() => {
     fetchOrders();
@@ -59,8 +61,17 @@ const Mypage = () => {
 
   const fetchOrders = async () => {
     try {
-      const userId = user.id;
-      const { data, error } = await supabase.from('orders').select().contains('user', { id: userId });
+      const {
+        data: { user }
+      } = await supabase.auth.getUser();
+
+      if (user === null) {
+        alert('로그인 후 이용 가능합니다.');
+        navigate('/');
+        return;
+      }
+
+      const { data, error } = await supabase.from('orders').select().contains('user', { id: user.id });
       console.log(data);
       if (error) {
         console.error('Error fetching orders:', error);

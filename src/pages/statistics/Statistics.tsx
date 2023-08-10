@@ -31,7 +31,7 @@ const Statistics = () => {
       </div>
       <div>
         {statistics.forEach((item: any) => {
-          if (item.isDone === true && item.storeId === '1') {
+          if (item.isDone === true && item.storeId === 1) {
             return (sum2 += item.price);
           }
         })}
@@ -39,7 +39,7 @@ const Statistics = () => {
       </div>
       <div>
         {statistics.forEach((item: any) => {
-          if (item.isDone === true && item.storeId === '2') {
+          if (item.isDone === true && item.storeId === 2) {
             return (sum3 += item.price);
           }
         })}

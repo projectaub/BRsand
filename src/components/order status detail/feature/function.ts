@@ -4,11 +4,12 @@ import { supabase } from '../../../supabase';
 export const getTimeFromPostgreSQL = (time: string): string => {
   const monthsInKorean = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
   const translate = new Date(time);
-  const month = monthsInKorean[translate.getUTCMonth()];
-  const day = translate.getUTCDate();
-  const hours = translate.getUTCHours();
-  const minutes = translate.getUTCMinutes();
-
+  // 한국 표준시로 변환
+  translate.setHours(translate.getHours()); // 영국과 한국의 시차는 9시간입니다.
+  const month = monthsInKorean[translate.getMonth()];
+  const day = translate.getDate();
+  const hours = translate.getHours();
+  const minutes = translate.getMinutes();
   return `${month} ${day}일 ${hours}시 ${minutes}분`;
 };
 
