@@ -4,12 +4,15 @@ import { styled } from 'styled-components';
 import { supabase } from '../../supabase';
 
 interface User {
-  id: number;
+  id: string;
   name: string;
   gender: string;
   age: number;
   email: string;
   grade: string;
+  aud: string;
+  role: string;
+  email_confirmed_at: string;
 }
 
 interface Order {
@@ -31,6 +34,24 @@ const store: Record<string, string> = {
 
 const Mypage = () => {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [user, setUser] = useState<any>();
+
+  const getUser = async () => {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(undefined);
+    } else {
+      setUser(user);
+      console.log(user);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
 
   useEffect(() => {
     fetchOrders();
@@ -38,7 +59,7 @@ const Mypage = () => {
 
   const fetchOrders = async () => {
     try {
-      const userId = '9509eafd-77ad-442d-8ca5-39e005d9d3b1';
+      const userId = user.id;
       const { data, error } = await supabase.from('orders').select().contains('user', { id: userId });
       console.log(data);
       if (error) {
