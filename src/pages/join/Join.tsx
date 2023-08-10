@@ -13,7 +13,7 @@ const Join = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const navigate = useNavigate();
-
+  //주석...
   useEffect(() => {
     if (userData) {
       setShowPersonalInfoAlert(true);
