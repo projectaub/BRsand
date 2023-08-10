@@ -21,16 +21,23 @@ const useGetOrder = () => {
         .from('orders')
         .select('id')
         .contains('user', { id: userId })
-        .is('orderMenu', null)
-        .single();
+        .is('orderMenu', null);
 
-      console.log('orderdata', data);
+      //이것이 최신의 데이터
+      console.log(data![0]);
+
+      // 이런 로직을 짜야함
+      //하나만 가져오게 해놓았음
+      //만약에 이 데이터가 두개 이상이다?
+      // order state에는 최근거로 세팅을하고 그럼 최근거로 일단 세팅을 하고
+      // 그거 이에외 모든것들은 delete로삭제를 해주세요...
+
       if (data === null) {
         alert('주문정보가 없습니다. 퀵 오더 시작화면으로 이동합니다.');
         navigate('/orderpage');
         return;
       }
-      setOrder(data?.id);
+      // setOrder(data?.id);
     } catch (error) {}
   };
 
