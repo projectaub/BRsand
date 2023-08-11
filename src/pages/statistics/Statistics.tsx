@@ -130,6 +130,8 @@ const Statistics = () => {
           <PieAge data={userAgeArr} />
           <PieTime data={orderTimeArr} />
         </div>
+        <div>연령별 사용자</div>
+        <div>시간대별 주문수</div>
       </div>
     </>
   );
