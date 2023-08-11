@@ -9,8 +9,8 @@ const SelectDineIn = ({ dineIn, setDineIn, userData }: any) => {
       </S.Title>
       <S.CaptionArea>
         <S.Caption>{dineIn === null ? '' : dineIn ? '매장' : '포장'}주문을 도와드릴게요.</S.Caption>
-        <S.Caption style={{ fontWeight: 700, color: '#226f54' }}>
-          {dineIn === null ? '매장 이용 여부를 선택하세요.' : ''}
+        <S.Caption style={{ fontWeight: 700, color: '#B73D52' }}>
+          {dineIn === null ? ' 매장이용 여부를 선택하세요.' : ''}
         </S.Caption>
       </S.CaptionArea>
       <S.BtnArea>
@@ -42,9 +42,11 @@ const S = {
   `,
   Title: styled.span`
     font-size: 24px;
+    margin-left: 15px;
   `,
   CaptionArea: styled.div`
     margin: 10px 0;
+    margin-left: 15px;
   `,
   Caption: styled.p`
     font-size: 18px;
@@ -65,10 +67,15 @@ const S = {
     width: calc(361px / 2 - 8px);
     padding: 16px;
     outline: none;
-    border: 1px solid #226f54;
+    border: 2px solid #ffd99b;
     border-radius: 50px;
     background-color: white;
     font-size: 18px;
-    color: #226f54;
+    cursor: pointer;
+    color: black;
+    &:hover {
+      background-color: #ffd99b;
+      color: white;
+    }
   `
 };

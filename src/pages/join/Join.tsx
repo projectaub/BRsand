@@ -74,7 +74,6 @@ const Join = () => {
       if (loginError) {
         console.error('로그인에러:', loginError);
       } else {
-        alert('로그인');
         setUserData(data);
         postUid(data.user!.id);
         emailUpdater(data);
@@ -108,7 +107,12 @@ const Join = () => {
     }
   };
   const closeModal = () => {
-    setShowPersonalInfoModal(false);
+    const confirmed = window.confirm('추가정보 작성을 취소하시겠습니까?');
+    if (confirmed) {
+      navigate('/');
+    } else {
+      return;
+    }
   };
   const postUid = async (id: string) => {
     try {
@@ -119,48 +123,52 @@ const Join = () => {
   };
   return (
     <div style={{ width: '100%' }}>
-      <StJoinH1>Sign Up</StJoinH1>
-      <form onSubmit={handleSubmit(joinHandler)}>
-        <div>
-          <StInput
-            type="email"
-            placeholder="e-mail"
-            {...register('email', {
-              required: true,
-              pattern: /^\S+@\S+$/i
-            })}
-          />
-          {errors.email && errors.email.type === 'required' && <Stp>메일을 입력하세요</Stp>}
-          {errors.email && errors.email.type === 'pattern' && <Stp>올바른 메일 형식이 아닙니다</Stp>}
-        </div>
-        <div>
-          <StInput
-            type="password"
-            placeholder="비밀번호"
-            {...register('password', {
-              required: true,
-              minLength: 6
-            })}
-          />
-          {errors.password && errors.password.type === 'required' && <Stp>비밀번호를 입력하세요</Stp>}
-          {errors.password && errors.password.type === 'minLength' && <Stp>비밀번호는 최소 6자리 이상</Stp>}
-        </div>
-        <div>
-          <StInput
-            type="password"
-            placeholder="비밀번호확인"
-            {...register('confirmingPw', {
-              required: true,
-              validate: (value) => value === passwordRef.current
-            })}
-          />
-          {errors.confirmingPw && errors.confirmingPw.type === 'required' && <Stp>비밀번호 확인을 입력하세요</Stp>}
-          {errors.confirmingPw && errors.confirmingPw.type === 'validate' && <Stp>비밀번호 확인 불일치</Stp>}
-        </div>
-        <div>
-          <StJoin>가입하기</StJoin>
-        </div>
-      </form>
+      {!showPersonalInfoModal && (
+        <>
+          <StJoinH1>Sign Up</StJoinH1>
+          <form onSubmit={handleSubmit(joinHandler)}>
+            <div>
+              <StInput
+                type="email"
+                placeholder="e-mail"
+                {...register('email', {
+                  required: true,
+                  pattern: /^\S+@\S+$/i
+                })}
+              />
+              {errors.email && errors.email.type === 'required' && <Stp>메일을 입력하세요</Stp>}
+              {errors.email && errors.email.type === 'pattern' && <Stp>올바른 메일 형식이 아닙니다</Stp>}
+            </div>
+            <div>
+              <StInput
+                type="password"
+                placeholder="비밀번호"
+                {...register('password', {
+                  required: true,
+                  minLength: 6
+                })}
+              />
+              {errors.password && errors.password.type === 'required' && <Stp>비밀번호를 입력하세요</Stp>}
+              {errors.password && errors.password.type === 'minLength' && <Stp>비밀번호는 최소 6자리 이상</Stp>}
+            </div>
+            <div>
+              <StInput
+                type="password"
+                placeholder="비밀번호확인"
+                {...register('confirmingPw', {
+                  required: true,
+                  validate: (value) => value === passwordRef.current
+                })}
+              />
+              {errors.confirmingPw && errors.confirmingPw.type === 'required' && <Stp>비밀번호 확인을 입력하세요</Stp>}
+              {errors.confirmingPw && errors.confirmingPw.type === 'validate' && <Stp>비밀번호 확인 불일치</Stp>}
+            </div>
+            <div>
+              <StJoin>가입하기</StJoin>
+            </div>
+          </form>
+        </>
+      )}
       {showPersonalInfoAlert && (
         <div className="alert">
           <h2>내 정보 업데이트 하러가기</h2>
@@ -170,12 +178,12 @@ const Join = () => {
       )}
       {showPersonalInfoModal && (
         <div className="modal">
-          <h2>개인 정보 입력</h2>
-          <StInput placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
-          <StInput placeholder="성별" value={gender} onChange={(e) => setGender(e.target.value)} />
-          <StInput placeholder="나이" value={age} onChange={(e) => setAge(e.target.value)} />
-          <button onClick={submitPersonalInfo}>입력 완료</button>
-          <button onClick={closeModal}>취소</button>
+          <StPersonalInfo>추가 정보 등록</StPersonalInfo>
+          <StInput placeholder="이름을 입력하세요." value={name} onChange={(e) => setName(e.target.value)} />
+          <StInput placeholder="남성/여성을 입력하세요." value={gender} onChange={(e) => setGender(e.target.value)} />
+          <StInput placeholder="나이를 입력하세요." value={age} onChange={(e) => setAge(e.target.value)} />
+          <StJoin onClick={submitPersonalInfo}>입력 완료</StJoin>
+          <StJoin onClick={closeModal}>취소</StJoin>
         </div>
       )}
     </div>
@@ -200,9 +208,18 @@ const StJoinH1 = styled.h1`
   margin-top: 220px;
 `;
 
+const StPersonalInfo = styled.h1`
+  text-align: center;
+  font-size: 20px;
+  color: #242424;
+  font-weight: bold;
+
+  margin-top: 220px;
+`;
+
 const StInput = styled.input`
   margin: 0 auto;
-  width: 200px;
+  width: 220px;
   height: 50px;
   border-radius: 10px;
   border: none;

@@ -123,7 +123,6 @@ const NoOrder = styled.p`
   font-size: 23px;
   font-weight: bold;
   color: #2e2e2e;
-  margin-right: 20px;
   height: 750px;
   line-height: 750px;
 `;
