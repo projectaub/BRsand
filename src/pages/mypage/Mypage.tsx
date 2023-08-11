@@ -71,6 +71,13 @@ const Mypage = () => {
         return;
       }
 
+      const { error: deleteUserError } = await supabase
+        .from('orders')
+        .delete()
+        .contains('user', { id: user.id })
+        .is('orderMenu', null);
+      // null 값이 포함된 오더 지워줌
+
       const { data, error } = await supabase.from('orders').select().contains('user', { id: user.id });
       console.log(data);
       if (error) {

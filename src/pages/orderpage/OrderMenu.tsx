@@ -37,7 +37,7 @@ const OrderMenu = () => {
     await supabase.from('orders').update(order).eq('id', orderId);
 
     alert('주문 잘 들어감');
-    navigate('/orderpage');
+    navigate('/mypage');
   };
 
   //메뉴와 가격을 세팅해서
