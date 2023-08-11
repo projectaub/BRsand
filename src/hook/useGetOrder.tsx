@@ -24,6 +24,7 @@ const useGetOrder = () => {
         .is('orderMenu', null);
       setOrder(data![0].id);
 
+      setOrder(data![0].id);
       //이것이 최신의 데이터
       setOrder(data![0].id);
 

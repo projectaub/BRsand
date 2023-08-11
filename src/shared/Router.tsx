@@ -40,9 +40,9 @@ const Router = () => {
         {/* <Route path="/" element={<Web />}> */}
 
         <Route path="/admin" element={<AdminLogin />} />
-        <Route path="/salestatus" element={<SalesStatus />} />
-        <Route path="/inventorystatus" element={<InventoryStatus />} />
         <Route element={<PrivateRoute />}>
+          <Route path="/salestatus" element={<SalesStatus />} />
+          <Route path="/inventorystatus" element={<InventoryStatus />} />
           <Route path="/statistics/:id" element={<Statistics />} />
           <Route path="/orderstatus/:id" element={<Orderstatus />} />
         </Route>
