@@ -4,7 +4,7 @@ import { reset } from 'styled-reset';
 const GlobalStyle = createGlobalStyle`
 
  ${reset}
- *{ box-sizing: border-box; }
+ *{ box-sizing: border-box; } 
 html, body {
     @font-face {
     font-family: 'Pretendard-Regular';
