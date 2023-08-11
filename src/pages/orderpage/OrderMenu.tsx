@@ -28,6 +28,10 @@ const OrderMenu = () => {
     { name: '핫칠리에그마요', price: 3000, id: 5 }
   ];
 
+  //
+
+  //통계 css
+
   //서버에 있는 주문 id값에 맞춰 메뉴와 가격을 업데이트 해줍니다.
   const updateOrder = async () => {
     const order = {
@@ -37,7 +41,7 @@ const OrderMenu = () => {
     await supabase.from('orders').update(order).eq('id', orderId);
 
     alert('주문 잘 들어감');
-    navigate('/orderpage');
+    navigate('/mypage');
   };
 
   //메뉴와 가격을 세팅해서

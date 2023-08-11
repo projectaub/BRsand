@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
-import { useParams } from 'react-router-dom';
-import PieAge from '../../component/chart/pieChartAge';
-import PieTime from '../../component/chart/pieChartTime';
+import { useNavigate, useParams } from 'react-router-dom';
+import PieAge from '../../components/chart/pieChartAge';
+import PieTime from '../../components/chart/pieChartTime';
 
 const Statistics = () => {
   let sum: any = 0;
@@ -13,7 +13,6 @@ const Statistics = () => {
   const [userAgeData, setUserAgeData] = useState<any>([]);
   const [orderTime, setOrderTime] = useState<any>([]);
 
-  console.log('statistics==>', statistics);
   const userAgeDataFilter = userAgeData.reduce((acc: any, age: any) => {
     const key = ~~(age.age / 10);
     if (acc[key]) {
@@ -130,8 +129,6 @@ const Statistics = () => {
           <PieAge data={userAgeArr} />
           <PieTime data={orderTimeArr} />
         </div>
-        <div>연령별 사용자</div>
-        <div>시간대별 주문수</div>
       </div>
     </>
   );

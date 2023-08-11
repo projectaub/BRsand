@@ -1,8 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+interface FormValue {
+  email: string;
+  password: string;
+  confirmingPw: string;
+}
 
 const Join = () => {
+  //유효성검사 👇🏿
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors }
+  } = useForm<FormValue>();
+
+  const passwordRef = useRef<string | null>(null);
+  passwordRef.current = watch('password');
+
+  //// 👆🏿
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,21 +32,29 @@ const Join = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const navigate = useNavigate();
-  //주석...
-  useEffect(() => {
-    if (userData) {
-      setShowPersonalInfoAlert(true);
-    }
-  }, [userData]);
 
-  const joinHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const joinHandler: SubmitHandler<FormValue> = async (formdata: FormValue) => {
     setLoading(true);
+    const { email, password } = formdata;
     setEmail('');
     setPassword('');
+
+    ///이메일 중복검사
+    const { data: existingUser, error: existingUserError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .single();
+
+    if (existingUser) {
+      alert('이미 가입된 메일입니다');
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase.auth.signUp({
-      email,
-      password
+      email: formdata.email,
+      password: formdata.password
     });
     // console.log(error);
     console.log('가입 잘 되?', data.user!.email);
@@ -59,11 +86,10 @@ const Join = () => {
           navigate('/');
         }
       }
-
-      // setShowPersonalInfoAlert(true);
     }
     setLoading(false);
   };
+
   const handlePersonalInfoAlert = () => {
     setShowPersonalInfoAlert(false);
     setShowPersonalInfoModal(true);
@@ -93,9 +119,45 @@ const Join = () => {
   return (
     <div>
       <h1>회원가입</h1>
-      <form onSubmit={joinHandler}>
-        <input placeholder="e-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="pw" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <form onSubmit={handleSubmit(joinHandler)}>
+        <div>
+          <input
+            type="email"
+            placeholder="e-mail"
+            {...register('email', {
+              required: true,
+              pattern: /^\S+@\S+$/i
+            })}
+          />
+          {errors.email && errors.email.type === 'required' && <p>메일을 입력하세요</p>}
+          {errors.email && errors.email.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="비밀번호"
+            {...register('password', {
+              required: true,
+              minLength: 6
+            })}
+          />
+          {errors.password && errors.password.type === 'required' && <p>비밀번호를 입력하세요</p>}
+          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="비밀번호확인"
+            {...register('confirmingPw', {
+              required: true,
+              validate: (value) => value === passwordRef.current
+            })}
+          />
+          {errors.confirmingPw && errors.confirmingPw.type === 'required' && (
+            <p>설정하고자 하는 비밀번호를 입력하세요</p>
+          )}
+          {errors.confirmingPw && errors.confirmingPw.type === 'validate' && <p>설정하고자 하는 비밀번호와 불일치</p>}
+        </div>
         <div>
           <button>가입하기</button>
         </div>

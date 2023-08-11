@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import Stocks from './Stocks';
-
 import OrderStateArea from '../../components/order status detail/OrderStateArea';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useCheckAdmin } from '../../hook/useCheckAdmin';
 
 // ------------------------------------
 
@@ -17,18 +17,22 @@ const store: Record<string, string> = {
 const Orderstatus = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const [dataOn] = useCheckAdmin(String(params.id));
 
-  console.log(params);
   const goToS = () => {
     navigate(`/statistics/${params.id}`);
   };
 
   return (
     <>
-      <button onClick={goToS}>통계로 꼬우</button>
-      <OrderStateArea></OrderStateArea>
+      {dataOn && (
+        <>
+          <button onClick={goToS}>통계로 꼬우</button>
+          <OrderStateArea></OrderStateArea>
 
-      <Stocks />
+          <Stocks />
+        </>
+      )}
     </>
   );
 };

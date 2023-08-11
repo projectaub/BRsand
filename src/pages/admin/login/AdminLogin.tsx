@@ -1,27 +1,37 @@
-import React, { ChangeEvent, useState } from 'react';
+import React from 'react';
 import { supabase } from '../../../supabase';
 import { useNavigate } from 'react-router-dom';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+interface FormValue {
+  adminEmail: string;
+  adminPw: string;
+}
 
 const AdminLogin = () => {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormValue>();
   const navigate = useNavigate();
 
-  const idInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-  };
-  const passwordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const adminLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const adminLogin: SubmitHandler<FormValue> = async (data: FormValue) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email: id, password });
+      const { adminEmail, adminPw } = data;
+      const { data: authData, error } = await supabase.auth.signInWithPassword({
+        email: adminEmail,
+        password: adminPw
+      });
+      console.log(data);
+
       if (error) {
+        console.log('어드민로그인 에러', error);
         return;
       }
-      const response = await supabase.from('admin').select().eq('id', id).single();
+
+      const response = await supabase.from('admin').select().eq('email', adminEmail).single();
+      console.log(response.data);
       if (response.data.storeId === 0) {
         navigate(`/statistics/${response.data.storeId}`);
       } else {
@@ -32,10 +42,32 @@ const AdminLogin = () => {
 
   return (
     <>
-      <form onSubmit={adminLogin}>
-        <input value={id} onChange={idInput}></input>
-        <input type="password" value={password} onChange={passwordInput}></input>
-        <button>어드민 로그인 </button>
+      <form onSubmit={handleSubmit(adminLogin)}>
+        <div>
+          <input
+            type="email"
+            placeholder="이메일"
+            {...register('adminEmail', {
+              required: true,
+              pattern: /^\S+@\S+$/i
+            })}
+          />
+          {errors.adminEmail && errors.adminEmail.type === 'required' && <p>메일을 입력하세요</p>}
+          {errors.adminEmail && errors.adminEmail.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="비밀번호"
+            {...register('adminPw', {
+              required: true,
+              minLength: 6
+            })}
+          />
+          {errors.adminPw && errors.adminPw.type === 'required' && <p>비밀번호를 입력하세요</p>}
+          {errors.adminPw && errors.adminPw.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+        </div>
+        <button type="submit">어드민 로그인</button>
       </form>
     </>
   );
