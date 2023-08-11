@@ -20,6 +20,8 @@ const OrderStateArea = () => {
 
   const fetchOrders = async () => {
     try {
+      await supabase.from('orders').delete().is('orderMenu', null);
+
       const { data, error } = await supabase.from('orders').select().eq('storeId', params.id).is('isDone', false);
       if (error) {
         console.error('Error fetching orders:', error);
@@ -38,12 +40,24 @@ const OrderStateArea = () => {
   return (
     <S.Container>
       <S.Wrapper>
-        <S.Title>신규주문 {orderCounter(orders).new}건</S.Title>
-        <OrderStateCard orders={filterdOrderList.newOrder}></OrderStateCard>
+        <S.TitleWrapper>
+          <S.Title>신규주문 </S.Title>
+          <S.OrderCount>{orderCounter(orders).new}건</S.OrderCount>
+        </S.TitleWrapper>
+        <S.InnerWrapper>
+          <OrderStateCard orders={filterdOrderList.newOrder}></OrderStateCard>
+          {/* <S.DummyArea></S.DummyArea> */}
+        </S.InnerWrapper>
       </S.Wrapper>
       <S.Wrapper>
-        <S.Title>주문현황 {orderCounter(orders).active}건</S.Title>
-        <OrderStateCard orders={filterdOrderList.activeOrder}></OrderStateCard>
+        <S.TitleWrapper>
+          <S.Title>주문현황 </S.Title>
+          <S.OrderCount>{orderCounter(orders).active}건</S.OrderCount>
+        </S.TitleWrapper>
+        <S.InnerWrapper>
+          <OrderStateCard orders={filterdOrderList.activeOrder}></OrderStateCard>
+          {/* <S.DummyArea></S.DummyArea> */}
+        </S.InnerWrapper>
       </S.Wrapper>
     </S.Container>
   );
@@ -54,16 +68,61 @@ export default OrderStateArea;
 const S = {
   Container: styled.div`
     display: flex;
+    flex-grow: 2;
+    overflow: hidden;
   `,
   Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
+    margin-top: 20px;
+    /* width: 350px; */
+    /* display: flex; */
+    height: 100vh;
+    /* flex-direction: column; */
+    flex-grow: 1;
+    /* background-color: royalblue; */
     align-items: center;
-    margin-top: 30px;
+    /* margin-top: 30px; */
+  `,
+  InnerWrapper: styled.div`
+    margin: 0 auto;
+    padding-top: 30px;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: calc(100vh - 200px);
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  `,
+  TitleWrapper: styled.div`
+    box-sizing: border-box;
+    padding: 0 30px 0 30px;
+    margin: 0 auto;
+    width: 400px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: #b73d52;
+    display: flex;
+    /* justify-content: left; */
+    color: white;
+    align-items: center;
   `,
   Title: styled.div`
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
-    color: green;
+  `,
+  OrderCount: styled.div`
+    margin-left: auto;
+    font-size: 20px;
+    font-weight: 700;
+    /* width: 60px;
+    height: 60px;
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
+    /* background-color: #b73d52; */
+    /* color: white; */
   `
 };

@@ -43,7 +43,7 @@ function Stocks() {
   };
 
   return (
-    <>
+    <S.Container>
       <h1>재고현황</h1>
       <StockArea>
         {stocks.map((stock) => (
@@ -57,7 +57,7 @@ function Stocks() {
           </div>
         ))}
       </StockArea>
-    </>
+    </S.Container>
   );
 }
 
@@ -69,3 +69,9 @@ const StockArea = styled.div`
 `;
 
 export default Stocks;
+
+const S = {
+  Container: styled.div`
+    flex-grow: 1;
+  `
+};
