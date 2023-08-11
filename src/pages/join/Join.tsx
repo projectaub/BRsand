@@ -39,6 +39,20 @@ const Join = () => {
     const { email, password } = formdata;
     setEmail('');
     setPassword('');
+
+    ///이메일 중복검사
+    const { data: existingUser, error: existingUserError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .single();
+
+    if (existingUser) {
+      alert('이미 가입된 메일입니다');
+      setLoading(false);
+      return;
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email: formdata.email,
       password: formdata.password
