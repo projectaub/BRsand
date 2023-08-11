@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
 import { useNavigate } from 'react-router-dom';
-import useCheckLoginUser from './useCheckLoginUser';
+import useCheckLoginUserId from './useCheckLoginUserId';
 import { User } from '../model';
 
 const useGetOrder = () => {
   const [order, setOrder] = useState<string>('');
-  const [userId] = useCheckLoginUser();
+  const [userId] = useCheckLoginUserId();
   // const [userData] = useCheck
   const navigate = useNavigate();
 
@@ -24,6 +24,7 @@ const useGetOrder = () => {
         .is('orderMenu', null);
       setOrder(data![0].id);
 
+      setOrder(data![0].id);
       //이것이 최신의 데이터
       setOrder(data![0].id);
 

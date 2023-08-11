@@ -26,6 +26,7 @@ const AdminLogin = () => {
       console.log(data);
 
       if (error) {
+        console.log('어드민로그인 에러', error);
         return;
       }
 

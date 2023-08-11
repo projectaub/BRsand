@@ -1,7 +1,16 @@
-import React from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuthenticate } from './useAuthenticate';
+import React, { useEffect, useState } from 'react';
+import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 
 export const PrivateRoute = (): React.ReactElement => {
-  return useAuthenticate() ? <Outlet /> : <Navigate to="/" />;
+  const token = localStorage.getItem('sb-oavbcvwhegykdcczsqfr-auth-token');
+  const tokenCheck = (token: string | null): boolean => {
+    if (token) {
+      return true;
+    } else {
+      alert('로그인 후 이용 가능합니다.');
+      return false;
+    }
+  };
+
+  return tokenCheck(token) ? <Outlet /> : <Navigate to="/" />;
 };
