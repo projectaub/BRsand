@@ -1,5 +1,5 @@
 //login 실패 시 1. email, password값 reset, login 버튼 활성화
-
+import { styled } from 'styled-components';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
@@ -45,7 +45,7 @@ const LoginBasic = () => {
 
   return (
     <>
-      <Stform onSubmit={handleSubmit}>
+      <Stform onSubmit={handleSubmit(pwLogin)}>
         <StLogin>LOGIN</StLogin>
         <div>
           <StInput
