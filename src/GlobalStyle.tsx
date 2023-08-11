@@ -1,9 +1,10 @@
 import { createGlobalStyle } from 'styled-components';
 import { reset } from 'styled-reset';
+
 const GlobalStyle = createGlobalStyle`
 
  ${reset}
-
+ *{ box-sizing: border-box; }
 html, body {
     @font-face {
     font-family: 'Pretendard-Regular';
@@ -11,7 +12,6 @@ html, body {
     font-weight: 400;
     font-style: normal;
 }
-    box-sizing: border-box;  
 }
 `;
 export default GlobalStyle;

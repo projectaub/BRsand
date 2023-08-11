@@ -59,9 +59,10 @@ const S = {
   `,
   Caption: styled.p`
     font-size: 18px;
-    margin: 8px 0px;
+    margin: 8px 0px 0px 15px;
     font-weight: 700;
-    color: #226f54;
+
+    color: #b73d52;
   `,
   BtnArea: styled.div`
     /* background-color: royalblue; */
@@ -73,6 +74,8 @@ const S = {
     justify-content: center;
     gap: 8px;
     border-bottom: 1px solid black;
+    margin-left: 15px;
+    margin-right: 15px;
   `,
   Name: styled.div`
     font-weight: 500;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
+import { styled } from 'styled-components';
 
 const LoginBasic = () => {
   const [loading, setLoading] = useState(false);
@@ -31,11 +32,12 @@ const LoginBasic = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <Stform onSubmit={handleSubmit}>
+        <StLogin>LOGIN</StLogin>
         <div>
-          <input
+          <StInput
             type="email"
-            placeholder="메일주소를 입력하세요"
+            placeholder="이메일을 입력하세요."
             value={email}
             required={true}
             onChange={(e) => setEmail(e.target.value)}
@@ -44,21 +46,59 @@ const LoginBasic = () => {
 
         {/* 테스트 */}
         <div>
-          <input
+          <StInput
             type="password"
-            placeholder="비번을 입력하세요"
+            placeholder="비밀번호를 입력하세요."
             value={password}
             required={true}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
-        <div>
-          <button disabled={loading}>{loading ? <span>Loading</span> : <span>로그인</span>}</button>
-        </div>
-      </form>
+        <LoginBtn disabled={loading}>{loading ? <span>Loading</span> : <span>로그인</span>}</LoginBtn>
+      </Stform>
     </>
   );
 };
+
+const StLogin = styled.h1`
+  text-align: center;
+  font-size: 30px;
+  color: #b73d52;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const LoginBtn = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color: #b73d52;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  margin-left: 60px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 1px 1px 1px #a6a6a6;
+  }
+`;
+
+const Stform = styled.form`
+  width: 210px;
+  margin: 0 auto;
+  margin-top: 250px;
+`;
+
+const StInput = styled.input`
+  margin: 0 auto;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+  padding: 0 10px 0 10px;
+  background-color: #f0efef;
+  outline: none;
+`;
 
 export default LoginBasic;

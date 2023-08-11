@@ -50,13 +50,13 @@ const Main = () => {
         autoplay={{ delay: 2000 }}
       >
         <SwiperSlide>
-          <img src={'https://i.postimg.cc/mZ3qdZLh/croissant.png'} style={{ width: '360px' }} />
+          <img src={'https://i.postimg.cc/mZ3qdZLh/croissant.png'} style={{ width: '100%' }} />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={'https://i.postimg.cc/PfMZ39Bd/marabeef.png'} style={{ width: '360px' }} />
+          <img src={'https://i.postimg.cc/PfMZ39Bd/marabeef.png'} style={{ width: '100%' }} />
         </SwiperSlide>
         <SwiperSlide>
-          <img src={'https://i.postimg.cc/J4vRdmZB/vegansand.jpg'} style={{ width: '360px' }} />
+          <img src={'https://i.postimg.cc/J4vRdmZB/vegansand.jpg'} style={{ width: '100%' }} />
         </SwiperSlide>
       </Swiper>
       <Swiper
@@ -72,7 +72,7 @@ const Main = () => {
         <SwiperSlide>
           <Event>
             EVENT
-            <img src={'https://i.postimg.cc/YCHX90m7/event.png'} style={{ width: '360px' }} />
+            <img src={'https://i.postimg.cc/YCHX90m7/event.png'} style={{ width: '100%' }} />
           </Event>
         </SwiperSlide>
       </Swiper>
@@ -100,25 +100,28 @@ const Main = () => {
 };
 
 const QuickOrder = styled.button`
-  width: 150px;
-  height: 40px;
+  width: 120px;
+  height: 35px;
   display: block;
-  font-size: 18px;
-  background-color: transparent;
-  border: 1px solid #226f54;
+  font-size: 17px;
+  background-color: #fce8c7;
+  border: none;
+  color: #222222;
   border-radius: 5px;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 15px;
   cursor: pointer;
   &:hover {
-    background-color: #226f54;
+    background-color: #facd83;
     color: white;
   }
 `;
 
 const Event = styled.div`
+  align-items: center;
+  margin: 0 auto;
   width: 360px;
-  margin-top: 20px;
+  margin-top: 10px;
   font-size: 17px;
   font-weight: bold;
 `;

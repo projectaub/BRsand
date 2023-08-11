@@ -43,7 +43,8 @@ const S = {
     font-size: 18px;
     margin: 8px 0px;
     font-weight: 700;
-    color: #226f54;
+    margin-left: 15px;
+    color: #b73d52;
   `,
   Name: styled.span`
     font-weight: 700;
@@ -60,10 +61,15 @@ const S = {
     width: calc(361px / 2 - 8px);
     padding: 16px;
     outline: none;
-    border: 1px solid #226f54;
+    border: 2px solid #ffd99b;
     border-radius: 50px;
     background-color: white;
     font-size: 18px;
-    color: #226f54;
+    color: black;
+    cursor: pointer;
+    &:hover {
+      background-color: #ffd99b;
+      color: white;
+    }
   `
 };
