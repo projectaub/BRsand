@@ -5,34 +5,55 @@ import { Order } from '../../model';
 interface Props {
   order: Order;
 }
-
 const OrderMenuDetail = ({ order }: Props) => {
+  const checkIsVegetable = (vege: any): boolean => {
+    let vegetableRender = false;
+    vege.forEach((item: any) => {
+      if (!item.isAdd) {
+        vegetableRender = true;
+      }
+    });
+    return vegetableRender;
+  };
+
   return (
     <>
       <S.MenuArea>
-        <S.Title>주문 옵션</S.Title>
+        <S.Title>주문서</S.Title>
+        <S.Line />
         {order.orderMenu.bread !== undefined ? (
-          <>
-            <S.Sub> {order.orderMenu.base}</S.Sub>
-            <S.Option>{order.orderMenu.bread}</S.Option>
-            <S.Option>{order.orderMenu.cheese}</S.Option>
-            <S.Option>{order.orderMenu.sauce}</S.Option>
+          <S.OptionArea>
+            <S.Sub> {order.orderMenu.base} 베이스</S.Sub>
+            <S.Option>{order.orderMenu.bread} 빵</S.Option>
+            <S.Option>{order.orderMenu.cheese} 치즈</S.Option>
+            <S.Option>{order.orderMenu.sauce} 소스</S.Option>
 
             {order.orderMenu.vegetables && (
               <>
-                <S.Title style={{ marginTop: '20px' }}>야채 옵션</S.Title>
-                {order.orderMenu.vegetables
-                  .filter((vege: any) => !vege.isAdd)
-                  .map((vege: any) => (
-                    <S.Caption key={vege.name}>(-){vege.name}</S.Caption>
-                  ))}
+                {checkIsVegetable(order.orderMenu.vegetables) && (
+                  <>
+                    <S.Line />
+                    <S.Title>채소 옵션</S.Title>
+                    {order.orderMenu.vegetables
+                      .filter((vege: any) => !vege.isAdd)
+                      .map((vege: any) => (
+                        <S.Caption key={vege.id}>{vege.name} (-)</S.Caption>
+                      ))}
+                  </>
+                )}
               </>
             )}
-          </>
+          </S.OptionArea>
         ) : (
-          <S.Sub>{order.orderMenu.base}</S.Sub>
+          <S.OptionArea>
+            <S.Sub>{order.orderMenu.base} 세트</S.Sub>
+          </S.OptionArea>
         )}
-        <div></div>
+        <S.Line />
+        <S.OptionArea>
+          <S.Option>결제금액 {order.price}원</S.Option>
+        </S.OptionArea>
+        <S.Line />
       </S.MenuArea>
     </>
   );
@@ -42,23 +63,41 @@ export default OrderMenuDetail;
 
 const S = {
   MenuArea: styled.div`
-    padding: 20px;
-    color: white;
-    background-color: royalblue;
-    border-radius: 10px;
-    /* text-align: center; */
+    /* background-color: orange; */
+    margin: 20px;
+    font-size: 18px;
   `,
   Title: styled.div`
-    font-size: 18px;
-    font-weight: 500;
-    margin-bottom: 20px;
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+  `,
+  OptionArea: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 20px;
   `,
   Sub: styled.div`
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 24px;
+    font-weight: 700;
+    /* width: 100%; */
+    text-align: justify;
+    text-align-last: justify;
+    margin-top: 5px;
   `,
   Option: styled.div`
-    margin: 10px 0;
+    text-align: justify;
+    text-align-last: justify;
   `,
-  Caption: styled.div``
+  Caption: styled.div`
+    text-align: justify;
+    text-align-last: justify;
+  `,
+
+  Line: styled.div`
+    width: 100%;
+    border: 0.5px solid rgba(0, 0, 0, 1);
+    margin: 10px 0 10px 0;
+  `
 };

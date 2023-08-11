@@ -34,11 +34,16 @@ const S = {
     overflow: hidden;
   `,
   ContentArea: styled.div`
-    width: 393px;
+    box-sizing: border-box;
+    /* margin: 0px 16px; */
+    width: 100%;
     height: 782px;
     padding-bottom: 16px;
     background-color: white;
     box-sizing: border-box;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `
 };

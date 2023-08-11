@@ -8,27 +8,38 @@ import { supabase } from '../../supabase';
 interface Props {
   orders: Order[];
 }
+
+interface StyledProps {
+  BgColor: boolean;
+}
+
 const OrderStateCard = ({ orders }: Props) => {
   return (
     <S.CardBox>
       {orders.map((order) => {
         return (
           <S.Card key={order.id}>
+            <S.OrderInfoArea>
+              <S.OrderInfoDetailArea>
+                <S.OrderInfoDetailTitle>{order.user.name}</S.OrderInfoDetailTitle> <span>님</span>
+                <S.OrderInfoDetailSub>
+                  {order.id.slice(0, 8)} | {getTimeFromPostgreSQL(order.time)}
+                </S.OrderInfoDetailSub>
+              </S.OrderInfoDetailArea>
+              <S.OrderInfoDineInArea dineIn={order.dineIn}>
+                <S.OrderInfoDineIn>{order.dineIn ? '매장' : '포장'}</S.OrderInfoDineIn>
+              </S.OrderInfoDineInArea>
+            </S.OrderInfoArea>
+
             <S.SubInfoArea>
-              <S.SubInfoContent>{order.dineIn ? '매장 식사' : '포장'}</S.SubInfoContent>
+              {/* <S.SubInfoContent></S.SubInfoContent> */}
               <S.SubInfoContent>{order.orderMenu.bread !== undefined ? '커스텀' : '완제품'}</S.SubInfoContent>
               <S.SubInfoContent>{order.isActive ? '조리중' : '접수 대기중'}</S.SubInfoContent>
             </S.SubInfoArea>
-            <S.MainInfoArea>
-              <p>주문번호 : {order.id.slice(0, 8)}</p>
-              <p>주문시간 : {getTimeFromPostgreSQL(order.time)}</p>
-              <h2>주문자명 : {order.user.name}</h2>
-            </S.MainInfoArea>
-
             {/* 디테일한 주문 내역 */}
             <OrderMenuDetail order={order}></OrderMenuDetail>
 
-            <S.PriceArea>최종 결제 금액 : {order.price}원</S.PriceArea>
+            {/* <S.PriceArea>최종 결제 금액 : {order.price}원</S.PriceArea> */}
             <S.ActionButton
               onClick={() => {
                 orderStateChanger(order);
@@ -39,6 +50,7 @@ const OrderStateCard = ({ orders }: Props) => {
           </S.Card>
         );
       })}
+      <S.DummyArea></S.DummyArea>
     </S.CardBox>
   );
 };
@@ -47,58 +59,51 @@ export default OrderStateCard;
 
 const S = {
   CardBox: styled.div`
-    border-radius: 10px;
-    border: 1px solid black;
-    padding: 30px;
+    width: 400px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    flex-direction: column;
+    /* background-color: orange; */
+    gap: 30px;
   `,
   Card: styled.div`
-    border-radius: 10px;
-    border: 1px solid black;
+    border-radius: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    /* background-color: royalblue; */
+    padding-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 5px 5px 1px rgba(0, 0, 0, 0.1);
+  `,
+  OrderInfoArea: styled.div`
+    width: 100%;
+    background-color: #b73d52;
     padding: 20px;
-    width: 300px;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-  `,
-  MainInfoArea: styled.div`
-    font-size: 18px;
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: orange;
-    padding: 10px;
-    border-radius: 10px;
-  `,
-  SubInfoArea: styled.div`
-    display: flex;
-    gap: 5px;
-  `,
-  SubInfoContent: styled.div`
-    padding: 10px;
+    align-items: center;
     color: white;
-    background-color: royalblue;
-    border-radius: 10px;
   `,
+  OrderInfoDetailArea: styled.div``,
+  OrderInfoDetailTitle: styled.span`
+    font-size: 22px;
+    font-weight: 700;
+  `,
+  OrderInfoDetailSub: styled.div`
+    margin-top: 5px;
+    font-size: 16px;
+  `,
+  OrderInfoDineInArea: styled.div<{ dineIn: boolean }>`
+    margin-left: auto;
+    font-size: 20px;
+    color: ${(props) => {
+      return props.dineIn ? '#FFFf00' : 'white';
+    }};
+  `,
+  OrderInfoDineIn: styled.div``,
+  SubInfoArea: styled.div``,
+  SubInfoContent: styled.div``,
 
-  ActionButton: styled.button`
-    padding: 10px;
-    color: white;
-    background-color: royalblue;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-    font-size: 18px;
-  `,
-  PriceArea: styled.div`
-    padding: 10px;
-    color: white;
-    background-color: royalblue;
-    border-radius: 10px;
-    text-align: right;
-  `
+  ActionButton: styled.button``,
+  PriceArea: styled.div``,
+  DummyArea: styled.div``
 };

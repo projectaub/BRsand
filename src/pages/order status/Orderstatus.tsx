@@ -24,24 +24,28 @@ const Orderstatus = () => {
   };
 
   return (
-    <>
+    <S.Container>
       {dataOn && (
         <>
-          <button onClick={goToS}>통계로 꼬우</button>
+          {/* <button onClick={goToS}>통계로 꼬우</button> */}
           <OrderStateArea></OrderStateArea>
 
           <Stocks />
         </>
       )}
-    </>
+    </S.Container>
   );
 };
 
-const OrderArea = styled.div`
-  border: 1px solid black;
-  width: 400px;
-  margin: 20px;
-  padding: 10px;
-`;
-
 export default Orderstatus;
+
+const S = {
+  Container: styled.div`
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+
+    /* background-color: #ffd99b; */
+  `
+};

@@ -15,6 +15,7 @@ import Mobile from './layout/Mobile';
 import { supabase } from '../supabase';
 import { PrivateRoute } from '../pages/statistics/PrivateRoute';
 import AdminLogin from '../pages/admin/login/AdminLogin';
+import Web from './layout/Web';
 
 console.log('Router', supabase);
 // interface ProfileProps {
@@ -39,10 +40,12 @@ const Router = () => {
           </Route>
         </Route>
         <Route element={<PrivateRoute />}>
-          <Route path="/salestatus" element={<SalesStatus />} />
-          <Route path="/inventorystatus" element={<InventoryStatus />} />
-          <Route path="/statistics/:id" element={<Statistics />} />
-          <Route path="/orderstatus/:id" element={<Orderstatus />} />
+          <Route path="/" element={<Web />}>
+            <Route path="/salestatus" element={<SalesStatus />} />
+            <Route path="/inventorystatus" element={<InventoryStatus />} />
+            <Route path="/statistics/:id" element={<Statistics />} />
+            <Route path="/orderstatus/:id" element={<Orderstatus />} />
+          </Route>
         </Route>
         <Route path="/admin" element={<AdminLogin />} />
         {/* </Route> */}
