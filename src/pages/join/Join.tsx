@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { styled } from 'styled-components';
 
 interface FormValue {
   email: string;
@@ -117,11 +118,11 @@ const Join = () => {
     }
   };
   return (
-    <div>
-      <h1>회원가입</h1>
+    <div style={{ width: '100%' }}>
+      <StJoinH1>Sign Up</StJoinH1>
       <form onSubmit={handleSubmit(joinHandler)}>
         <div>
-          <input
+          <StInput
             type="email"
             placeholder="e-mail"
             {...register('email', {
@@ -129,11 +130,11 @@ const Join = () => {
               pattern: /^\S+@\S+$/i
             })}
           />
-          {errors.email && errors.email.type === 'required' && <p>메일을 입력하세요</p>}
-          {errors.email && errors.email.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
+          {errors.email && errors.email.type === 'required' && <Stp>메일을 입력하세요</Stp>}
+          {errors.email && errors.email.type === 'pattern' && <Stp>올바른 메일 형식이 아닙니다</Stp>}
         </div>
         <div>
-          <input
+          <StInput
             type="password"
             placeholder="비밀번호"
             {...register('password', {
@@ -141,11 +142,11 @@ const Join = () => {
               minLength: 6
             })}
           />
-          {errors.password && errors.password.type === 'required' && <p>비밀번호를 입력하세요</p>}
-          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+          {errors.password && errors.password.type === 'required' && <Stp>비밀번호를 입력하세요</Stp>}
+          {errors.password && errors.password.type === 'minLength' && <Stp>비밀번호는 최소 6자리 이상</Stp>}
         </div>
         <div>
-          <input
+          <StInput
             type="password"
             placeholder="비밀번호확인"
             {...register('confirmingPw', {
@@ -153,13 +154,11 @@ const Join = () => {
               validate: (value) => value === passwordRef.current
             })}
           />
-          {errors.confirmingPw && errors.confirmingPw.type === 'required' && (
-            <p>설정하고자 하는 비밀번호를 입력하세요</p>
-          )}
-          {errors.confirmingPw && errors.confirmingPw.type === 'validate' && <p>설정하고자 하는 비밀번호와 불일치</p>}
+          {errors.confirmingPw && errors.confirmingPw.type === 'required' && <Stp>비밀번호 확인을 입력하세요</Stp>}
+          {errors.confirmingPw && errors.confirmingPw.type === 'validate' && <Stp>비밀번호 확인 불일치</Stp>}
         </div>
         <div>
-          <button>가입하기</button>
+          <StJoin>가입하기</StJoin>
         </div>
       </form>
       {showPersonalInfoAlert && (
@@ -172,9 +171,9 @@ const Join = () => {
       {showPersonalInfoModal && (
         <div className="modal">
           <h2>개인 정보 입력</h2>
-          <input placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
-          <input placeholder="성별" value={gender} onChange={(e) => setGender(e.target.value)} />
-          <input placeholder="나이" value={age} onChange={(e) => setAge(e.target.value)} />
+          <StInput placeholder="이름" value={name} onChange={(e) => setName(e.target.value)} />
+          <StInput placeholder="성별" value={gender} onChange={(e) => setGender(e.target.value)} />
+          <StInput placeholder="나이" value={age} onChange={(e) => setAge(e.target.value)} />
           <button onClick={submitPersonalInfo}>입력 완료</button>
           <button onClick={closeModal}>취소</button>
         </div>
@@ -182,5 +181,51 @@ const Join = () => {
     </div>
   );
 };
+
+const Stp = styled.p`
+  text-align: left;
+  width: 200px;
+  margin: 0 auto;
+  font-size: 14px;
+  margin-top: 5px;
+  color: #282828;
+`;
+
+const StJoinH1 = styled.h1`
+  text-align: center;
+  font-size: 30px;
+  color: #b73d52;
+  font-weight: bold;
+
+  margin-top: 220px;
+`;
+
+const StInput = styled.input`
+  margin: 0 auto;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+  padding: 0 10px 0 10px;
+  background-color: #f0efef;
+  outline: none;
+  margin-left: 90px;
+`;
+
+const StJoin = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color: #b73d52;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  margin-left: 152px;
+  margin-top: 10px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 1px 1px 1px #a6a6a6;
+  }
+`;
 
 export default Join;

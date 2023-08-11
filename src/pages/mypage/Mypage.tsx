@@ -89,7 +89,7 @@ const Mypage = () => {
               ))}
           </div>
           <div>
-            <p>{userName} 님의 지난 주문입니다.</p>
+            <Stp>{userName} 님의 지난 주문입니다.</Stp>
             {orders
               .filter((order) => order.isDone)
               .map((order) => (
@@ -108,11 +108,13 @@ const HiMember = styled.h1`
   font-size: 19px;
   font-weight: bold;
   margin-top: 20px;
+  margin-left: 40px;
 `;
 
 const Stp = styled.p`
   margin-top: 10px;
   font-size: 17px;
+  margin-left: 40px;
 `;
 
 const NoOrder = styled.p`

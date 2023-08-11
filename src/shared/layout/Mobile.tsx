@@ -25,16 +25,15 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #fce3ba;
   `,
   MobileWrapper: styled.div`
     width: 393px;
     height: 852px;
     border-radius: 20px;
     overflow: hidden;
-    border: 1px solid black;
   `,
   ContentArea: styled.div`
-    margin: 0px 16px;
     width: 393px;
     height: 782px;
     padding-bottom: 16px;

@@ -36,7 +36,7 @@ interface MyOrderProps {
 
 function MyOrder({ order }: MyOrderProps) {
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <OrderArea key={order.id}>
         <Stp>주문일시 : {getTimeFromPostgreSQL(order.time)}</Stp>
         <Stp>주문번호 : {order.id.slice(0, 8)}</Stp>
@@ -67,12 +67,13 @@ const OrderArea = styled.div`
   margin: 20px;
   padding: 10px;
   box-shadow: 1px 1px 3px #a6a6a6;
+  margin: 20px auto;
 `;
 
 const FoodArea = styled.div`
   border-top: 1px solid gray;
   width: 280px;
-  margin: 10px;
+  margin: auto 0;
   padding-top: 10px;
 `;
 
@@ -82,6 +83,7 @@ const Stp = styled.p`
 
 const Sprice = styled.p`
   margin-top: 10px;
+  margin-right: 5px;
   text-align: right;
   font-weight: bold;
   font-size: 18px;
@@ -92,6 +94,7 @@ const CallBtn = styled.button`
   width: 70px;
   height: 23px;
   margin-left: 5px;
+  line-height: 20px;
   background-color: #e7a583;
   border: none;
   border-radius: 5px;
