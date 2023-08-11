@@ -1,14 +1,4 @@
-"@types/jest"
-"@types/node"
-"@types/react"
-"@types/react-dom"
-"json-server"  
-"react-query"
-"react-redux"
-"typescript"
-styled component
-reset
-styled-components
+프로젝트 때 사용한 라이브러리들
 
 npm i
 yarn 

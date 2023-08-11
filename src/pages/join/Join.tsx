@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+interface FormValue {
+  email: string;
+  password: string;
+}
 
 const Join = () => {
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors }
+  } = useForm<FormValue>();
+
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -20,8 +33,7 @@ const Join = () => {
     }
   }, [userData]);
 
-  const joinHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const joinHandler: SubmitHandler<FormValue> = async (formdata: FormValue) => {
     setLoading(true);
     setEmail('');
     setPassword('');
@@ -59,8 +71,6 @@ const Join = () => {
           navigate('/');
         }
       }
-
-      // setShowPersonalInfoAlert(true);
     }
     setLoading(false);
   };
@@ -93,9 +103,31 @@ const Join = () => {
   return (
     <div>
       <h1>회원가입</h1>
-      <form onSubmit={joinHandler}>
-        <input placeholder="e-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="pw" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <form onSubmit={handleSubmit(joinHandler)}>
+        <div>
+          <input
+            type="email"
+            placeholder="e-mail"
+            {...register('email', {
+              required: true,
+              pattern: /^\S+@\S+$/i
+            })}
+          />
+          {errors.email && errors.email.type === 'required' && <p>메일을 입력하세요</p>}
+          {errors.email && errors.email.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="비밀번호"
+            {...register('password', {
+              required: true,
+              minLength: 6
+            })}
+          />
+          {errors.password && errors.password.type === 'required' && <p>비밀번호를 입력하세요</p>}
+          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+        </div>
         <div>
           <button>가입하기</button>
         </div>
