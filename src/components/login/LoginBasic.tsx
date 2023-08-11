@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
-import { styled } from 'styled-components';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+interface FormValue {
+  email: string;
+  password: string;
+}
 
 const LoginBasic = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormValue>();
+
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const pwLogin: SubmitHandler<FormValue> = async (formdata: FormValue) => {
     setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
@@ -35,22 +44,28 @@ const LoginBasic = () => {
         <div>
           <StInput
             type="email"
-            placeholder="이메일을 입력하세요."
-            value={email}
-            required={true}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="메일주소를 입력하세요"
+            {...register('email', {
+              required: true,
+              pattern: /^\S+@\S+$/i
+            })}
           />
+          {errors.email && errors.email.type === 'required' && <p>메일을 입력하세요</p>}
+          {errors.email && errors.email.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
         </div>
 
         {/* 테스트 */}
         <div>
           <StInput
             type="password"
-            placeholder="비밀번호를 입력하세요."
-            value={password}
-            required={true}
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비번을 입력하세요"
+            {...register('password', {
+              required: true,
+              minLength: 6
+            })}
           />
+          {errors.password && errors.password.type === 'required' && <p>비밀번호를 입력하세요</p>}
+          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
         </div>
 
         <LoginBtn disabled={loading}>{loading ? <span>Loading</span> : <span>로그인</span>}</LoginBtn>
