@@ -33,8 +33,8 @@ const OrderStateCard = ({ orders }: Props) => {
 
             <S.SubInfoArea>
               {/* <S.SubInfoContent></S.SubInfoContent> */}
-              <S.SubInfoContent>{order.orderMenu.bread !== undefined ? '커스텀' : '완제품'}</S.SubInfoContent>
-              <S.SubInfoContent>{order.isActive ? '조리중' : '접수 대기중'}</S.SubInfoContent>
+              {/* <S.SubInfoContent>{order.orderMenu.bread !== undefined ? '커스텀' : '완제품'}</S.SubInfoContent> */}
+              {/* <S.SubInfoContent>{order.isActive ? '조리중' : '접수 대기중'}</S.SubInfoContent> */}
             </S.SubInfoArea>
             {/* 디테일한 주문 내역 */}
             <OrderMenuDetail order={order}></OrderMenuDetail>

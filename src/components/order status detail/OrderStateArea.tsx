@@ -73,20 +73,14 @@ const S = {
   `,
   Wrapper: styled.div`
     margin-top: 20px;
-    /* width: 350px; */
-    /* display: flex; */
     height: 100vh;
-    /* flex-direction: column; */
     flex-grow: 1;
-    /* background-color: royalblue; */
     align-items: center;
-    /* margin-top: 30px; */
   `,
   InnerWrapper: styled.div`
     margin: 0 auto;
     padding-top: 30px;
     display: flex;
-    /* justify-content: center; */
     align-items: center;
     flex-direction: column;
     overflow-y: scroll;
@@ -104,7 +98,6 @@ const S = {
     border-radius: 20px;
     background-color: #b73d52;
     display: flex;
-    /* justify-content: left; */
     color: white;
     align-items: center;
   `,
@@ -116,13 +109,5 @@ const S = {
     margin-left: auto;
     font-size: 20px;
     font-weight: 700;
-    /* width: 60px;
-    height: 60px;
-    border-radius: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center; */
-    /* background-color: #b73d52; */
-    /* color: white; */
   `
 };
