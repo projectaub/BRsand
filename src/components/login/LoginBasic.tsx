@@ -7,7 +7,6 @@ const LoginBasic = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [selectLogin, setSelectLogin] = useState(true);
 
   const navigate = useNavigate();
 
@@ -15,7 +14,6 @@ const LoginBasic = () => {
     e.preventDefault();
 
     setLoading(true);
-    // const { error } = await supabase.auth.signInWithOtp({ email });
 
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
