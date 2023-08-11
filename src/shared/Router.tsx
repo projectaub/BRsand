@@ -32,20 +32,19 @@ const Router = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/mypage" element={<Mypage />} />
           {/* 주문관련 - 모바일 */}
-          <Route path="/orderpage" element={<OrderPage />} />
-          <Route path="/order-custom" element={<OrderCustom />} />
-          <Route path="/order-menu" element={<OrderMenu />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/orderpage" element={<OrderPage />} />
+            <Route path="/order-custom" element={<OrderCustom />} />
+            <Route path="/order-menu" element={<OrderMenu />} />
+          </Route>
         </Route>
-
-        {/* <Route path="/" element={<Web />}> */}
-
-        <Route path="/admin" element={<AdminLogin />} />
         <Route element={<PrivateRoute />}>
           <Route path="/salestatus" element={<SalesStatus />} />
           <Route path="/inventorystatus" element={<InventoryStatus />} />
           <Route path="/statistics/:id" element={<Statistics />} />
           <Route path="/orderstatus/:id" element={<Orderstatus />} />
         </Route>
+        <Route path="/admin" element={<AdminLogin />} />
         {/* </Route> */}
       </Routes>
     </BrowserRouter>

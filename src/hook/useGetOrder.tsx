@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
 import { useNavigate } from 'react-router-dom';
-import useCheckLoginUser from './useCheckLoginUser';
+import useCheckLoginUserId from './useCheckLoginUserId';
 import { User } from '../model';
 
 const useGetOrder = () => {
   const [order, setOrder] = useState<string>('');
-  const [userId] = useCheckLoginUser();
+  const [userId] = useCheckLoginUserId();
   // const [userData] = useCheck
   const navigate = useNavigate();
 

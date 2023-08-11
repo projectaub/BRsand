@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PieAge from '../../components/chart/pieChartAge';
 import PieTime from '../../components/chart/pieChartTime';
+import { useCheckAdmin } from '../../hook/useCheckAdmin';
 
 const Statistics = () => {
   let sum: any = 0;
@@ -12,6 +13,8 @@ const Statistics = () => {
   const [statistics, setStatistics] = useState<any>([]);
   const [userAgeData, setUserAgeData] = useState<any>([]);
   const [orderTime, setOrderTime] = useState<any>([]);
+  const navigate = useNavigate();
+  const [dataOn] = useCheckAdmin(String(params.id));
 
   console.log('statistics==>', statistics);
   const userAgeDataFilter = userAgeData.reduce((acc: any, age: any) => {
@@ -102,35 +105,39 @@ const Statistics = () => {
 
   return (
     <>
-      <div>
-        {statistics.forEach((item: any) => {
-          if (item.isDone === true) {
-            return (sum += item.price);
-          }
-        })}
-        {params.id === '0' && <div>총매출액 :{sum}</div>}
-      </div>
+      {dataOn && (
+        <>
+          <div>
+            {statistics.forEach((item: any) => {
+              if (item.isDone === true) {
+                return (sum += item.price);
+              }
+            })}
+            {params.id === '0' && <div>총매출액 :{sum}</div>}
+          </div>
 
-      <div>
-        {statistics.forEach((item: any) => {
-          if (item.isDone === true && item.storeId === 1) {
-            return (sum2 += item.price);
-          }
-        })}
-        {(params.id === '0' || params.id === '1') && <div>스토어1 :{sum2}</div>}
-      </div>
-      <div>
-        {statistics.forEach((item: any) => {
-          if (item.isDone === true && item.storeId === 2) {
-            return (sum3 += item.price);
-          }
-        })}
-        {(params.id === '0' || params.id === '2') && <div>스토어2 :{sum3}</div>}
-        <div style={{ height: '300px', display: 'flex' }}>
-          <PieAge data={userAgeArr} />
-          <PieTime data={orderTimeArr} />
-        </div>
-      </div>
+          <div>
+            {statistics.forEach((item: any) => {
+              if (item.isDone === true && item.storeId === 1) {
+                return (sum2 += item.price);
+              }
+            })}
+            {(params.id === '0' || params.id === '1') && <div>스토어1 :{sum2}</div>}
+          </div>
+          <div>
+            {statistics.forEach((item: any) => {
+              if (item.isDone === true && item.storeId === 2) {
+                return (sum3 += item.price);
+              }
+            })}
+            {(params.id === '0' || params.id === '2') && <div>스토어2 :{sum3}</div>}
+            <div style={{ height: '300px', display: 'flex' }}>
+              <PieAge data={userAgeArr} />
+              <PieTime data={orderTimeArr} />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

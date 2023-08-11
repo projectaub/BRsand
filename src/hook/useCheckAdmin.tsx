@@ -1,34 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { supabase } from '../supabase';
-import { User } from '../model';
 import { useNavigate } from 'react-router-dom';
+import useCheckLoginUserId from './useCheckLoginUserId';
 
-const useCheckAdmin = () => {
-  const [userId, setUserId] = useState<string>();
+export const useCheckAdmin = (params: string) => {
+  const [dataOn, setDataOn] = useState(false);
   const navigate = useNavigate();
 
-  const fetchUserData = async () => {
-    try {
-      //로그인한 유저의 정보를 가져옵니다.
-      const {
-        data: { user }
-      } = await supabase.auth.getUser();
+  const test = async () => {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+    console.log(user);
+    const response = await supabase.from('admin').select().eq('id', user!.id).single();
+    if (response.error || response.data === null) {
+      alert('관리자만 이용이 가능함.. 넌 유저아님?');
+      navigate('/');
+      return;
+    }
+    const id = response.data.storeId;
+    //아이디가 0이 아니면서 params랑 다른 아이디면 타매장으로 취급
+    //아이디가 0이면 최상위 관리자라서 조회 가능
+    if (id !== 0 && params !== String(id)) {
+      alert('타 매장의 주문 정보는 불러올 수 없습니다.');
 
-      if (user === null) {
-        alert('로그인 후 이용 가능합니다.');
-        navigate('/');
-        return;
-      } else {
-        setUserId(user.id);
-      }
-    } catch (error) {}
+      //본인이 선택한 정보의 페이지로 이동..
+      const currentUrl = window.location.href;
+      const baseUrl = currentUrl.split('/');
+      navigate(`/${baseUrl[3]}/${id}`);
+    }
+    setDataOn(true);
   };
 
   useEffect(() => {
-    fetchUserData();
+    test();
   }, []);
 
-  return [userId];
+  return [dataOn];
 };
-
-export default useCheckAdmin;
