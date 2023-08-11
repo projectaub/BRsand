@@ -30,7 +30,8 @@ const AdminLogin = () => {
         return;
       }
 
-      const response = await supabase.from('admin').select().eq('id', adminEmail).single();
+      const response = await supabase.from('admin').select().eq('email', adminEmail).single();
+      console.log(response.data);
       if (response.data.storeId === 0) {
         navigate(`/statistics/${response.data.storeId}`);
       } else {
