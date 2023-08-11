@@ -1,11 +1,13 @@
+//login 실패 시 1. email, password값 reset, login 버튼 활성화
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 interface FormValue {
-  email: string;
-  password: string;
+  userEmail: string;
+  userPassword: string;
 }
 
 const LoginBasic = () => {
@@ -16,22 +18,26 @@ const LoginBasic = () => {
   } = useForm<FormValue>();
 
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
 
-  const pwLogin: SubmitHandler<FormValue> = async (formdata: FormValue) => {
+  const pwLogin: SubmitHandler<FormValue> = async (data: FormValue) => {
     setLoading(true);
+    const { userEmail, userPassword } = data;
+    const { data: loginData, error } = await supabase.auth.signInWithPassword({
+      email: userEmail,
+      password: userPassword
+    });
 
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    console.log(loginData);
 
     if (error) {
       console.log(error);
       const errorDescription = (error as any).error_description || error.message;
       alert(errorDescription);
+      setLoading(false);
     } else {
-      alert('로그인 되었읍니다.');
+      alert('로그인');
       navigate('/');
       setLoading(false);
     }
@@ -45,27 +51,26 @@ const LoginBasic = () => {
           <StInput
             type="email"
             placeholder="메일주소를 입력하세요"
-            {...register('email', {
+            {...register('userEmail', {
               required: true,
               pattern: /^\S+@\S+$/i
             })}
           />
-          {errors.email && errors.email.type === 'required' && <p>메일을 입력하세요</p>}
-          {errors.email && errors.email.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
+          {errors.userEmail && errors.userEmail.type === 'required' && <p>메일을 입력하세요</p>}
+          {errors.userEmail && errors.userEmail.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
         </div>
 
-        {/* 테스트 */}
         <div>
           <StInput
             type="password"
             placeholder="비번을 입력하세요"
-            {...register('password', {
+            {...register('userPassword', {
               required: true,
               minLength: 6
             })}
           />
-          {errors.password && errors.password.type === 'required' && <p>비밀번호를 입력하세요</p>}
-          {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+          {errors.userPassword && errors.userPassword.type === 'required' && <p>비밀번호를 입력하세요</p>}
+          {errors.userPassword && errors.userPassword.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
         </div>
 
         <LoginBtn disabled={loading}>{loading ? <span>Loading</span> : <span>로그인</span>}</LoginBtn>
