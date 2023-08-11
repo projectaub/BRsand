@@ -10,7 +10,6 @@ const OrderPage = () => {
   const [dineIn, setDineIn] = useState<boolean | null>(null);
   const [userData, setUserData] = useState<User | null>();
   const [store, setStore] = useState<StorePoint>();
-  // const [userId] = useCheckLoginUser();
   const navigate = useNavigate();
 
   const fetchData = async () => {
@@ -45,7 +44,6 @@ const OrderPage = () => {
       isActive: false,
       isDone: false
     };
-    console.log(newOrderSet);
 
     try {
       const { data, error } = await supabase.from('orders').insert(newOrderSet).select();
