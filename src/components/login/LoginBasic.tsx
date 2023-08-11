@@ -14,7 +14,8 @@ const LoginBasic = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
+    setError
   } = useForm<FormValue>();
 
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,19 @@ const LoginBasic = () => {
   const pwLogin: SubmitHandler<FormValue> = async (data: FormValue) => {
     setLoading(true);
     const { userEmail, userPassword } = data;
+
+    const { data: userData, error: userError } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', userEmail)
+      .single();
+
+    if (userError) {
+      setError('userEmail', { type: 'manual', message: '등록되지 않은 메일' });
+      setLoading(false);
+      return;
+    }
+
     const { data: loginData, error } = await supabase.auth.signInWithPassword({
       email: userEmail,
       password: userPassword
@@ -34,7 +48,11 @@ const LoginBasic = () => {
     if (error) {
       console.log(error);
       const errorDescription = (error as any).error_description || error.message;
-      alert(errorDescription);
+      if (error.message.includes('Invalid login credentials')) {
+        setError('userPassword', { type: 'manual', message: '잘못된 비밀번호' });
+      } else {
+        alert(errorDescription);
+      }
       setLoading(false);
     } else {
       alert('로그인');
@@ -58,6 +76,7 @@ const LoginBasic = () => {
           />
           {errors.userEmail && errors.userEmail.type === 'required' && <p>메일을 입력하세요</p>}
           {errors.userEmail && errors.userEmail.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
+          {errors.userEmail && <p>{errors.userEmail.message}</p>}
         </div>
 
         <div>
@@ -71,6 +90,7 @@ const LoginBasic = () => {
           />
           {errors.userPassword && errors.userPassword.type === 'required' && <p>비밀번호를 입력하세요</p>}
           {errors.userPassword && errors.userPassword.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+          {errors.userPassword && <p>{errors.userPassword.message}</p>}
         </div>
 
         <LoginBtn disabled={loading}>{loading ? <span>Loading</span> : <span>로그인</span>}</LoginBtn>
