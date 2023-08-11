@@ -3,6 +3,7 @@ import useGetOrder from '../../hook/useGetOrder';
 import { supabase } from '../../supabase';
 import { User } from '../../model/data';
 import OrderPay from '../../components/order detail/OrderPay';
+import { useNavigate } from 'react-router-dom';
 
 interface veges {
   name: string;
@@ -17,6 +18,7 @@ interface Menu {
 }
 
 const OrderCustom = () => {
+  const navigate = useNavigate();
   const vegetableList = [
     { name: '토마토', id: 1, isAdd: true },
     { name: '오이', id: 2, isAdd: true },
@@ -85,6 +87,7 @@ const OrderCustom = () => {
     };
     await supabase.from('orders').update(order).eq('id', orderId);
     alert('서버가서 확인해봐');
+    navigate('/mypage');
   };
 
   return (

@@ -25,6 +25,7 @@ const useGetOrder = () => {
       setOrder(data![0].id);
 
       //이것이 최신의 데이터
+      setOrder(data![0].id);
 
       console.log(data![0]);
 
@@ -33,9 +34,12 @@ const useGetOrder = () => {
       //만약에 이 데이터가 두개 이상이다?
       // order state에는 최근거로 세팅을하고 그럼 최근거로 일단 세팅을 하고
       // 그거 이에외 모든것들은 delete로삭제를 해주세요...
+      // const { error } = await supabase.from('orders').delete().contains('user', { id: userId }).is('orderMenu', null);
+      //얘를 마이페이지 들어갈때 쓴다면 ?
 
       if (data === null) {
         alert('주문정보가 없습니다. 퀵 오더 시작화면으로 이동합니다.');
+
         navigate('/orderpage');
         return;
       }
