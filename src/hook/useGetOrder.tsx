@@ -27,8 +27,6 @@ const useGetOrder = () => {
       //이것이 최신의 데이터
       setOrder(data![0].id);
 
-      console.log(data![0]);
-
       // 이런 로직을 짜야함
       //하나만 가져오게 해놓았음
       //만약에 이 데이터가 두개 이상이다?

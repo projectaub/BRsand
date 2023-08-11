@@ -10,7 +10,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import 'swiper/css/autoplay';
 import { supabase } from '../../supabase';
-import { log } from 'console';
 
 const Main = () => {
   const [user, setUser] = useState({});
@@ -87,7 +86,13 @@ const Main = () => {
           <QuickOrder onClick={() => navigate('/join')}>회원가입</QuickOrder>
         </>
       )}
-      <QuickOrder onClick={() => navigate('/orderpage')}>퀵오더</QuickOrder>
+      <QuickOrder
+        onClick={() => {
+          navigate('/orderpage');
+        }}
+      >
+        퀵오더
+      </QuickOrder>
     </>
   );
 };

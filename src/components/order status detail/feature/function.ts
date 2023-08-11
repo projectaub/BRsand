@@ -5,7 +5,7 @@ export const getTimeFromPostgreSQL = (time: string): string => {
   const monthsInKorean = ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'];
   const translate = new Date(time);
   // 한국 표준시로 변환
-  translate.setHours(translate.getHours()); // 영국과 한국의 시차는 9시간입니다.
+  translate.setHours(translate.getHours());
   const month = monthsInKorean[translate.getMonth()];
   const day = translate.getDate();
   const hours = translate.getHours();
