@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { styled } from 'styled-components';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
 import MyOrder from './MyOrder';
@@ -76,11 +77,11 @@ const Mypage = () => {
     <>
       {userName ? (
         <div>
-          <h1>
+          <HiMember>
             {userGrade} 멤버십 {userName} 님! 반가워요.
-          </h1>
+          </HiMember>
           <div>
-            <p>{userName} 님의 주문이 진행중입니다.</p>
+            <Stp>{userName} 님의 주문이 진행중입니다.</Stp>
             {orders
               .filter((order) => !order.isDone)
               .map((order) => (
@@ -97,10 +98,32 @@ const Mypage = () => {
           </div>
         </div>
       ) : (
-        <h1>주문내역이없습니다.</h1>
+        <NoOrder>최근 주문하신 내역이 없습니다.</NoOrder>
       )}
     </>
   );
 };
+
+const HiMember = styled.h1`
+  font-size: 19px;
+  font-weight: bold;
+  margin-top: 20px;
+`;
+
+const Stp = styled.p`
+  margin-top: 10px;
+  font-size: 17px;
+`;
+
+const NoOrder = styled.p`
+  margin: 0 auto;
+  text-align: center;
+  font-size: 23px;
+  font-weight: bold;
+  color: #2e2e2e;
+  margin-right: 20px;
+  height: 750px;
+  line-height: 750px;
+`;
 
 export default Mypage;

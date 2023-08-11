@@ -104,14 +104,15 @@ const QuickOrder = styled.button`
   height: 40px;
   display: block;
   font-size: 18px;
-  background-color: transparent;
-  border: 1px solid #226f54;
+  background-color: #fce8c7;
+  border: none;
+  color: #222222;
   border-radius: 5px;
   margin: 0 auto;
   margin-top: 20px;
   cursor: pointer;
   &:hover {
-    background-color: #226f54;
+    background-color: #facd83;
     color: white;
   }
 `;
