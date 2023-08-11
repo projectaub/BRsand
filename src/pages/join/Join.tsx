@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -6,16 +6,23 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 interface FormValue {
   email: string;
   password: string;
+  confirmingPw: string;
 }
 
 const Join = () => {
+  //유효성검사 👇🏿
   const {
     register,
     handleSubmit,
+    watch,
     setError,
     formState: { errors }
   } = useForm<FormValue>();
 
+  const passwordRef = useRef<string | null>(null);
+  passwordRef.current = watch('password');
+
+  //// 👆🏿
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,20 +33,15 @@ const Join = () => {
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const navigate = useNavigate();
-  //주석...
-  useEffect(() => {
-    if (userData) {
-      setShowPersonalInfoAlert(true);
-    }
-  }, [userData]);
 
   const joinHandler: SubmitHandler<FormValue> = async (formdata: FormValue) => {
     setLoading(true);
+    const { email, password } = formdata;
     setEmail('');
     setPassword('');
     const { data, error } = await supabase.auth.signUp({
-      email,
-      password
+      email: formdata.email,
+      password: formdata.password
     });
     // console.log(error);
     console.log('가입 잘 되?', data.user!.email);
@@ -74,6 +76,7 @@ const Join = () => {
     }
     setLoading(false);
   };
+
   const handlePersonalInfoAlert = () => {
     setShowPersonalInfoAlert(false);
     setShowPersonalInfoModal(true);
@@ -127,6 +130,20 @@ const Join = () => {
           />
           {errors.password && errors.password.type === 'required' && <p>비밀번호를 입력하세요</p>}
           {errors.password && errors.password.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="비밀번호확인"
+            {...register('confirmingPw', {
+              required: true,
+              validate: (value) => value === passwordRef.current
+            })}
+          />
+          {errors.confirmingPw && errors.confirmingPw.type === 'required' && (
+            <p>설정하고자 하는 비밀번호를 입력하세요</p>
+          )}
+          {errors.confirmingPw && errors.confirmingPw.type === 'validate' && <p>설정하고자 하는 비밀번호와 불일치</p>}
         </div>
         <div>
           <button>가입하기</button>

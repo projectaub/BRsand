@@ -12,7 +12,6 @@ const AdminLogin = () => {
   const {
     register,
     handleSubmit,
-    setError,
     formState: { errors }
   } = useForm<FormValue>();
   const navigate = useNavigate();
