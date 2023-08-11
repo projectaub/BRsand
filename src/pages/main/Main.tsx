@@ -32,6 +32,8 @@ const Main = () => {
   }, []);
 
   const logOut = async () => {
+    setUser(false);
+    alert('로그아웃 되었습니다.');
     const { error } = await supabase.auth.signOut();
   };
 
