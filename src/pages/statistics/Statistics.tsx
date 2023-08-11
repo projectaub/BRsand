@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
 import { useParams } from 'react-router-dom';
-import PieAge from '../../component/chart/pieChartAge';
-import PieTime from '../../component/chart/pieChartTime';
+import PieAge from '../../components/chart/pieChartAge';
+import PieTime from '../../components/chart/pieChartTime';
 
 const Statistics = () => {
   let sum: any = 0;
