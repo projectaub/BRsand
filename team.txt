@@ -15,4 +15,4 @@ yarn
 
 yarn add styled-components 
 yarn add @supabase/supabase-js 
-yarn add react-hook-form swiper
+yarn add react-hook-form swiper @nivo packages @nivo/pie

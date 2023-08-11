@@ -1,7 +1,7 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { supabase } from '../../../supabase';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 interface FormValue {
   adminEmail: string;
@@ -17,24 +17,19 @@ const AdminLogin = () => {
   } = useForm<FormValue>();
   const navigate = useNavigate();
 
-  const adminLogin = async (data: FormValue) => {
+  const adminLogin: SubmitHandler<FormValue> = async (data: FormValue) => {
     try {
       const { adminEmail, adminPw } = data;
       const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: adminEmail,
         password: adminPw
       });
+      console.log(data);
+
       if (error) {
-        setError('adminEmail', {
-          type: 'manual',
-          message: '유효한 이메일과 비밀번호를 입력하세요.'
-        });
-        setError('adminPw', {
-          type: 'manual',
-          message: '유효한 이메일과 비밀번호를 입력하세요.'
-        });
         return;
       }
+
       const response = await supabase.from('admin').select().eq('id', adminEmail).single();
       if (response.data.storeId === 0) {
         navigate(`/statistics/${response.data.storeId}`);
@@ -52,20 +47,24 @@ const AdminLogin = () => {
             type="email"
             placeholder="이메일"
             {...register('adminEmail', {
-              required: '이메일을 입력하세요.'
+              required: true,
+              pattern: /^\S+@\S+$/i
             })}
           />
-          {errors.adminEmail && <p>{errors.adminEmail.message}</p>}
+          {errors.adminEmail && errors.adminEmail.type === 'required' && <p>메일을 입력하세요</p>}
+          {errors.adminEmail && errors.adminEmail.type === 'pattern' && <p>올바른 메일 형식이 아닙니다</p>}
         </div>
         <div>
           <input
             type="password"
             placeholder="비밀번호"
             {...register('adminPw', {
-              required: '비밀번호를 입력하세요.'
+              required: true,
+              minLength: 6
             })}
           />
-          {errors.adminPw && <p>{errors.adminPw.message}</p>}
+          {errors.adminPw && errors.adminPw.type === 'required' && <p>비밀번호를 입력하세요</p>}
+          {errors.adminPw && errors.adminPw.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
         </div>
         <button type="submit">어드민 로그인</button>
       </form>
