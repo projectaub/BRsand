@@ -15,6 +15,7 @@ import Mobile from './layout/Mobile';
 import { supabase } from '../supabase';
 import { PrivateRoute } from '../pages/statistics/PrivateRoute';
 import AdminLogin from '../pages/admin/login/AdminLogin';
+import LoginSocial from '../components/login/LoginSocial';
 import Web from './layout/Web';
 
 console.log('Router', supabase);
@@ -32,6 +33,8 @@ const Router = () => {
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/login-social" element={<LoginSocial />} />
+
           {/* 주문관련 - 모바일 */}
           <Route element={<PrivateRoute />}>
             <Route path="/orderpage" element={<OrderPage />} />
