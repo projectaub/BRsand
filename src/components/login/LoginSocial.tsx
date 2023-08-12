@@ -16,7 +16,7 @@ const LoginSocial = () => {
     } else {
       alert('로그인');
       console.log(data);
-      // navigate('/');
+      navigate('/');
       // await addProfiles(data.id);
     }
   };
