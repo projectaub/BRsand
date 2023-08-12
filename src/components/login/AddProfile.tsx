@@ -24,7 +24,6 @@ const AddProfile = () => {
   const addUserProfiles = async () => {
     await supabase.from('users').insert(user.id);
   };
-
-  return <div>AddProfile</div>;
 };
+
 export default AddProfile;
