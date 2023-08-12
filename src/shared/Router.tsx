@@ -12,15 +12,10 @@ import Statistics from '../pages/statistics/Statistics';
 import OrderMenu from '../pages/orderpage/OrderMenu';
 import OrderCustom from '../pages/orderpage/OrderCustom';
 import Mobile from './layout/Mobile';
-import { supabase } from '../supabase';
 import { PrivateRoute } from '../pages/statistics/PrivateRoute';
 import AdminLogin from '../pages/admin/login/AdminLogin';
+import LoginSocial from '../components/login/LoginSocial';
 import Web from './layout/Web';
-
-console.log('Router', supabase);
-// interface ProfileProps {
-//   session: supabase.auth.Session | null; // Use the Session type from supabase
-// }
 
 const Router = () => {
   return (
@@ -32,6 +27,8 @@ const Router = () => {
           <Route path="/join" element={<Join />} />
           <Route path="/login" element={<Login />} />
           <Route path="/mypage" element={<Mypage />} />
+          <Route path="/login-social" element={<LoginSocial />} />
+
           {/* 주문관련 - 모바일 */}
           <Route element={<PrivateRoute />}>
             <Route path="/orderpage" element={<OrderPage />} />
