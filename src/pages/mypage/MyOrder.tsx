@@ -35,6 +35,14 @@ interface MyOrderProps {
 }
 
 function MyOrder({ order }: MyOrderProps) {
+  const priceChangeHandler = (price: any) => {
+    price = String(price); // price를 문자열로 변환
+    price = price.replace(/[^0-9]/g, '');
+    const numValue = price.replaceAll(',', '');
+    price = numValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return `${price} 원`; // 변환된 가격 값을 반환
+  };
+
   return (
     <div style={{ width: '100%' }}>
       <OrderArea key={order.id}>
@@ -53,7 +61,7 @@ function MyOrder({ order }: MyOrderProps) {
             order.orderMenu.vegetables
               .filter((vege: any) => !vege.isAdd)
               .map((vege: any) => <Stp key={vege.id}>(-){vege.name}</Stp>)}
-          <Sprice>{order.price} 원</Sprice>
+          <Sprice>{priceChangeHandler(order.price)}</Sprice>
         </FoodArea>
       </OrderArea>
     </div>
