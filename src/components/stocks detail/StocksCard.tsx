@@ -1,12 +1,32 @@
 import React from 'react';
 import { styled } from 'styled-components';
 import { Stock } from '../../pages/order status/Stocks';
+import { supabase } from '../../supabase';
+import { useParams } from 'react-router-dom';
 
 interface Props {
   stock: Stock;
 }
 
 const StocksCard = ({ stock }: Props) => {
+  const params = useParams();
+
+  const getMoreStocks = async (id: string, prev: number) => {
+    try {
+      const { data, error } = await supabase
+        .from(`stocks_${params.id}`)
+        .update({ count: prev + 20 })
+        .eq('id', id)
+        .select();
+
+      console.log(data);
+      console.log(error);
+      console.log('발주완료');
+    } catch (error) {
+      console.error('Error Updating orders:', error);
+    }
+  };
+
   return (
     <S.Container>
       <S.StockBox>
@@ -14,7 +34,24 @@ const StocksCard = ({ stock }: Props) => {
           <S.Name>{stock.name}</S.Name>
           <S.Category>{stock.type}</S.Category>
         </S.StockArea>
-        <S.Stocks>{stock.count}개</S.Stocks>
+        {stock.count <= 25 ? (
+          <div
+            style={{
+              marginLeft: 'auto'
+            }}
+          >
+            <S.Stocks>{stock.count}개</S.Stocks>
+            <S.StocksNeedMore
+              onClick={() => {
+                getMoreStocks(stock.id, stock.count);
+              }}
+            >
+              발주
+            </S.StocksNeedMore>
+          </div>
+        ) : (
+          <S.Stocks>{stock.count}개</S.Stocks>
+        )}
       </S.StockBox>
     </S.Container>
   );
@@ -46,6 +83,18 @@ const S = {
   `,
   Stocks: styled.div`
     margin-left: auto;
+    padding: 10px;
+  `,
+  StocksNeedMore: styled.div`
+    margin-left: auto;
+    background-color: #ffd99b;
+    border-radius: 20px;
+    padding: 10px;
+    cursor: pointer;
+    &:hover {
+      background-color: #b73d52;
+      color: white;
+    }
   `,
   Name: styled.div`
     font-weight: 500;
@@ -54,7 +103,6 @@ const S = {
   Category: styled.div`
     font-size: 12px;
   `,
-
   Btn: styled.button`
     width: calc(361px / 2 - 8px);
     padding: 8px;

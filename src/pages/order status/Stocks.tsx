@@ -3,9 +3,9 @@ import { supabase } from '../../supabase';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
-import StocksCard from '../../components/stocks detail/StocksCard';
 import StockArea from '../../components/stocks detail/StockArea';
 import { sortStockData } from '../../components/stocks detail/feature/sortData';
+import { updateStockData } from '../../components/stocks detail/feature/realtime';
 
 export interface Stock {
   id: string;
@@ -21,13 +21,16 @@ export interface SortedStockList {
 function Stocks() {
   const [stocks, setStocks] = useState<SortedStockList[] | null>(null);
   const params = useParams();
+
+  updateStockData(stocks!, setStocks!, params.id!);
+
   useEffect(() => {
     fetchStocks();
   }, []);
 
   const fetchStocks = async () => {
     try {
-      const { data, error } = await supabase.from(`stocks_${params.id}`).select();
+      const { data, error } = await supabase.from(`stocks_${params.id}`).select().order('count', { ascending: true });
       if (error) {
         console.error('Error fetching orders:', error);
       } else if (data !== null) {
@@ -46,13 +49,6 @@ function Stocks() {
     </S.Container>
   );
 }
-
-// const StockArea = styled.div`
-//   border: 1px solid black;
-//   width: 400px;
-//   margin: 20px;
-//   padding: 10px;
-// `;
 
 export default Stocks;
 
