@@ -24,7 +24,7 @@ const Main = () => {
     } else {
       setUser(user);
       console.log(user.id);
-      console.log(user.user_metadata['email']);
+      console.log(user.user_metadata);
     }
   };
 
