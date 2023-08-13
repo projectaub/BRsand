@@ -99,7 +99,7 @@ const OrderPay = ({ updateOrder, setPay }: any) => {
       pay_method: 'card', // 결제수단
       merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
       amount: 10000, // 결제금액
-      name: '벼랑샌드', // 주문명
+      name: '벼락샌드', // 주문명
       buyer_name: '홍길동', // 구매자 이름
       buyer_tel: '01012341234', // 구매자 전화번호
       buyer_email: 'example@example', // 구매자 이메일
@@ -137,6 +137,7 @@ const SPay = styled.button`
   font-size: 17px;
   cursor: pointer;
   margin: 10px;
+  margin-top: 350px;
   background-color: #b73d52;
   color: white;
   border: none;
