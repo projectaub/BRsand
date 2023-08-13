@@ -23,7 +23,8 @@ const Main = () => {
       setUser(false);
     } else {
       setUser(user);
-      console.log(user);
+      console.log(user.id);
+      console.log(user.user_metadata['email']);
     }
   };
 

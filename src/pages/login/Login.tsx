@@ -6,13 +6,16 @@ import LoginOTP from '../../components/login/LoginOTP';
 import { styled } from 'styled-components';
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
   const [selectLogin, setSelectLogin] = useState(true);
 
   const navigate = useNavigate();
 
   const moveJoinPage = async () => {
     navigate('/join');
+  };
+
+  const moveLoginSocialPage = async () => {
+    navigate('/login-social');
   };
 
   const selectLoginWay = () => {
@@ -25,7 +28,9 @@ const Login = () => {
       <div>
         <StLogin onClick={selectLoginWay}>{selectLogin ? '간편로그인' : '기본로그인'}</StLogin>
       </div>
-
+      <div>
+        <StLogin onClick={moveLoginSocialPage}>소셜로그인</StLogin>
+      </div>
       <div>
         <StJoin onClick={moveJoinPage}>회원가입</StJoin>
       </div>
