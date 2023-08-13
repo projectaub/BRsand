@@ -3,17 +3,12 @@ import { supabase } from '../../supabase';
 import { Order } from '../../model/Order';
 import { User } from '../../model/User';
 import { styled } from 'styled-components';
-import { useCheckAdmin } from '../../hook/useCheckAdmin';
-import { useNavigate, useParams } from 'react-router-dom';
 
 const Grade = () => {
   const [orderData, setOrderData] = useState<Order[]>([]);
   const [userData, setUserData] = useState<User[]>([]);
   const [userTotalPrices, setUserTotalPrices] = useState<{ [username: string]: number }>({});
   const [userUpgradeGrades, setUserUpgradeGrades] = useState<{ [username: string]: string }>({});
-  const params = useParams();
-  const navigate = useNavigate();
-  const [dataOn] = useCheckAdmin(String(params.id));
 
   const getOrderInfo = async () => {
     const { data, error } = await supabase.from('orders').select('*');
@@ -62,9 +57,9 @@ const Grade = () => {
     Object.keys(userPrices).forEach((username) => {
       const totalPrice = userPrices[username];
 
-      if (totalPrice >= 100000) {
+      if (totalPrice >= 70000) {
         upgradeGrades[username] = 'Gold';
-      } else if (totalPrice >= 50000) {
+      } else if (totalPrice >= 30000) {
         upgradeGrades[username] = 'Silver';
       } else {
         upgradeGrades[username] = 'basic';
@@ -109,6 +104,20 @@ const Grade = () => {
     getUserInfo();
   };
 
+  const sortedUsernames = Object.keys(userTotalPrices).sort((a, b) => {
+    const gradeA = userData.find((user) => user.name === a)?.grade;
+    const gradeB = userData.find((user) => user.name === b)?.grade;
+    if (gradeA === gradeB) {
+      return userTotalPrices[b] - userTotalPrices[a];
+    } else if (gradeA === 'Gold') {
+      return -1;
+    } else if (gradeA === 'Silver' && gradeB === 'basic') {
+      return -1;
+    } else {
+      return 1;
+    }
+  });
+
   return (
     <Container>
       <Table>
@@ -123,7 +132,7 @@ const Grade = () => {
           </TableRow>
         </thead>
         <tbody>
-          {Object.keys(userTotalPrices).map((username, index) => {
+          {sortedUsernames?.map((username, index) => {
             const user = userData.find((user) => user.name === username);
             const order = orderData.find((order) => order.user.name === username); // 수정된 부분
 
