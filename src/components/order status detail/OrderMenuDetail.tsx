@@ -16,6 +16,14 @@ const OrderMenuDetail = ({ order }: Props) => {
     return vegetableRender;
   };
 
+  const priceChangeHandler = (price: any) => {
+    price = String(price); // price를 문자열로 변환
+    price = price.replace(/[^0-9]/g, '');
+    const numValue = price.replaceAll(',', '');
+    price = numValue.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return `${price}`; // 변환된 가격 값을 반환
+  };
+
   return (
     <>
       <S.MenuArea>
@@ -51,7 +59,7 @@ const OrderMenuDetail = ({ order }: Props) => {
         )}
         <S.Line />
         <S.OptionArea>
-          <S.Option>결제금액 {order.price}원</S.Option>
+          <S.Option>결제금액 {priceChangeHandler(order.price)}원</S.Option>
         </S.OptionArea>
         <S.Line />
       </S.MenuArea>
