@@ -4,6 +4,16 @@ import { supabase } from '../../supabase';
 import { User } from '../../model/data';
 import OrderPay from '../../components/order detail/OrderPay';
 import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+
+interface Ingredient {
+  name: string;
+  id: number;
+  isAdd: boolean;
+  type: string;
+  price: number;
+  img: string;
+}
 
 interface veges {
   name: string;
@@ -30,44 +40,51 @@ const OrderCustom = () => {
     { name: '파프리카', id: 8, isAdd: true }
   ];
   const [base, setBase] = useState<Menu>();
+  const [baseList, setBaseList] = useState<Ingredient[]>([]);
   const [bread, setBread] = useState('');
+  const [breadList, setBreadList] = useState<Ingredient[]>([]);
   const [sauce, setSauce] = useState('');
+  const [sauceList, setSauceList] = useState<Ingredient[]>([]);
   const [cheese, setCheese] = useState('');
+  const [cheeseList, setCheeseList] = useState<Ingredient[]>([]);
   const [vegetables, setVegetables] = useState<veges[]>(vegetableList);
+  const [showBaseOrder, setShowBaseOrder] = useState(true);
+  const [showBreadOrder, setShowBreadOrder] = useState(true);
+  const [showSauceOrder, setShowSauceOrder] = useState(true);
+  const [showCheeseOrder, setShowCheeseOrder] = useState(true);
+
   const [pay, setPay] = useState(false);
 
   //로그인한 유저의 주문번호를 가져옵니다.
   //주문이 되고있는 번호는 단 하나겠지요..?
 
   //이것도 나중에는 서버에서 가져오는 방향으로... 어드민에서 추가할 수 있을꺼같습니다.
-  const baseList = [
-    { name: '치킨', price: 30000, id: 1 },
-    { name: '비건 콩고기', price: 260000, id: 2 },
-    { name: '에그마요', price: 960000, id: 3 },
-    { name: '비프', price: 302200, id: 4 },
-    { name: '햄', price: 573200, id: 5 }
-  ];
+  // const baseList = [
+  //   { name: '치킨', price: 30000, id: 1 },
+  //   { name: '비건 콩고기', price: 260000, id: 2 },
+  //   { name: '에그마요', price: 960000, id: 3 },
+  //   { name: '비프', price: 302200, id: 4 },
+  //   { name: '햄', price: 573200, id: 5 }
+  // ];
 
-  const breadList = [
-    { name: '화이트', id: 1 },
-    { name: '크로아상', id: 2 },
-    { name: '베이글', id: 3 },
-    { name: '번', id: 4 }
-  ];
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-  const cheeseList = [
-    { name: '모짜렐라', id: 1 },
-    { name: '체다', id: 2 },
-    { name: '고르곤졸라', id: 3 }
-  ];
-
-  const sauceList = [
-    { name: '바베큐', id: 1 },
-    { name: '핫칠리', id: 2 },
-    { name: '랜치', id: 3 },
-    { name: '마라', id: 4 },
-    { name: '스위트어니언', id: 5 }
-  ];
+  const fetchData = async () => {
+    const { data, error } = await supabase.from('custom').select();
+    const baseData = data?.filter((data) => data.type === '베이스');
+    const breadData = data?.filter((data) => data.type === '빵');
+    const sauceData = data?.filter((data) => data.type === '소스');
+    const cheeseData = data?.filter((data) => data.type === '치즈');
+    setBaseList(baseData!);
+    setBreadList(breadData!);
+    setCheeseList(cheeseData!);
+    setSauceList(sauceData!);
+    if (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
 
   const [orderId] = useGetOrder();
   console.log(orderId);
@@ -96,34 +113,55 @@ const OrderCustom = () => {
       {pay && <OrderPay updateOrder={updateOrder} setPay={setPay}></OrderPay>}
 
       {/* 먼저 베이스를 골라줍니다. */}
-      <h1>베이스를 골라주세요.</h1>
-      {baseList.map((base) => {
-        return (
-          <button
-            key={base.id}
-            onClick={() => {
-              setBase(base);
-            }}
-          >
-            {base.name}
-          </button>
-        );
-      })}
+      {showBaseOrder && (
+        <div>
+          <S.Caption>베이스를 골라주세요.</S.Caption>
+          {baseList.map((base) => {
+            return (
+              <div style={{ display: 'inline-block' }}>
+                <S.MenuBtn
+                  key={base.id}
+                  onClick={() => {
+                    setBase(base);
+                    setShowBaseOrder(false);
+                  }}
+                >
+                  <S.ImageContainer>
+                    <img src={base.img} style={{ height: '90px' }} alt={base.name} />
+                  </S.ImageContainer>
+                  <S.TextContainerB>
+                    <S.Name>{base.name}</S.Name>
+                    <S.Price> {base.price}</S.Price>
+                  </S.TextContainerB>
+                </S.MenuBtn>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {/* 베이스를 고르면 빵을 고를 수 있습니다. */}
-      {base ? (
+      {showBreadOrder && base ? (
         <>
-          <h1>빵을 골라주세요.</h1>
+          <S.Caption>빵을 골라주세요.</S.Caption>
           {breadList.map((bread) => {
             return (
-              <button
-                key={bread.id}
-                onClick={() => {
-                  setBread(bread.name);
-                }}
-              >
-                {bread.name}
-              </button>
+              <div style={{ display: 'inline-block' }}>
+                <S.MenuBtn
+                  key={bread.id}
+                  onClick={() => {
+                    setBread(bread.name);
+                    setShowBreadOrder(false);
+                  }}
+                >
+                  <S.ImageContainer>
+                    <img src={bread.img} style={{ height: '90px' }} alt={bread.name} />
+                  </S.ImageContainer>
+                  <S.TextContainer>
+                    <S.Name>{bread.name}</S.Name>
+                  </S.TextContainer>
+                </S.MenuBtn>
+              </div>
             );
           })}
         </>
@@ -132,38 +170,54 @@ const OrderCustom = () => {
       )}
 
       {/* 빵을 고르면 소스를 고를 수 있습니다. */}
-      {bread.length !== 0 && (
+      {showSauceOrder && bread.length !== 0 && (
         <>
-          <h1>소스를 골라보세요.</h1>
+          <S.Caption>소스를 골라보세요.</S.Caption>
           {sauceList.map((sauce) => {
             return (
-              <button
-                key={sauce.id}
-                onClick={() => {
-                  setSauce(sauce.name);
-                }}
-              >
-                {sauce.name}
-              </button>
+              <div style={{ display: 'inline-block' }}>
+                <S.MenuBtn
+                  key={sauce.id}
+                  onClick={() => {
+                    setSauce(sauce.name);
+                    setShowSauceOrder(false);
+                  }}
+                >
+                  <S.ImageContainer>
+                    <img src={sauce.img} style={{ height: '90px' }} alt={sauce.name} />
+                  </S.ImageContainer>
+                  <S.TextContainer>
+                    <S.Name>{sauce.name}</S.Name>
+                  </S.TextContainer>
+                </S.MenuBtn>
+              </div>
             );
           })}
         </>
       )}
 
       {/* 소스를 고르면 치즈를 고를 수 있습니다. */}
-      {sauce.length !== 0 && (
+      {showCheeseOrder && sauce.length !== 0 && (
         <>
-          <h1>치즈를 골라보세요.</h1>
+          <S.Caption>치즈를 골라보세요.</S.Caption>
           {cheeseList.map((cheese) => {
             return (
-              <button
-                key={cheese.id}
-                onClick={() => {
-                  setCheese(cheese.name);
-                }}
-              >
-                {cheese.name}
-              </button>
+              <div style={{ display: 'inline-block' }}>
+                <S.MenuBtn
+                  key={cheese.id}
+                  onClick={() => {
+                    setCheese(cheese.name);
+                    setShowCheeseOrder(false);
+                  }}
+                >
+                  <S.ImageContainer>
+                    <img src={cheese.img} style={{ height: '90px' }} alt={cheese.name} />
+                  </S.ImageContainer>
+                  <S.TextContainer>
+                    <S.Name>{cheese.name}</S.Name>
+                  </S.TextContainer>
+                </S.MenuBtn>
+              </div>
             );
           })}
         </>
@@ -197,7 +251,6 @@ const OrderCustom = () => {
 
       {/* 이제 드디어 주문 할 수 있습니다. */}
       <>
-        <h1>주문할수있어요</h1>
         {cheese.length !== 0 && (
           <button
             onClick={() => {
@@ -210,6 +263,63 @@ const OrderCustom = () => {
       </>
     </>
   );
+};
+
+const S = {
+  Caption: styled.p`
+    font-size: 18px;
+    margin: 8px 0px;
+    font-weight: 700;
+    margin-left: 15px;
+    color: #b73d52;
+  `,
+  MenuBtn: styled.div`
+    position: relative;
+    width: 180px;
+    margin: 7px;
+    height: 180px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 7px;
+    &:hover {
+      background-color: #ffe8c4;
+    }
+  `,
+  ImageContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+  `,
+
+  TextContainer: styled.div`
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    line-height: 30px;
+    background-color: #b73d52;
+    height: 50px;
+  `,
+  TextContainerB: styled.div`
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #b73d52;
+    height: 50px;
+  `,
+  Name: styled.p`
+    text-align: center;
+    font-size: 19px;
+
+    color: white;
+  `,
+  Price: styled.p`
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  `
 };
 
 export default OrderCustom;
