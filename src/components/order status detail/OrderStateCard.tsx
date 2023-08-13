@@ -32,7 +32,7 @@ const OrderStateCard = ({ orders }: Props) => {
                 orderStateChanger(order);
               }}
             >
-              주문접수
+              {order.isActive ? '조리완료' : '주문접수'}
             </S.ActionButton>
           </S.Card>
         );
