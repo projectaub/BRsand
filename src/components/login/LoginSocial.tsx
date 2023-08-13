@@ -3,82 +3,63 @@ import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
+// Define the Provider type with valid options
+type Provider =
+  | 'github'
+  | 'google'
+  | 'gitlab'
+  | 'bitbucket'
+  | 'facebook'
+  | 'apple'
+  | 'twitter'
+  | 'linkedin'
+  | 'bitbucket'
+  | 'twitch'
+  | 'discord'
+  | 'kakao'
+  | 'slack';
+
 const LoginSocial = () => {
   const navigate = useNavigate();
 
-  const kakaoLogin = async () => {
+  const signInWithOAuthAndLog = async (provider: Provider) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'kakao'
+      provider: provider
     });
 
     if (error) {
-      console.log(error);
+      console.log(`Error signing in with ${provider}:`, error);
     } else {
+      console.log(`Successfully signed in with ${provider}:`, data);
       alert('로그인');
-      console.log(data);
       navigate('/');
-      // await addProfiles(data.id);
-    }
-  };
-
-  const slackLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'slack'
-    });
-
-    if (error) {
-      console.log('slack Longin', error);
-    } else {
-      alert('로그인');
-      console.log(data);
-      navigate('/');
-      // await addProfiles(data.id);
-    }
-  };
-
-  const googleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent'
-        }
-      }
-    });
-
-    if (error) {
-      console.log('google Longin', error);
-    } else {
-      alert('로그인');
-      console.log(data);
-      navigate('/');
-      // await addProfiles(data.id);
-    }
-  };
-
-  const addProfiles = async (userId: string) => {
-    try {
-      const { data: dbData } = await supabase.from('users').select('id').eq('id', userId);
-      const isDbEmpty = !dbData || dbData.length === 0;
-
-      if (isDbEmpty) {
-        await supabase.from('users').insert([{ id: userId }]);
-      }
-    } catch (error) {
-      console.log(error);
     }
   };
 
   return (
-    <div style={{ marginTop: '300px' }}>
-      <form onSubmit={kakaoLogin}>
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog('kakao');
+        }}
+      >
         <QuickOrder>kakao</QuickOrder>
       </form>
-      <form onSubmit={slackLogin}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog('slack');
+        }}
+      >
         <QuickOrder>slack</QuickOrder>
       </form>
-      <form onSubmit={googleLogin}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog('google');
+        }}
+      >
         <QuickOrder>google</QuickOrder>
       </form>
     </div>
