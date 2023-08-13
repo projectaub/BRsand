@@ -75,7 +75,7 @@ const OrderMenu = () => {
                   </S.ImageContainer>
                   <S.TextContainer>
                     <S.Name>{menu.name}</S.Name>
-                    <S.Price> {menu.price}</S.Price>
+                    <S.Price> {menu.price.toLocaleString('ko-KR')}</S.Price>
                   </S.TextContainer>
                 </S.MenuBtn>
               </div>
