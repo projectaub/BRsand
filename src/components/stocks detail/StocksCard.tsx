@@ -18,10 +18,6 @@ const StocksCard = ({ stock }: Props) => {
         .update({ count: prev + 20 })
         .eq('id', id)
         .select();
-
-      console.log(data);
-      console.log(error);
-      console.log('발주완료');
     } catch (error) {
       console.error('Error Updating orders:', error);
     }
@@ -71,10 +67,8 @@ const S = {
     align-items: center;
     padding: 15px 20px;
     border-bottom: 1px solid black;
-    /* background-color: orange; */
   `,
   StockArea: styled.div`
-    /* height: 80px; */
     cursor: pointer;
     display: flex;
     flex-direction: column;
