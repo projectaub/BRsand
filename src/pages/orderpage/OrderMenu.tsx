@@ -21,7 +21,6 @@ const OrderMenu = () => {
   const [pay, setPay] = useState(false);
   const [menu, setMenu] = useState<Menu | undefined>();
   const [menuList, setMenuList] = useState<Menu[]>([]);
-  const [picked, setPicked] = useState(false);
 
   //메뉴 리스트를 서버에서 가져오면 좋을거같습니다.
   //나중에 전체 어드민에서 새로운 메뉴를 추가할 수 있도록..?
@@ -77,11 +76,10 @@ const OrderMenu = () => {
               onClick={() => {
                 setMenu(menu);
                 setPay(true);
-                setPicked(true);
               }}
             >
               <S.ImageContainer>
-                <img src={menu.img} style={{ width: '130px' }} alt={menu.name} />
+                <img src={menu.img} style={{ height: '90px' }} alt={menu.name} />
               </S.ImageContainer>
               <S.TextContainer>
                 <S.Name>{menu.name}</S.Name>
@@ -109,6 +107,7 @@ const S = {
     margin: 7px;
     height: 180px;
     cursor: pointer;
+    overflow: hidden;
     &:hover {
       background-color: #ffe8c4;
     }
