@@ -19,48 +19,48 @@ const Statistics = () => {
 
   // console.log('orderList==>', orderList);
 
-  // const orderPmTiemFilter = orderTime.reduce((acc: any, item: any) => {
-  //   const key = new Date(item.time).getHours();
-  //   if (acc[key]) {
-  //     acc[key] = acc[key] + 1;
-  //   } else {
-  //     acc[key] = 1;
-  //   }
-  //   return acc;
-  // }, {});
+  const orderPmTiemFilter = orderTime.reduce((acc: any, item: any) => {
+    const key = new Date(item.time).getHours();
+    if (acc[key]) {
+      acc[key] = acc[key] + 1;
+    } else {
+      acc[key] = 1;
+    }
+    return acc;
+  }, {});
 
-  // 아무것도 없는 오브젝트
+  //   아무것도 없는 오브젝트
 
-  // const pieTiemData = Object.keys(orderPmTiemFilter);
-  // const orderTimeArr = pieTiemData.map((key) => {
-  //   const newTimeArr = {
-  //     id: key,
-  //     label: key,
-  //     value: orderPmTiemFilter[key],
-  //     color: `rgb(255,${key}0,255);`
-  //   };
-  //   return newTimeArr;
-  // });
-  // const userAgeDataFilter = userAgeData.reduce((acc: any, age: any) => {
-  //   const key = ~~(age.age / 10);
-  //   if (acc[key]) {
-  //     acc[key] = acc[key] + 1;
-  //   } else {
-  //     acc[key] = 1;
-  //   }
-  //   return acc;
-  // }, {});
+  const pieTiemData = Object.keys(orderPmTiemFilter);
+  const orderTimeArr = pieTiemData.map((key) => {
+    const newTimeArr = {
+      id: key,
+      label: key,
+      value: orderPmTiemFilter[key],
+      color: `rgb(255,${key}0,255);`
+    };
+    return newTimeArr;
+  });
+  const userAgeDataFilter = userAgeData.reduce((acc: any, age: any) => {
+    const key = ~~(age.age / 10);
+    if (acc[key]) {
+      acc[key] = acc[key] + 1;
+    } else {
+      acc[key] = 1;
+    }
+    return acc;
+  }, {});
 
-  // const userAgeArr = Object.keys(userAgeDataFilter).map((key) => {
-  //   const newPieArr = {
-  //     id: key + 0,
-  //     label: key + '0대',
-  //     value: userAgeDataFilter[key],
-  //     color: `rgb(255,${key}0,255);`
-  //   };
-  //   console.log('파이 데이터', newPieArr);
-  //   return newPieArr;
-  // });
+  const userAgeArr = Object.keys(userAgeDataFilter).map((key) => {
+    const newPieArr = {
+      id: key + 0,
+      label: key + '0대',
+      value: userAgeDataFilter[key],
+      color: `rgb(255,${key}0,255);`
+    };
+    console.log('파이 데이터', newPieArr);
+    return newPieArr;
+  });
 
   // arr 이라는 배열을 돌면서 배열안에 들어있는 object를 콘솔로 다찍어주는 for문을 만들어주세요
   const fetchData = async () => {
@@ -75,41 +75,44 @@ const Statistics = () => {
     }
   };
 
-  // const getUserAge = async () => {
-  //   const { data } = await supabase.from('users').select('age').not('age', 'is', null);
-  //   console.log(data);
-  //   setUserAgeData(data!);
-  // };
+  const getUserAge = async () => {
+    const { data } = await supabase.from('users').select('age').not('age', 'is', null);
+    setUserAgeData(data!);
+  };
 
-  // const getOrderTimeData = async () => {
-  //   if (params.id === '0') {
-  //     const { data } = await supabase
-  //       .from('orders')
-  //       .select()
-  //       .gte('time', '2023-08-10T00:00:00.114748+00:00')
-  //       .lte('time', '2023-08-10T14:00:00.114748+00:00');
-  //     setOrderTime(data);
-  //   } else {
-  //     const { data } = await supabase
-  //       .from('orders')
-  //       .select()
-  //       .eq('storeId', params.id)
-  //       .gte('time', '2023-08-10T00:00:00.114748+00:00')
-  //       .lte('time', '2023-08-10T14:00:00.114748+00:00');
-  //     setOrderTime(data);
-  //   }
-  // };
+  const getOrderTimeData = async () => {
+    if (params.id === '0') {
+      const { data } = await supabase
+        .from('orders')
+        .select()
+        .gte('time', '2023-08-10T00:00:00.114748+00:00')
+        .lte('time', '2023-08-10T14:00:00.114748+00:00');
+      setOrderTime(data);
+    } else {
+      const { data } = await supabase
+        .from('orders')
+        .select()
+        .eq('storeId', params.id)
+        .gte('time', '2023-08-10T00:00:00.114748+00:00')
+        .lte('time', '2023-08-10T14:00:00.114748+00:00');
+      setOrderTime(data);
+    }
+  };
 
   useEffect(() => {
     fetchData();
-    // getUserAge();
-    // getOrderTimeData();
+    getUserAge();
+    getOrderTimeData();
   }, []);
 
   return (
     <>
       {dataOn && (
         <>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
           <div className="what">
             {/* {orderList.forEach((item: Order): => {
               if (item.isDone === true) {
@@ -135,8 +138,8 @@ const Statistics = () => {
             })} */}
             {/* {(params.id === '0' || params.id === '2') && <div>스토어2 :{sum3}</div>} */}
             <div style={{ height: '300px', display: 'flex' }}>
-              {/* <PieAge data={userAgeArr} /> */}
-              {/* <PieTime data={orderTimeArr} /> */}
+              <PieAge data={userAgeArr} />
+              <PieTime data={orderTimeArr} />
             </div>
           </div>
         </>
