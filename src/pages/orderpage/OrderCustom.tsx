@@ -4,7 +4,7 @@ import { supabase } from '../../supabase';
 import { User } from '../../model/data';
 import OrderPay from '../../components/order detail/OrderPay';
 import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 interface Ingredient {
   name: string;
@@ -232,7 +232,7 @@ const OrderCustom = () => {
           {vegetables.map((vege, index) => {
             return (
               <div style={{ display: 'inline-block' }}>
-                <S.MenuBtn
+                <S.VegeMenuBtn
                   key={vege.id}
                   onClick={() => {
                     const newList = vegetables.map((item) => {
@@ -245,6 +245,7 @@ const OrderCustom = () => {
 
                     setVegetables(newList);
                   }}
+                  $isSelected={vege.isAdd}
                 >
                   <S.ImageContainer>
                     <img src={vege.img} style={{ height: '90px' }} alt={vege.name} />
@@ -252,7 +253,7 @@ const OrderCustom = () => {
                   <S.TextContainer>
                     <S.Name>{vege.name}</S.Name>
                   </S.TextContainer>
-                </S.MenuBtn>
+                </S.VegeMenuBtn>
               </div>
             );
           })}
@@ -276,6 +277,10 @@ const OrderCustom = () => {
   );
 };
 
+type VegeButtonProps = {
+  $isSelected: boolean;
+} & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+
 const S = {
   Caption: styled.p`
     font-size: 18px;
@@ -283,6 +288,24 @@ const S = {
     font-weight: 700;
     margin-left: 15px;
     color: #b73d52;
+  `,
+  VegeMenuBtn: styled.div<VegeButtonProps>`
+    position: relative;
+    width: 180px;
+    margin: 7px;
+    height: 180px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 7px;
+    background-color: #ffd99b;
+    &:hover {
+      background-color: #ffd99b;
+    }
+    ${(props) =>
+      props.$isSelected &&
+      css`
+        background-color: white;
+      `}
   `,
   MenuBtn: styled.div`
     position: relative;
