@@ -84,6 +84,7 @@ const Mypage = () => {
             <Stp>{userName} 님의 주문이 진행중입니다.</Stp>
             {orders
               .filter((order) => !order.isDone)
+              .reverse()
               .map((order) => (
                 <MyOrder order={order} />
               ))}
