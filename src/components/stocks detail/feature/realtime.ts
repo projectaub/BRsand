@@ -7,7 +7,7 @@ export const updateStockData = (
   id: string
 ) => {
   supabase
-    .channel('custom-db-channel')
+    .channel('custom-stock-channel')
     .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: `stocks_${id}` }, (payload) => {
       const newStockList = stockList?.map((stocks) => {
         const list = stocks.stock.map((item) => {
