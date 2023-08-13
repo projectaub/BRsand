@@ -1,4 +1,5 @@
 import React from 'react';
+import { styled } from 'styled-components';
 
 export interface RequestPayAdditionalParams {
   digital?: boolean;
@@ -122,11 +123,28 @@ const OrderPay = ({ updateOrder, setPay }: any) => {
     }
   }
   return (
-    <>
-      <button onClick={submitPay}>현금</button>
-      <button onClick={onClickPayment}>카드</button>
-    </>
+    <div style={{ width: '240px', margin: '0 auto' }}>
+      <SPay onClick={submitPay}>현금</SPay>
+      <SPay onClick={onClickPayment}>카드</SPay>
+    </div>
   );
 };
+
+const SPay = styled.button`
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 17px;
+  cursor: pointer;
+  margin: 10px;
+  background-color: #b73d52;
+  color: white;
+  border: none;
+  &:hover {
+    background-color: white;
+    color: #b73d52;
+    border: 2px solid #b73d52;
+  }
+`;
 
 export default OrderPay;

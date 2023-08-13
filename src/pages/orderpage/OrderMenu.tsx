@@ -21,6 +21,7 @@ const OrderMenu = () => {
   const [pay, setPay] = useState(false);
   const [menu, setMenu] = useState<Menu | undefined>();
   const [menuList, setMenuList] = useState<Menu[]>([]);
+  const [picked, setPicked] = useState(false);
 
   //메뉴 리스트를 서버에서 가져오면 좋을거같습니다.
   //나중에 전체 어드민에서 새로운 메뉴를 추가할 수 있도록..?
@@ -67,18 +68,27 @@ const OrderMenu = () => {
       {pay && <OrderPay updateOrder={updateOrder} setPay={setPay}></OrderPay>}
 
       <S.Caption>메뉴를 골라주세요.</S.Caption>
+
       {menuList?.map((menu) => {
         return (
-          <S.MenuBtn
-            key={menu.id}
-            onClick={() => {
-              setMenu(menu);
-              setPay(true);
-            }}
-          >
-            {menu.name}, {menu.price}
-            <img src={menu.img} style={{ width: '160px' }} />
-          </S.MenuBtn>
+          <div style={{ display: 'inline-block' }}>
+            <S.MenuBtn
+              key={menu.id}
+              onClick={() => {
+                setMenu(menu);
+                setPay(true);
+                setPicked(true);
+              }}
+            >
+              <S.ImageContainer>
+                <img src={menu.img} style={{ width: '130px' }} alt={menu.name} />
+              </S.ImageContainer>
+              <S.TextContainer>
+                <S.Name>{menu.name}</S.Name>
+                <S.Price> {menu.price}</S.Price>
+              </S.TextContainer>
+            </S.MenuBtn>
+          </div>
         );
       })}
     </>
@@ -93,12 +103,42 @@ const S = {
     margin-left: 15px;
     color: #b73d52;
   `,
-  MenuBtn: styled.p`
+  MenuBtn: styled.div`
+    position: relative;
     width: 180px;
+    margin: 7px;
     height: 180px;
-    border: 2px solid #b73d52;
-    border-radius: 10px;
-    display: inline-table;
+    cursor: pointer;
+    &:hover {
+      background-color: #ffe8c4;
+    }
+  `,
+  ImageContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 130px;
+  `,
+
+  TextContainer: styled.div`
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+
+    background-color: #b73d52;
+    height: 50px;
+  `,
+  Name: styled.p`
+    text-align: center;
+    font-size: 19px;
+
+    color: white;
+  `,
+  Price: styled.p`
+    text-align: center;
+    color: white;
+    font-weight: bold;
   `
 };
 
