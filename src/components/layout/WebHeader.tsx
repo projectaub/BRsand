@@ -10,7 +10,14 @@ const WebHeader = () => {
     const currentUrl = window.location.href;
     let baseUrl = currentUrl.split('/');
     let url = '';
-    if (baseUrl[3] === 'statistics') {
+
+    if (params.id === '0') {
+      if (baseUrl[3] === 'statistics') {
+        url = 'grade'; // params.id가 0이면 회원 관리 페이지로 이동
+      } else {
+        url = 'statistics';
+      }
+    } else if (baseUrl[3] === 'statistics') {
       url = 'orderstatus';
     } else {
       url = 'statistics';
@@ -22,7 +29,13 @@ const WebHeader = () => {
     const currentUrl = window.location.href;
     let baseUrl = currentUrl.split('/');
     let url = '';
-    if (baseUrl[3] === 'statistics') {
+    if (params.id === '0') {
+      if (baseUrl[3] === 'statistics') {
+        return true;
+      } else {
+        return false;
+      }
+    } else if (baseUrl[3] === 'statistics') {
       return true;
     } else {
       return false;
@@ -31,11 +44,23 @@ const WebHeader = () => {
 
   return (
     <S.Area>
-      <S.LogoArea>
-        <S.LogoImg src="https://i.ibb.co/ZT0yLjj/02.png"></S.LogoImg>
-        <S.LogoArea>주문 | 매장 관리 시스템</S.LogoArea>
-      </S.LogoArea>
-      <S.Btn onClick={adminPageChanger}>{textChanger() ? '주문' : '매장'}관리로 이동</S.Btn>
+      {params.id === '0' ? (
+        <>
+          <S.LogoArea>
+            <S.LogoImg src="https://i.ibb.co/ZT0yLjj/02.png"></S.LogoImg>
+            <S.LogoArea>주문 | 회원 관리 시스템</S.LogoArea>
+          </S.LogoArea>
+          <S.Btn onClick={adminPageChanger}>{textChanger() ? '회원' : '매장'}관리로 이동</S.Btn>
+        </>
+      ) : (
+        <>
+          <S.LogoArea>
+            <S.LogoImg src="https://i.ibb.co/ZT0yLjj/02.png"></S.LogoImg>
+            <S.LogoArea>주문 | 매장 관리 시스템</S.LogoArea>
+          </S.LogoArea>
+          <S.Btn onClick={adminPageChanger}>{textChanger() ? '주문' : '매장'}관리로 이동</S.Btn>
+        </>
+      )}
     </S.Area>
   );
 };
