@@ -51,6 +51,7 @@ const OrderCustom = () => {
   const [showBaseOrder, setShowBaseOrder] = useState(true);
   const [showBreadOrder, setShowBreadOrder] = useState(true);
   const [showSauceOrder, setShowSauceOrder] = useState(true);
+  const [showCheeseOrder, setShowCheeseOrder] = useState(true);
 
   const [pay, setPay] = useState(false);
 
@@ -196,19 +197,27 @@ const OrderCustom = () => {
       )}
 
       {/* 소스를 고르면 치즈를 고를 수 있습니다. */}
-      {sauce.length !== 0 && (
+      {showCheeseOrder && sauce.length !== 0 && (
         <>
           <S.Caption>치즈를 골라보세요.</S.Caption>
           {cheeseList.map((cheese) => {
             return (
-              <button
-                key={cheese.id}
-                onClick={() => {
-                  setCheese(cheese.name);
-                }}
-              >
-                {cheese.name}
-              </button>
+              <div style={{ display: 'inline-block' }}>
+                <S.MenuBtn
+                  key={cheese.id}
+                  onClick={() => {
+                    setCheese(cheese.name);
+                    setShowCheeseOrder(false);
+                  }}
+                >
+                  <S.ImageContainer>
+                    <img src={cheese.img} style={{ height: '90px' }} alt={cheese.name} />
+                  </S.ImageContainer>
+                  <S.TextContainer>
+                    <S.Name>{cheese.name}</S.Name>
+                  </S.TextContainer>
+                </S.MenuBtn>
+              </div>
             );
           })}
         </>
