@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../supabase';
+import { styled } from 'styled-components';
 
 const LoginOTP = () => {
   const [loading, setLoading] = useState(false);
@@ -28,21 +29,50 @@ const LoginOTP = () => {
     <>
       <form onSubmit={handleSubmit}>
         <div>
-          <input
+          <StInput
             type="email"
             placeholder="메일주소를 입력하세요"
             value={email}
             required={true}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: any) => setEmail(e.target.value)}
           />
         </div>
 
         <div>
-          <button disabled={loading}>{loading ? <span>Loading</span> : <span>인증메일 발송</span>}</button>
+          <StBtn disabled={loading}>{loading ? <span>Loading</span> : <span>인증메일 발송</span>}</StBtn>
         </div>
       </form>
     </>
   );
 };
+
+const StInput = styled.input`
+  margin: 0 auto;
+  width: 200px;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+  padding: 0 10px 0 10px;
+  background-color: #f0efef;
+  outline: none;
+  margin-left: 100px;
+`;
+
+const StBtn = styled.button`
+  width: 100px;
+  height: 30px;
+  background-color: #939393;
+  margin-bottom: 180px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  margin-left: 152px;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 1px 1px 1px #a6a6a6;
+  }
+`;
 
 export default LoginOTP;

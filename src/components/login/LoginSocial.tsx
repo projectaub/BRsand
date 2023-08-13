@@ -71,7 +71,7 @@ const LoginSocial = () => {
   };
 
   return (
-    <div>
+    <div style={{ marginTop: '300px' }}>
       <form onSubmit={kakaoLogin}>
         <QuickOrder>kakao</QuickOrder>
       </form>

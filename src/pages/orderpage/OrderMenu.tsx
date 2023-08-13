@@ -47,7 +47,7 @@ const OrderMenu = () => {
     };
     await supabase.from('orders').update(order).eq('id', orderId);
 
-    alert('주문 잘 들어감');
+    alert('주문이 완료되었습니다.');
     navigate('/mypage');
   };
 
