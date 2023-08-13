@@ -1,26 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { User } from '@supabase/supabase-js';
 
-// Define the Provider type with valid options
-type Provider =
-  | 'github'
-  | 'google'
-  | 'gitlab'
-  | 'bitbucket'
-  | 'facebook'
-  | 'apple'
-  | 'twitter'
-  | 'linkedin'
-  | 'bitbucket'
-  | 'twitch'
-  | 'discord'
-  | 'kakao'
-  | 'slack';
+type Provider = 'google' | 'kakao' | 'slack';
 
 const LoginSocial = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
 
   const signInWithOAuthAndLog = async (provider: Provider) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
@@ -32,8 +20,40 @@ const LoginSocial = () => {
     } else {
       console.log(`Successfully signed in with ${provider}:`, data);
       alert('로그인');
+      getUser();
+      getUserInfo();
       navigate('/');
     }
+  };
+
+  const getUser = async () => {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setUser(null);
+    } else {
+      setUser(user);
+      console.log(user.id);
+      console.log(user.user_metadata);
+    }
+  };
+
+  const getUserInfo = async () => {
+    const { data: userInfo } = await supabase.from('users').select('id').single();
+    if (userInfo) {
+      console.log('유저정보등록되어있음');
+      return;
+    } else {
+      updateUserInfo();
+    }
+  };
+
+  const updateUserInfo = async () => {
+    await supabase
+      .from('users')
+      .insert({ id: user!.id, email: user!.user_metadata['email'], grade: 'basic', name: user!.user_metadata['name'] });
   };
 
   return (
@@ -44,7 +64,7 @@ const LoginSocial = () => {
           signInWithOAuthAndLog('kakao');
         }}
       >
-        <QuickOrder>kakao</QuickOrder>
+        <SocialLogin>kakao</SocialLogin>
       </form>
       <form
         onSubmit={(e) => {
@@ -52,7 +72,7 @@ const LoginSocial = () => {
           signInWithOAuthAndLog('slack');
         }}
       >
-        <QuickOrder>slack</QuickOrder>
+        <SocialLogin>slack</SocialLogin>
       </form>
       <form
         onSubmit={(e) => {
@@ -60,7 +80,7 @@ const LoginSocial = () => {
           signInWithOAuthAndLog('google');
         }}
       >
-        <QuickOrder>google</QuickOrder>
+        <SocialLogin>google</SocialLogin>
       </form>
     </div>
   );
@@ -68,7 +88,7 @@ const LoginSocial = () => {
 
 export default LoginSocial;
 
-const QuickOrder = styled.button`
+const SocialLogin = styled.button`
   width: 120px;
   height: 35px;
   display: block;
