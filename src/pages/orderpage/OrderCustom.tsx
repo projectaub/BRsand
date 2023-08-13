@@ -133,7 +133,7 @@ const OrderCustom = () => {
                   </S.ImageContainer>
                   <S.TextContainerB>
                     <S.Name>{base.name}</S.Name>
-                    <S.Price> {base.price}</S.Price>
+                    <S.Price> {base.price.toLocaleString('ko-KR')}</S.Price>
                   </S.TextContainerB>
                 </S.MenuBtn>
               </div>
