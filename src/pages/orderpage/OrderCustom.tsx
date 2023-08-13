@@ -174,7 +174,7 @@ const OrderCustom = () => {
       {/* 빵을 고르면 소스를 고를 수 있습니다. */}
       {showSauceOrder && bread.length !== 0 && (
         <>
-          <S.Caption>소스를 골라보세요.</S.Caption>
+          <S.Caption>소스를 골라주세요.</S.Caption>
           {sauceList.map((sauce) => {
             return (
               <div style={{ display: 'inline-block' }}>
@@ -201,7 +201,7 @@ const OrderCustom = () => {
       {/* 소스를 고르면 치즈를 고를 수 있습니다. */}
       {showCheeseOrder && sauce.length !== 0 && (
         <>
-          <S.Caption>치즈를 골라보세요.</S.Caption>
+          <S.Caption>치즈를 골라주세요.</S.Caption>
           {cheeseList.map((cheese) => {
             return (
               <div style={{ display: 'inline-block' }}>
@@ -287,7 +287,7 @@ const S = {
     margin: 8px 0px;
     font-weight: 700;
     margin-left: 15px;
-    color: #b73d52;
+    color: #000000;
   `,
   VegeMenuBtn: styled.div<VegeButtonProps>`
     position: relative;
@@ -297,9 +297,9 @@ const S = {
     cursor: pointer;
     overflow: hidden;
     border-radius: 7px;
-    background-color: #ffd99b;
+    background-color: #ffe8c4;
     &:hover {
-      background-color: #ffd99b;
+      background-color: #ffe8c4;
     }
     ${(props) =>
       props.$isSelected &&
@@ -364,6 +364,10 @@ const S = {
     cursor: pointer;
     margin-top: 20px;
     margin-left: 130px;
+    font-size: 17px;
+    &:hover {
+      background-color: #ffcd7c;
+    }
   `
 };
 

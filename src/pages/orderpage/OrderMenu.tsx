@@ -47,7 +47,7 @@ const OrderMenu = () => {
     };
     await supabase.from('orders').update(order).eq('id', orderId);
 
-    alert('주문이 완료되었습니다.');
+    alert('결제가 완료되었습니다.');
     navigate('/mypage');
   };
 
@@ -93,7 +93,7 @@ const S = {
     margin: 8px 0px;
     font-weight: 700;
     margin-left: 15px;
-    color: #b73d52;
+    color: #000000;
   `,
   MenuBtn: styled.div`
     position: relative;

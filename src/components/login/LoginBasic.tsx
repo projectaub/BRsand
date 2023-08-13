@@ -70,7 +70,7 @@ const LoginBasic = () => {
             })}
           />
           {errors.userPassword && errors.userPassword.type === 'required' && <p>비밀번호를 입력하세요</p>}
-          {errors.userPassword && errors.userPassword.type === 'minLength' && <p>비밀번호는 최소 6자리 이상</p>}
+          {errors.userPassword && errors.userPassword.type === 'minLength' && <p>비밀번호는 최소 6자리 이상입니다</p>}
         </div>
 
         <LoginBtn disabled={loading}>{loading ? <span>Loading</span> : <span>로그인</span>}</LoginBtn>
