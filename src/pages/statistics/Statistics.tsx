@@ -167,7 +167,7 @@ const S = {
   MenuContentBox: styled.div`
     margin-top: 30px;
 
-    padding-top: 30px;
+    padding: 30px 0;
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
