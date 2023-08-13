@@ -21,6 +21,42 @@ const LoginSocial = () => {
     }
   };
 
+  const slackLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'slack'
+    });
+
+    if (error) {
+      console.log('slack Longin', error);
+    } else {
+      alert('로그인');
+      console.log(data);
+      navigate('/');
+      // await addProfiles(data.id);
+    }
+  };
+
+  const googleLogin = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent'
+        }
+      }
+    });
+
+    if (error) {
+      console.log('google Longin', error);
+    } else {
+      alert('로그인');
+      console.log(data);
+      navigate('/');
+      // await addProfiles(data.id);
+    }
+  };
+
   const addProfiles = async (userId: string) => {
     try {
       const { data: dbData } = await supabase.from('users').select('id').eq('id', userId);
@@ -37,7 +73,13 @@ const LoginSocial = () => {
   return (
     <div>
       <form onSubmit={kakaoLogin}>
-        <QuickOrder>카카오로그인</QuickOrder>
+        <QuickOrder>kakao</QuickOrder>
+      </form>
+      <form onSubmit={slackLogin}>
+        <QuickOrder>slack</QuickOrder>
+      </form>
+      <form onSubmit={googleLogin}>
+        <QuickOrder>google</QuickOrder>
       </form>
     </div>
   );
