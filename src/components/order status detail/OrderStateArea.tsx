@@ -84,7 +84,7 @@ const S = {
     align-items: center;
     flex-direction: column;
     overflow-y: scroll;
-    height: calc(100vh - 200px);
+    height: calc(100vh - 160px);
     &::-webkit-scrollbar {
       display: none;
     }

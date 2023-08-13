@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 const SelectDineIn = ({ dineIn, setDineIn, userData }: any) => {
   return (
@@ -18,6 +18,9 @@ const SelectDineIn = ({ dineIn, setDineIn, userData }: any) => {
           onClick={() => {
             setDineIn(true);
           }}
+          $isSelected={dineIn}
+          $active={true}
+          //생겨날 요소에대한 key
         >
           매장
         </S.Btn>
@@ -25,6 +28,8 @@ const SelectDineIn = ({ dineIn, setDineIn, userData }: any) => {
           onClick={() => {
             setDineIn(false);
           }}
+          $isSelected={dineIn}
+          $active={false}
         >
           포장
         </S.Btn>
@@ -34,6 +39,11 @@ const SelectDineIn = ({ dineIn, setDineIn, userData }: any) => {
 };
 
 export default SelectDineIn;
+
+type ButtonProps = {
+  $isSelected: boolean;
+  $active: boolean;
+} & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
 const S = {
   Container: styled.div`
@@ -63,7 +73,7 @@ const S = {
     gap: 16px;
     margin-top: 30px;
   `,
-  Btn: styled.button`
+  Btn: styled.button<ButtonProps>`
     width: calc(361px / 2 - 8px);
     padding: 16px;
     outline: none;
@@ -77,5 +87,15 @@ const S = {
       background-color: #ffd99b;
       color: white;
     }
+    &:active {
+      transform: scale(1);
+    }
+
+    ${(props) =>
+      props.$isSelected === props.$active &&
+      css`
+        background-color: #ffd99b;
+        color: white;
+      `};
   `
 };
