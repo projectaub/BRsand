@@ -82,9 +82,10 @@ https://github.com/projectaub/BRsand
   * styled-component
   * styled-reset
   * nivo-pie
+  * react-hook-form
 
 ## 사용한 API
-  * PG 아임포트 결제하기
+  * PG 아임포트 
 
 ## 버전 관리 시스템
    * Git/Github
