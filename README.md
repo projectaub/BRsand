@@ -134,18 +134,18 @@ https://github.com/projectaub/BRsand
 
 ### 1) 메인 페이지
 
-<a href="https://ibb.co/WFHrTxt"><img width="1440" src="https://i.ibb.co/Cvwjr12/2023-08-14-9-46-30.png" alt="2023-08-14-9-46-30" border="0"></a>
+<a href="https://ibb.co/WFHrTxt"><img src="https://i.ibb.co/Cvwjr12/2023-08-14-9-46-30.png" alt="2023-08-14-9-46-30" border="0"></a>
 
 
 ### 2) 주문관리 페이지
 
-<a href="https://ibb.co/mS0zNKD"><img width="1440" src="https://i.ibb.co/x3Y5FbC/2023-08-14-9-46-51.png" alt="2023-08-14-9-46-51" border="0"></a>
+<a href="https://ibb.co/mS0zNKD"><img src="https://i.ibb.co/x3Y5FbC/2023-08-14-9-46-51.png" alt="2023-08-14-9-46-51" border="0"></a>
 
 
 ### 3) 매장관리 페이지
 
-<a href="https://ibb.co/WtMd82x"><img width="1440" src="https://i.ibb.co/9t1fKr8/2023-08-14-9-47-12.png" alt="2023-08-14-9-47-12" border="0"></a>
+<a href="https://ibb.co/WtMd82x"><img src="https://i.ibb.co/9t1fKr8/2023-08-14-9-47-12.png" alt="2023-08-14-9-47-12" border="0"></a>
 
 ### 4) 회원관리 페이지
 
-<a href="https://ibb.co/mvp2bqh"><img width="1440" src="https://i.ibb.co/z8dBQRP/2023-08-14-10-09-47.png" alt="2023-08-14-10-09-47" border="0"></a>
+<a href="https://ibb.co/mvp2bqh"><img src="https://i.ibb.co/z8dBQRP/2023-08-14-10-09-47.png" alt="2023-08-14-10-09-47" border="0"></a>
