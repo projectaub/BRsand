@@ -21,16 +21,7 @@ const OrderMenu = () => {
   const [pay, setPay] = useState(false);
   const [menu, setMenu] = useState<Menu | undefined>();
   const [menuList, setMenuList] = useState<Menu[]>([]);
-
-  //메뉴 리스트를 서버에서 가져오면 좋을거같습니다.
-  //나중에 전체 어드민에서 새로운 메뉴를 추가할 수 있도록..?
-  // const menuList = [
-  //   { name: '바베큐치킨', price: 50000, id: 1 },
-  //   { name: '랜치비건', price: 40000, id: 2 },
-  //   { name: '마라비프', price: 100000, id: 3 },
-  //   { name: '스위트어니언햄', price: 8000, id: 4 },
-  //   { name: '핫칠리에그마요', price: 3000, id: 5 }
-  // ];
+  const [showItsOrder, setShowItsOrder] = useState(true);
 
   //
   useEffect(() => {
@@ -56,7 +47,7 @@ const OrderMenu = () => {
     };
     await supabase.from('orders').update(order).eq('id', orderId);
 
-    alert('주문 잘 들어감');
+    alert('결제가 완료되었습니다.');
     navigate('/mypage');
   };
 
@@ -65,30 +56,33 @@ const OrderMenu = () => {
     <>
       {/* 결제모달창 컴포넌트입니다. */}
       {pay && <OrderPay updateOrder={updateOrder} setPay={setPay}></OrderPay>}
-
-      <S.Caption>메뉴를 골라주세요.</S.Caption>
-
-      {menuList?.map((menu) => {
-        return (
-          <div style={{ display: 'inline-block' }}>
-            <S.MenuBtn
-              key={menu.id}
-              onClick={() => {
-                setMenu(menu);
-                setPay(true);
-              }}
-            >
-              <S.ImageContainer>
-                <img src={menu.img} style={{ height: '90px' }} alt={menu.name} />
-              </S.ImageContainer>
-              <S.TextContainer>
-                <S.Name>{menu.name}</S.Name>
-                <S.Price> {menu.price}</S.Price>
-              </S.TextContainer>
-            </S.MenuBtn>
-          </div>
-        );
-      })}
+      {showItsOrder && (
+        <>
+          <S.Caption>메뉴를 골라주세요.</S.Caption>
+          {menuList?.map((menu) => {
+            return (
+              <div style={{ display: 'inline-block' }}>
+                <S.MenuBtn
+                  key={menu.id}
+                  onClick={() => {
+                    setMenu(menu);
+                    setPay(true);
+                    setShowItsOrder(false);
+                  }}
+                >
+                  <S.ImageContainer>
+                    <img src={menu.img} style={{ height: '90px' }} alt={menu.name} />
+                  </S.ImageContainer>
+                  <S.TextContainer>
+                    <S.Name>{menu.name}</S.Name>
+                    <S.Price> {menu.price.toLocaleString('ko-KR')}</S.Price>
+                  </S.TextContainer>
+                </S.MenuBtn>
+              </div>
+            );
+          })}
+        </>
+      )}
     </>
   );
 };
@@ -99,7 +93,7 @@ const S = {
     margin: 8px 0px;
     font-weight: 700;
     margin-left: 15px;
-    color: #b73d52;
+    color: #000000;
   `,
   MenuBtn: styled.div`
     position: relative;
@@ -107,6 +101,7 @@ const S = {
     margin: 7px;
     height: 180px;
     cursor: pointer;
+    border-radius: 7px;
     overflow: hidden;
     &:hover {
       background-color: #ffe8c4;

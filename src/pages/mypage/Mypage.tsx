@@ -84,6 +84,7 @@ const Mypage = () => {
             <Stp>{userName} 님의 주문이 진행중입니다.</Stp>
             {orders
               .filter((order) => !order.isDone)
+              .reverse()
               .map((order) => (
                 <MyOrder order={order} />
               ))}
@@ -98,7 +99,10 @@ const Mypage = () => {
           </div>
         </div>
       ) : (
-        <NoOrder>최근 주문하신 내역이 없습니다.</NoOrder>
+        <NoOrderContainer>
+          <NoOrder>최근 주문하신 내역이 없습니다.</NoOrder>
+          <Fbtn onClick={() => navigate('/orderpage')}>첫주문 하러가기</Fbtn>
+        </NoOrderContainer>
       )}
     </>
   );
@@ -117,14 +121,32 @@ const Stp = styled.p`
   margin-left: 40px;
 `;
 
+const NoOrderContainer = styled.div`
+  margin-top: 340px;
+`;
+
 const NoOrder = styled.p`
   margin: 0 auto;
   text-align: center;
   font-size: 23px;
   font-weight: bold;
   color: #2e2e2e;
-  height: 750px;
-  line-height: 750px;
+`;
+
+const Fbtn = styled.button`
+  width: 160px;
+  height: 33px;
+  border-radius: 5px;
+  border: none;
+  background-color: #b73d52;
+  color: white;
+  font-size: 17px;
+  margin-top: 10px;
+  margin-left: 110px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffcd7c;
+  }
 `;
 
 export default Mypage;

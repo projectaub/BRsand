@@ -100,7 +100,7 @@ const Join = () => {
   const submitPersonalInfo = async () => {
     try {
       await supabase.from('users').update({ name, gender, age, grade: 'basic' }).eq('id', userData.user!.id);
-      alert('입력완료되었다. 즐거운 이용 하시길 바람...');
+      alert('추가 정보 입력 완료');
       navigate('/');
     } catch (error) {
       console.error('Error updating personal user Info:', error);

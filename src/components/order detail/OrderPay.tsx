@@ -99,7 +99,7 @@ const OrderPay = ({ updateOrder, setPay }: any) => {
       pay_method: 'card', // 결제수단
       merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
       amount: 10000, // 결제금액
-      name: '벼랑샌드', // 주문명
+      name: '벼락샌드', // 주문명
       buyer_name: '홍길동', // 구매자 이름
       buyer_tel: '01012341234', // 구매자 전화번호
       buyer_email: 'example@example', // 구매자 이메일
@@ -123,12 +123,18 @@ const OrderPay = ({ updateOrder, setPay }: any) => {
     }
   }
   return (
-    <div style={{ width: '240px', margin: '0 auto' }}>
+    <div style={{ width: '240px', margin: '340px auto' }}>
+      <StH>결제방식을 선택해주세요.</StH>
       <SPay onClick={submitPay}>현금</SPay>
       <SPay onClick={onClickPayment}>카드</SPay>
     </div>
   );
 };
+
+const StH = styled.h1`
+  text-align: center;
+  font-size: 18px;
+`;
 
 const SPay = styled.button`
   width: 100px;
@@ -137,13 +143,13 @@ const SPay = styled.button`
   font-size: 17px;
   cursor: pointer;
   margin: 10px;
+
   background-color: #b73d52;
   color: white;
   border: none;
   &:hover {
-    background-color: white;
-    color: #b73d52;
-    border: 2px solid #b73d52;
+    background-color: #ffcd7c;
+    color: white;
   }
 `;
 

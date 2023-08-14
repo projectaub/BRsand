@@ -53,7 +53,7 @@ function MyOrder({ order }: MyOrderProps) {
             order.orderMenu.vegetables
               .filter((vege: any) => !vege.isAdd)
               .map((vege: any) => <Stp key={vege.id}>(-){vege.name}</Stp>)}
-          <Sprice>{order.price} 원</Sprice>
+          <Sprice>{order.price.toLocaleString('ko-KR')} 원</Sprice>
         </FoodArea>
       </OrderArea>
     </div>

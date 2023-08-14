@@ -1,85 +1,86 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { User } from '@supabase/supabase-js';
+
+type Provider = 'google' | 'kakao' | 'slack';
 
 const LoginSocial = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState<User | null>(null);
 
-  const kakaoLogin = async () => {
+  const signInWithOAuthAndLog = async (provider: Provider) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'kakao'
+      provider: provider
     });
 
     if (error) {
-      console.log(error);
+      console.log(`Error signing in with ${provider}:`, error);
     } else {
+      console.log(`Successfully signed in with ${provider}:`, data);
       alert('로그인');
-      console.log(data);
+      getUser();
+      getUserInfo();
       navigate('/');
-      // await addProfiles(data.id);
     }
   };
 
-  const slackLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'slack'
-    });
+  const getUser = async () => {
+    const {
+      data: { user }
+    } = await supabase.auth.getUser();
 
-    if (error) {
-      console.log('slack Longin', error);
+    if (!user) {
+      setUser(null);
     } else {
-      alert('로그인');
-      console.log(data);
-      navigate('/');
-      // await addProfiles(data.id);
+      setUser(user);
+      console.log(user.id);
+      console.log(user.user_metadata);
     }
   };
 
-  const googleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent'
-        }
-      }
-    });
-
-    if (error) {
-      console.log('google Longin', error);
+  const getUserInfo = async () => {
+    const { data: userInfo } = await supabase.from('users').select('id').single();
+    if (userInfo) {
+      console.log('유저정보등록되어있음');
+      return;
     } else {
-      alert('로그인');
-      console.log(data);
-      navigate('/');
-      // await addProfiles(data.id);
+      updateUserInfo();
     }
   };
 
-  const addProfiles = async (userId: string) => {
-    try {
-      const { data: dbData } = await supabase.from('users').select('id').eq('id', userId);
-      const isDbEmpty = !dbData || dbData.length === 0;
-
-      if (isDbEmpty) {
-        await supabase.from('users').insert([{ id: userId }]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const updateUserInfo = async () => {
+    await supabase
+      .from('users')
+      .insert({ id: user!.id, email: user!.user_metadata['email'], grade: 'basic', name: user!.user_metadata['name'] });
   };
 
   return (
     <div>
-      <form onSubmit={kakaoLogin}>
-        <QuickOrder>kakao</QuickOrder>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog('kakao');
+        }}
+      >
+        <SocialLogin>kakao</SocialLogin>
       </form>
-      <form onSubmit={slackLogin}>
-        <QuickOrder>slack</QuickOrder>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog('slack');
+        }}
+      >
+        <SocialLogin>slack</SocialLogin>
       </form>
-      <form onSubmit={googleLogin}>
-        <QuickOrder>google</QuickOrder>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signInWithOAuthAndLog('google');
+        }}
+      >
+        <SocialLogin>google</SocialLogin>
       </form>
     </div>
   );
@@ -87,7 +88,7 @@ const LoginSocial = () => {
 
 export default LoginSocial;
 
-const QuickOrder = styled.button`
+const SocialLogin = styled.button`
   width: 120px;
   height: 35px;
   display: block;
