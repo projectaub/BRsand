@@ -26,7 +26,9 @@ const OrderStateArea = () => {
       if (error) {
         console.error('Error fetching orders:', error);
       } else if (data !== null) {
-        setOrders(data);
+        const sortTimeData = data.sort((a, b) => a.time.localeCompare(b.time));
+
+        setOrders(sortTimeData);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
