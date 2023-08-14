@@ -89,7 +89,7 @@ https://github.com/projectaub/BRsand
     <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
   </div>
   
-## 7. 협업툴
+## 협업 툴
   * Visual Studio
   * Slack
   * figma
