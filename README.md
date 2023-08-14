@@ -78,6 +78,7 @@ https://github.com/projectaub/BRsand
   * react-swiper
   * styled-component
   * styled-reset
+  * nivo-pie
 
 ## 사용한 API
   * PG 아임포트 결제하기
