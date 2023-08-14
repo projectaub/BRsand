@@ -15,7 +15,7 @@ export const useCheckAdmin = (params: string) => {
     console.log(user);
     const response = await supabase.from('admin').select().eq('id', user!.id).single();
     if (response.error || response.data === null) {
-      alert('관리자만 이용이 가능함.. 넌 유저아님?');
+      alert('관리자만 이용이 가능합니다.');
       navigate('/');
       return;
     }
@@ -24,7 +24,7 @@ export const useCheckAdmin = (params: string) => {
     //아이디가 0이면 최상위 관리자라서 조회 가능
 
     if (id !== 0 && currentUrl.includes('grade')) {
-      alert('사장님만 볼 수 있어');
+      alert('권한이 없습니다.');
       const baseUrl = currentUrl.split('/');
       navigate(`/orderstatus/${id}`);
     }

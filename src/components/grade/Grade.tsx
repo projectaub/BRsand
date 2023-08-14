@@ -21,6 +21,7 @@ const Grade = () => {
 
   const getUserInfo = async () => {
     const { data, error } = await supabase.from('users').select('*');
+    console.log(data);
     if (error) {
       console.error('Error fetching users data:', error);
     } else {
@@ -117,12 +118,13 @@ const Grade = () => {
       return 1;
     }
   });
+  console.log(sortedUsernames);
 
   return (
     <Container>
       <Table>
         <thead>
-          <TableRow userGrade="index">
+          <TableRow $userGrade="index">
             <TableHeader>이름</TableHeader>
             <TableHeader>현재 회원 등급</TableHeader>
             <TableHeader>업데이트 될 회원 등급</TableHeader>
@@ -138,7 +140,7 @@ const Grade = () => {
 
             if (user) {
               return (
-                <TableRow key={username} userGrade={user.grade}>
+                <TableRow key={username} $userGrade={user.grade}>
                   <TableCell>{username}</TableCell>
                   <TableCell>{user.grade}</TableCell>
                   <TableCell>{userUpgradeGrades[username]}</TableCell>
@@ -169,32 +171,40 @@ const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
+  border-top: 1px solid #444444;
+  /* border-spacing: 50px; */
+  /* padding: 10px; */
 `;
 
-const TableRow = styled.tr<{ userGrade: string }>`
+const TableRow = styled.tr<{ $userGrade: string }>`
   // 사용자 지정 속성을 선언합니다.
-  background-color: ${(props) =>
-    props.userGrade === 'Gold'
+
+  color: ${(props) =>
+    props.$userGrade === 'Gold'
       ? '#B73D52'
-      : props.userGrade === 'Silver'
+      : props.$userGrade === 'Silver'
       ? '#DB8B77'
-      : props.userGrade === 'basic'
+      : props.$userGrade === 'basic'
       ? '#F3BF8F'
-      : '#FFD99B'};
+      : 'black'};
+  /* background-color: rgba(0, 0, 0, 0.05); */
 `;
 
 const TableHeader = styled.th`
   padding: 10px;
   text-align: left;
   font-weight: bold;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
 const TableCell = styled.td`
-  padding: 10px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
 const ReflectCell = styled.td`
   text-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 `;
 
 const ReflectButton = styled.button`
