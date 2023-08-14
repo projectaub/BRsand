@@ -16,6 +16,7 @@ import { PrivateRoute } from '../pages/statistics/PrivateRoute';
 import AdminLogin from '../pages/admin/login/AdminLogin';
 import LoginSocial from '../components/login/LoginSocial';
 import Web from './layout/Web';
+import Grade from '../components/grade/Grade';
 
 const Router = () => {
   return (
@@ -42,6 +43,7 @@ const Router = () => {
             <Route path="/inventorystatus" element={<InventoryStatus />} />
             <Route path="/statistics/:id" element={<Statistics />} />
             <Route path="/orderstatus/:id" element={<Orderstatus />} />
+            <Route path="/grade/:id" element={<Grade />} />
           </Route>
         </Route>
         <Route path="/admin" element={<AdminLogin />} />
