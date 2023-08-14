@@ -95,7 +95,7 @@ const OrderPay = ({ updateOrder, setPay }: any) => {
     /* 2. 결제 데이터 정의하기 */
     const data: RequestPayParams = {
       // kcp, kakaopay 등록해놨음
-      pg: 'kakaopay', // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고
+      pg: 'kcp', // PG사 : https://portone.gitbook.io/docs/sdk/javascript-sdk/payrq#undefined-1 참고
       pay_method: 'card', // 결제수단
       merchant_uid: `mid_${new Date().getTime()}`, // 주문번호
       amount: 10000, // 결제금액

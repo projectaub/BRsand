@@ -63,7 +63,8 @@ const Mypage = () => {
       if (error) {
         console.error('Error fetching orders:', error);
       } else if (data !== null) {
-        setOrders(data);
+        const sortTimeData = data.sort((a, b) => a.time.localeCompare(b.time));
+        setOrders(sortTimeData);
       }
     } catch (error) {
       console.error('Error fetching orders:', error);
@@ -84,7 +85,6 @@ const Mypage = () => {
             <Stp>{userName} 님의 주문이 진행중입니다.</Stp>
             {orders
               .filter((order) => !order.isDone)
-              .reverse()
               .map((order) => (
                 <MyOrder order={order} />
               ))}
