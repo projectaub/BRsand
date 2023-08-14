@@ -4,6 +4,12 @@
 
 스파르타코딩클럽 6기_React / 23.08.07 ~ 23.08.14 
 
+<div align="center">
+
+![header](https://capsule-render.vercel.app/api?type=Cylinder&color=B73D52&height=150&section=header&text=벼락%20샌드&fontColor=FFD99B&fontSize=70&animation=fadeIn&fontAlignY=55)
+
+</div>
+
 ## 팀원
 
 | 팀원   |  팀원구분 | 깃허브                                      | 블로그                                  |
@@ -120,12 +126,12 @@ https://github.com/projectaub/BRsand
 
 <a href="https://ibb.co/PMJdZmF"><img width="400" src="https://i.ibb.co/DYmZDVz/2023-08-14-9-45-00.png" alt="2023-08-14-9-45-00" border="0"></a>
 
-### 3) 주문 페이지
+### 4) 주문 페이지
 
 <a href="https://ibb.co/kXMTVWJ"><img width="400" src="https://i.ibb.co/CQWypT6/2023-08-14-9-45-30.png" alt="2023-08-14-9-45-30" border="0"></a>
 <a href="https://ibb.co/q9pDsQZ"><img width="400" src="https://i.ibb.co/mt4RqWx/2023-08-14-9-45-44.png" alt="2023-08-14-9-45-44" border="0"></a>
 
-### 4) 결제 페이지
+### 5) 결제 페이지
 
 <a href="https://ibb.co/7KXSsr7"><img width="400" src="https://i.ibb.co/NKsFcWw/2023-08-14-9-45-59.png" alt="2023-08-14-9-45-59" border="0"></a>
 
