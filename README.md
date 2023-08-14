@@ -64,7 +64,7 @@ https://github.com/projectaub/BRsand
   * html/css
   * react
   * TypeScript : 사전에 일어날 가능성이 있는 버그를 막아서 효율적으로 코드 관리를 할 수 있다.
-  * Supabase : 백엔드 없이 인증/인가, DB등 다양한 서비스를 제공하기위해 supbase를 사용하였다. Firebase 대비 직관적인 사용 방식으로 팀원 내 만족도가 높았다.
+  * Supabase : 다양한 종류의 Data를 다뤄야했기 때문에 백엔드 없이 인증/인가, DB등 다양한 서비스를 제공하기위해 supbase를 사용하였다. Firebase 대비 직관적인 사용 방식으로 팀원 내 만족도가 높았다.
   <div align=“center”>
 	  <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
     <img src="https://img.shields.io/badge/css3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
