@@ -9,7 +9,7 @@
 | 팀원   |  팀원구분 | 깃허브                                      | 블로그                                  |
 | ------ | -------- | ------------------------------------------- | --------------------------------- |
 | 정승하 | `팀장`   | https://github.com/projectaub  | https://blog.naver.com/tmdgk10        |
-| 김윤수 |  팀원     | https://github.com/TerryEHLee |  https://velog.io/@zkzk625                        |    
+| 김윤수 |  팀원     | https://github.com/KimYoonSu97 |  https://velog.io/@zkzk625                        |    
 | 이은한 |  팀원     | https://github.com/TerryEHLee | terryehlee.tistory.com        |
 | 이우정 |  팀원     | https://github.com/Passionhruit | https://passionfruit6.tistory.com/                               |
 
